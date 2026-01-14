@@ -1,15 +1,21 @@
-
 import React, { useState, useEffect } from 'react';
 import { ExperienceItem } from './ExperienceItem';
 import { CONTENT } from '../constants';
 
 const Portfolio: React.FC = () => {
   const [isDark, setIsDark] = useState(true);
-  const [lang, setLang] = useState<'it' | 'en'>('it');
+  const [lang, setLang] = useState<'it' | 'en'>('en');
 
   useEffect(() => {
-    // Sync local state with document classes (Astro hydration)
-    setIsDark(document.documentElement.classList.contains('dark'));
+    // Initial sync
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'light') {
+      setIsDark(false);
+      document.documentElement.classList.remove('dark');
+    } else {
+      setIsDark(true);
+      document.documentElement.classList.add('dark');
+    }
     
     const savedLang = localStorage.getItem('lang') as 'it' | 'en';
     if (savedLang) {
@@ -43,22 +49,22 @@ const Portfolio: React.FC = () => {
       <header className="px-6 py-12 md:px-12 md:py-16 flex justify-between items-start max-w-[1600px] mx-auto">
         <div>
           <h1 className="text-xl font-medium tracking-tight">Stefano Perelli,</h1>
-          <p className="text-xl text-zinc-500">Project & Delivery Manager</p>
+          <p className="text-xl text-teal-600 dark:text-teal-400 font-medium">Project & Delivery Manager</p>
         </div>
         <nav className="flex items-center gap-6 md:gap-8">
-          <a href="#about" className="text-xl font-medium hover:opacity-50 transition-opacity hidden sm:block">{t.labels.about}</a>
+          <a href="#about" className="text-xl font-medium hover:text-accent transition-colors hidden sm:block">{t.labels.about}</a>
           <div className="flex gap-2">
             <button 
               onClick={toggleLang}
-              className="text-[10px] font-mono tracking-widest border border-zinc-200 dark:border-zinc-800 px-3 py-1 rounded-full uppercase hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-colors"
+              className="text-[10px] font-mono tracking-widest border border-zinc-200 dark:border-zinc-800 px-3 py-1 rounded-full uppercase hover:border-teal-500 hover:text-teal-500 transition-colors"
             >
               {lang === 'it' ? 'EN' : 'IT'}
             </button>
             <button 
               onClick={toggleTheme}
-              className="text-[10px] font-mono tracking-widest border border-zinc-200 dark:border-zinc-800 px-3 py-1 rounded-full uppercase hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-colors"
+              className="text-[10px] font-mono tracking-widest border border-zinc-200 dark:border-zinc-800 px-3 py-1 rounded-full uppercase hover:border-accent hover:text-accent transition-colors"
             >
-              {isDark ? 'Light' : 'Dark'}
+              {isDark ? 'Dark' : 'Light'}
             </button>
           </div>
         </nav>
@@ -79,13 +85,13 @@ const Portfolio: React.FC = () => {
 
               <div className="space-y-0">
                 <div className="py-4 border-t border-zinc-200 dark:border-zinc-800 flex justify-between items-center group">
-                  <a href="mailto:hello@stefanoperelli.com" className="text-sm hover:opacity-50 transition-opacity">hello@stefanoperelli.com ↗</a>
+                  <a href="mailto:hello@stefanoperelli.com" className="text-sm hover:text-teal-500 transition-colors underline underline-offset-4 decoration-zinc-300 dark:decoration-zinc-700 group-hover:decoration-teal-500">hello@stefanoperelli.com ↗</a>
                 </div>
                 <div className="py-4 border-t border-zinc-200 dark:border-zinc-800 flex justify-between items-center group">
                   <span className="text-sm text-zinc-500">+39 347 000 0000 ↗</span>
                 </div>
                 <div className="py-4 border-t border-zinc-200 dark:border-zinc-800 border-b flex justify-between items-center group">
-                  <a href="#" className="text-sm hover:opacity-50 transition-opacity">Linkedin ↗</a>
+                  <a href="#" className="text-sm hover:text-accent transition-colors underline underline-offset-4 decoration-zinc-300 dark:decoration-zinc-700 group-hover:decoration-accent">Linkedin ↗</a>
                 </div>
               </div>
             </div>
@@ -110,10 +116,10 @@ const Portfolio: React.FC = () => {
               </div>
               <div className="divide-y divide-zinc-200 dark:divide-zinc-800">
                 {t.projects.map((project, idx) => (
-                  <div key={idx} className="py-12 first:pt-0">
+                  <div key={idx} className="py-12 first:pt-0 group cursor-default">
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-16">
                       <div>
-                        <h3 className="text-lg font-bold mb-2">{project.title}</h3>
+                        <h3 className="text-lg font-bold mb-2 group-hover:text-teal-500 transition-colors">{project.title}</h3>
                         <p className="text-zinc-500 text-sm italic">{project.role}</p>
                       </div>
                       <div>
@@ -134,11 +140,11 @@ const Portfolio: React.FC = () => {
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
                 {t.skills.map((cat, idx) => (
                   <div key={idx} className="space-y-6">
-                    <h3 className="text-xs font-bold uppercase tracking-widest text-zinc-600 dark:text-zinc-400">{cat.title}</h3>
+                    <h3 className="text-xs font-bold uppercase tracking-widest text-teal-600 dark:text-teal-400 border-l-2 border-accent pl-3">{cat.title}</h3>
                     <ul className="space-y-3">
                       {cat.skills.map((skill, sIdx) => (
                         <li key={sIdx} className="text-sm flex gap-3 items-start text-zinc-800 dark:text-zinc-300">
-                          <span className="text-zinc-500 mt-1">•</span>
+                          <span className="text-accent mt-1">•</span>
                           {skill}
                         </li>
                       ))}
@@ -156,8 +162,8 @@ const Portfolio: React.FC = () => {
         <div className="flex flex-col md:flex-row justify-between items-center gap-8 opacity-40 text-[10px] uppercase font-mono tracking-widest">
           <span>{t.labels.footer}</span>
           <div className="flex gap-8">
-            <a href="#" className="hover:opacity-100 transition-opacity">CV / PDF</a>
-            <a href="#" className="hover:opacity-100 transition-opacity">LinkedIn</a>
+            <a href="#" className="hover:text-teal-500 transition-colors underline underline-offset-4">CV / PDF</a>
+            <a href="#" className="hover:text-accent transition-colors underline underline-offset-4">LinkedIn</a>
           </div>
         </div>
       </footer>
