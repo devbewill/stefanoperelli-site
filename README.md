@@ -1,11 +1,21 @@
-<div align="center">
+# Stefano Perelli Portfolio
 
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
+Minimalist professional portfolio built with **React 19** and **Tailwind CSS**.
 
-  <h1>Built with AI Studio</h2>
+## Features
+- 🇮🇹 / 🇬🇧 Multi-language toggle (Italian/English).
+- 🌓 Dark/Light mode support.
+- 📱 Fully responsive, mobile-first design.
+- 🎨 High-end minimalist aesthetic.
 
-  <p>The fastest path from prompt to production with Gemini.</p>
+## Tech Stack
+- **React**: UI components and state management.
+- **Tailwind CSS**: Utility-first styling.
+- **Geist Sans/Mono**: Premium typography.
+- **ESM.sh**: Modern module loading.
 
-  <a href="https://aistudio.google.com/apps">Start building</a>
-
-</div>
+## Structure
+- `/components`: Reusable UI components.
+- `App.tsx`: Main application shell and layout.
+- `constants.ts`: Multi-language dictionary.
+- `types.ts`: TypeScript interfaces.
