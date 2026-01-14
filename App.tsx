@@ -4,7 +4,8 @@ import { CONTENT } from './constants';
 
 const App: React.FC = () => {
   const [isDark, setIsDark] = useState(true);
-  const [lang, setLang] = useState<'it' | 'en'>('it');
+  // Impostiamo 'en' come valore iniziale predefinito
+  const [lang, setLang] = useState<'it' | 'en'>('en');
 
   useEffect(() => {
     const savedTheme = localStorage.getItem('theme');
@@ -18,6 +19,7 @@ const App: React.FC = () => {
       document.documentElement.classList.add('dark');
     }
 
+    // Carichiamo la lingua salvata, altrimenti rimarrà quella dello stato iniziale ('en')
     const savedLang = localStorage.getItem('lang') as 'it' | 'en';
     if (savedLang) setLang(savedLang);
   }, []);
