@@ -1,0 +1,66 @@
+---
+import type { Experience } from "../types";
+
+interface Props {
+    item: Experience;
+}
+
+const { item } = Astro.props;
+---
+
+<div
+    class="py-6 first:pt-0 group border-b border-zinc-200 dark:border-zinc-800 last:border-b-0"
+>
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-16">
+        {/* Left Side: Basic Info */}
+        <div class="space-y-1">
+            <p class="text-zinc-500 text-sm font-mono tracking-tight">
+                {item.period}
+            </p>
+            <h3 class="text-accent text-lg font-bold">{item.role}</h3>
+            <div class="space-y-1">
+                <a href={item.link} class="text-sm font-medium">
+                    {item.company} ↗
+                </a>
+                <p class="text-zinc-500 text-sm italic">{item.description}</p>
+            </div>
+        </div>
+
+        {/* Right Side: Details/Bullets */}
+        <div>
+            <ul class="space-y-6">
+                {
+                    item.details.map((detail) => {
+                        const hasColon = detail.includes(":");
+                        if (hasColon) {
+                            const [title, content] = detail.split(":");
+                            return (
+                                <li class="flex gap-4 items-start text-sm leading-relaxed">
+                                    <span class="shrink-0 mt-1.5 text-teal-500">
+                                        •
+                                    </span>
+                                    <span>
+                                        <span class="font-bold text-zinc-900 dark:text-zinc-100">
+                                            {title}:
+                                        </span>{" "}
+                                        <span class="text-zinc-600 dark:text-zinc-400">
+                                            {content}
+                                        </span>
+                                    </span>
+                                </li>
+                            );
+                        }
+                        return (
+                            <li class="flex gap-4 items-start text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
+                                <span class="shrink-0 mt-1.5 text-teal-500">
+                                    •
+                                </span>
+                                <span>{detail}</span>
+                            </li>
+                        );
+                    })
+                }
+            </ul>
+        </div>
+    </div>
+</div>
