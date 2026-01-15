@@ -1,0 +1,84 @@
+---
+import type { CollectionEntry } from "astro:content";
+import Layout from "./Layout.astro";
+import Header from "../components/Header.astro";
+
+type Props = CollectionEntry<"blog">["data"];
+
+const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
+---
+
+<Layout title={title}>
+    <div
+        class="min-h-screen bg-white dark:bg-black text-black dark:text-white transition-colors duration-500 font-sans selection:bg-teal-100 dark:selection:bg-teal-900/30"
+    >
+        <Header />
+
+        <main class="w-full max-w-[800px] mx-auto px-6 py-12 md:px-12 md:py-16">
+            <article class="prose dark:prose-invert prose-zinc max-w-none">
+                <div class="mb-8 not-prose">
+                    {
+                        heroImage && (
+                            <img
+                                width={1020}
+                                height={510}
+                                src={heroImage}
+                                alt=""
+                                class="w-full rounded-lg shadow-sm mb-6"
+                            />
+                        )
+                    }
+                    <div class="text-zinc-500 text-sm mb-2">
+                        <time datetime={pubDate.toISOString()}>
+                            {
+                                pubDate.toLocaleDateString("en-us", {
+                                    year: "numeric",
+                                    month: "short",
+                                    day: "numeric",
+                                })
+                            }
+                        </time>
+                        {
+                            updatedDate && (
+                                <div class="italic">
+                                    Last updated on{" "}
+                                    <time datetime={updatedDate.toISOString()}>
+                                        {updatedDate.toLocaleDateString(
+                                            "en-us",
+                                            {
+                                                year: "numeric",
+                                                month: "short",
+                                                day: "numeric",
+                                            },
+                                        )}
+                                    </time>
+                                </div>
+                            )
+                        }
+                    </div>
+                    <h1
+                        class="text-4xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100 mb-4"
+                    >
+                        {title}
+                    </h1>
+                    <hr class="border-zinc-200 dark:border-zinc-800" />
+                </div>
+                <div
+                    class="prose-a:text-teal-600 dark:prose-a:text-teal-400 prose-img:rounded-lg"
+                >
+                    <slot />
+                </div>
+            </article>
+
+            <div
+                class="mt-12 pt-8 border-t border-zinc-200 dark:border-zinc-800"
+            >
+                <a
+                    href="/blog"
+                    class="text-sm font-medium hover:text-teal-500 transition-colors"
+                    >← Back to Blog</a
+                >
+            </div>
+        </main>
+    </div>
+</Layout>
