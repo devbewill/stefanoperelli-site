@@ -7,7 +7,7 @@ interface ExperienceItemProps {
 
 export const ExperienceItem: React.FC<ExperienceItemProps> = ({ item }) => {
   return (
-    <div className="py-12 first:pt-0 group">
+    <div className="py-6 first:pt-0 group">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-16">
         {/* Left Side: Basic Info */}
         <div className="space-y-1">

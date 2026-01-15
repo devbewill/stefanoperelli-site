@@ -135,13 +135,18 @@ const App: React.FC = () => {
                 {t.projects.map((project, idx) => (
                   <div
                     key={idx}
-                    className="py-12 first:pt-0 group cursor-default"
+                    className="py-2 first:pt-0 group cursor-default"
                   >
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-16">
                       <div>
-                        <h3 className="text-lg font-bold mb-2 group-hover:text-teal-500 transition-colors">
-                          {project.title}
-                        </h3>
+                        <a
+                          href={project.link}
+                          className="block text-sm group-hover:text-teal-500 transition-colors"
+                        >
+                          <h3 className="text-lg font-bold mb-2">
+                            {project.title}
+                          </h3>
+                        </a>
                         <p className="text-zinc-500 text-sm italic">
                           {project.role}
                         </p>
