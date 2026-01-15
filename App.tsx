@@ -1,25 +1,25 @@
-import React, { useState, useEffect } from 'react';
-import { ExperienceItem } from './components/ExperienceItem';
-import { CONTENT } from './constants';
+import React, { useState, useEffect } from "react";
+import { ExperienceItem } from "./components/ExperienceItem";
+import { CONTENT } from "./constants";
 
 const App: React.FC = () => {
   const [isDark, setIsDark] = useState(true);
-  const [lang, setLang] = useState<'it' | 'en'>('en');
+  const [lang, setLang] = useState<"it" | "en">("en");
 
   useEffect(() => {
     // Check saved theme or default to dark
-    const savedTheme = localStorage.getItem('theme');
-    
-    if (savedTheme === 'light') {
+    const savedTheme = localStorage.getItem("theme");
+
+    if (savedTheme === "light") {
       setIsDark(false);
-      document.documentElement.classList.remove('dark');
+      document.documentElement.classList.remove("dark");
     } else {
       // Default or explicitly dark
       setIsDark(true);
-      document.documentElement.classList.add('dark');
+      document.documentElement.classList.add("dark");
     }
 
-    const savedLang = localStorage.getItem('lang') as 'it' | 'en';
+    const savedLang = localStorage.getItem("lang") as "it" | "en";
     if (savedLang) setLang(savedLang);
   }, []);
 
@@ -27,18 +27,18 @@ const App: React.FC = () => {
     const newDark = !isDark;
     setIsDark(newDark);
     if (newDark) {
-      document.documentElement.classList.add('dark');
-      localStorage.setItem('theme', 'dark');
+      document.documentElement.classList.add("dark");
+      localStorage.setItem("theme", "dark");
     } else {
-      document.documentElement.classList.remove('dark');
-      localStorage.setItem('theme', 'light');
+      document.documentElement.classList.remove("dark");
+      localStorage.setItem("theme", "light");
     }
   };
 
   const toggleLang = () => {
-    const newLang = lang === 'it' ? 'en' : 'it';
+    const newLang = lang === "it" ? "en" : "it";
     setLang(newLang);
-    localStorage.setItem('lang', newLang);
+    localStorage.setItem("lang", newLang);
   };
 
   const t = CONTENT[lang];
@@ -47,25 +47,32 @@ const App: React.FC = () => {
     <div className="min-h-screen bg-white dark:bg-black text-black dark:text-white transition-colors duration-500 font-sans selection:bg-teal-100 dark:selection:bg-teal-900/30">
       <header className="px-6 py-12 md:px-12 md:py-16 flex justify-between items-start max-w-[1600px] mx-auto">
         <div>
-          <h1 className="text-xl font-medium tracking-tight">Stefano Perelli,</h1>
-          <p className="text-xl text-teal-600 dark:text-teal-400 font-medium">Project & Delivery Manager</p>
+          <h1 className="text-xl font-medium tracking-tight">
+            Stefano Perelli,
+          </h1>
+          <p className="text-xl text-teal-600 dark:text-teal-400 font-medium">
+            Project & Delivery Manager
+          </p>
         </div>
         <nav className="flex items-center gap-6 md:gap-8">
-          <a href="#about" className="text-xl font-medium hover:text-accent transition-colors hidden sm:block">
+          <a
+            href="#about"
+            className="text-xl font-medium hover:text-accent transition-colors hidden sm:block"
+          >
             {t.labels.about}
           </a>
           <div className="flex gap-2">
-            <button 
+            <button
               onClick={toggleLang}
               className="text-[10px] font-mono tracking-widest border border-zinc-200 dark:border-zinc-800 px-3 py-1 rounded-full uppercase hover:border-teal-500 hover:text-teal-500 transition-colors"
             >
-              {lang === 'it' ? 'EN' : 'IT'}
+              {lang === "it" ? "EN" : "IT"}
             </button>
-            <button 
+            <button
               onClick={toggleTheme}
               className="text-[10px] font-mono tracking-widest border border-zinc-200 dark:border-zinc-800 px-3 py-1 rounded-full uppercase hover:border-accent hover:text-accent transition-colors"
             >
-              {isDark ? 'Dark' : 'Light'}
+              {isDark ? "Dark" : "Light"}
             </button>
           </div>
         </nav>
@@ -75,22 +82,28 @@ const App: React.FC = () => {
         <div className="flex flex-col md:flex-row gap-12 md:gap-24">
           <div className="w-full md:w-[368px] md:shrink-0">
             <div className="md:sticky md:top-16 space-y-12">
-              <div id="about" className="pt-8 border-t border-zinc-200 dark:border-zinc-800">
-                <p className="text-lg leading-relaxed text-zinc-800 dark:text-zinc-200">
+              <div
+                id="about"
+                className="pt-8 border-t border-zinc-200 dark:border-zinc-800"
+              >
+                <p className="text-md leading-relaxed text-zinc-800 dark:text-zinc-200">
                   {t.bio}
                 </p>
               </div>
               <div className="space-y-0">
                 <div className="py-4 border-t border-zinc-200 dark:border-zinc-800 flex justify-between items-center group">
-                  <a href="mailto:hello@stefanoperelli.com" className="text-sm hover:text-teal-500 transition-colors underline underline-offset-4 decoration-zinc-300 dark:decoration-zinc-700 group-hover:decoration-teal-500">
-                    hello@stefanoperelli.com
+                  <a
+                    href="mailto:sedprc@gmail.com"
+                    className="text-sm hover:text-teal-500 transition-colors underline underline-offset-4 decoration-zinc-300 dark:decoration-zinc-700 group-hover:decoration-teal-500"
+                  >
+                    Mail me
                   </a>
                 </div>
-                <div className="py-4 border-t border-zinc-200 dark:border-zinc-800 flex justify-between items-center">
-                  <span className="text-sm text-zinc-500">+39 347 000 0000</span>
-                </div>
                 <div className="py-4 border-t border-zinc-200 dark:border-zinc-800 border-b flex justify-between items-center group">
-                  <a href="#" className="text-sm hover:text-accent transition-colors underline underline-offset-4 decoration-zinc-300 dark:decoration-zinc-700 group-hover:decoration-accent">
+                  <a
+                    href="https://www.linkedin.com/in/stefanoperelli/"
+                    className="text-sm hover:text-accent transition-colors underline underline-offset-4 decoration-zinc-300 dark:decoration-zinc-700 group-hover:decoration-accent"
+                  >
                     Linkedin
                   </a>
                 </div>
@@ -101,7 +114,9 @@ const App: React.FC = () => {
           <div className="flex-1 space-y-32">
             <section id="experience">
               <div className="pt-8 border-t border-zinc-200 dark:border-zinc-800 mb-12">
-                <h2 className="text-sm font-medium text-zinc-500 uppercase tracking-wider">{t.labels.experience}</h2>
+                <h2 className="text-sm font-medium text-zinc-500 uppercase tracking-wider">
+                  {t.labels.experience}
+                </h2>
               </div>
               <div className="divide-y divide-zinc-200 dark:divide-zinc-800">
                 {t.experiences.map((exp, idx) => (
@@ -112,15 +127,24 @@ const App: React.FC = () => {
 
             <section id="projects">
               <div className="pt-8 border-t border-zinc-200 dark:border-zinc-800 mb-12">
-                <h2 className="text-sm font-medium text-zinc-500 uppercase tracking-wider">{t.labels.projects}</h2>
+                <h2 className="text-sm font-medium text-zinc-500 uppercase tracking-wider">
+                  {t.labels.projects}
+                </h2>
               </div>
               <div className="divide-y divide-zinc-200 dark:divide-zinc-800">
                 {t.projects.map((project, idx) => (
-                  <div key={idx} className="py-12 first:pt-0 group cursor-default">
+                  <div
+                    key={idx}
+                    className="py-12 first:pt-0 group cursor-default"
+                  >
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-16">
                       <div>
-                        <h3 className="text-lg font-bold mb-2 group-hover:text-teal-500 transition-colors">{project.title}</h3>
-                        <p className="text-zinc-500 text-sm italic">{project.role}</p>
+                        <h3 className="text-lg font-bold mb-2 group-hover:text-teal-500 transition-colors">
+                          {project.title}
+                        </h3>
+                        <p className="text-zinc-500 text-sm italic">
+                          {project.role}
+                        </p>
                       </div>
                       <div>
                         <p className="text-sm leading-relaxed max-w-xl text-zinc-500 dark:text-zinc-400">
@@ -135,15 +159,22 @@ const App: React.FC = () => {
 
             <section id="skills">
               <div className="pt-8 border-t border-zinc-200 dark:border-zinc-800 mb-12">
-                <h2 className="text-sm font-medium text-zinc-500 uppercase tracking-wider">{t.labels.skills}</h2>
+                <h2 className="text-sm font-medium text-zinc-500 uppercase tracking-wider">
+                  {t.labels.skills}
+                </h2>
               </div>
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
                 {t.skills.map((cat, idx) => (
                   <div key={idx} className="space-y-6">
-                    <h3 className="text-xs font-bold uppercase tracking-widest text-teal-600 dark:text-teal-400 border-l-2 border-accent pl-3">{cat.title}</h3>
+                    <h3 className="text-xs font-bold uppercase tracking-widest text-teal-600 dark:text-teal-400 border-l-2 border-accent pl-3">
+                      {cat.title}
+                    </h3>
                     <ul className="space-y-3">
                       {cat.skills.map((skill, sIdx) => (
-                        <li key={sIdx} className="text-sm flex gap-3 items-start text-zinc-800 dark:text-zinc-300">
+                        <li
+                          key={sIdx}
+                          className="text-sm flex gap-3 items-start text-zinc-800 dark:text-zinc-300"
+                        >
                           <span className="text-accent mt-1">•</span>
                           {skill}
                         </li>
@@ -161,8 +192,18 @@ const App: React.FC = () => {
         <div className="flex flex-col md:flex-row justify-between items-center gap-8 opacity-40 text-[10px] uppercase font-mono tracking-widest">
           <span>{t.labels.footer}</span>
           <div className="flex gap-8">
-            <a href="#" className="hover:text-teal-500 transition-colors underline underline-offset-4">CV / PDF</a>
-            <a href="#" className="hover:text-accent transition-colors underline underline-offset-4">LinkedIn</a>
+            <a
+              href="#"
+              className="hover:text-teal-500 transition-colors underline underline-offset-4"
+            >
+              CV / PDF
+            </a>
+            <a
+              href="#"
+              className="hover:text-accent transition-colors underline underline-offset-4"
+            >
+              LinkedIn
+            </a>
           </div>
         </div>
       </footer>
