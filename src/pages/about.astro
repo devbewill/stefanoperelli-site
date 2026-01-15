@@ -1,0 +1,82 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import { CONTENT } from "../constants";
+
+const t = CONTENT["en"]; // Defaulting to EN for server-side render, ideally use same client-side logic if needed
+---
+
+<Layout title="About | Stefano Perelli">
+    <div
+        class="min-h-screen bg-white dark:bg-black text-black dark:text-white transition-colors duration-500 font-sans selection:bg-teal-100 dark:selection:bg-teal-900/30"
+    >
+        <Header />
+
+        <main class="px-6 md:px-12 max-w-[800px] mx-auto py-12 md:py-16">
+            <div class="mb-12">
+                <h1 class="text-4xl font-bold tracking-tight mb-6">About Me</h1>
+                <div class="prose dark:prose-invert prose-zinc max-w-none">
+                    <p class="lead text-lg" data-i18n="bio">
+                        {t.bio}
+                    </p>
+
+                    <p>
+                        I am dedicated to building high-quality collaborative
+                        teams and delivering exceptional digital products. With
+                        a background in both technical implementation and
+                        strategic management, I bridge the gap between complex
+                        engineering challenges and business goals.
+                    </p>
+
+                    <h3>Philosophy</h3>
+                    <p>
+                        I believe in transparency, continuous improvement, and
+                        the power of well-structured processes. My approach is
+                        user-centric and data-driven, ensuring that every
+                        decision contributes to the longterm success of the
+                        product and the team's growth.
+                    </p>
+
+                    <h3>Connect</h3>
+                    <p>
+                        I'm always open to discussing new opportunities, tech
+                        trends, or just chatting about software development.
+                    </p>
+                </div>
+            </div>
+
+            <div
+                class="grid grid-cols-1 md:grid-cols-2 gap-6 border-t border-zinc-200 dark:border-zinc-800 pt-8"
+            >
+                <div>
+                    <h3
+                        class="text-sm font-medium text-zinc-500 uppercase tracking-wider mb-4"
+                    >
+                        Contact
+                    </h3>
+                    <a
+                        href="mailto:sedprc@gmail.com"
+                        class="block text-lg font-medium hover:text-teal-500 transition-colors"
+                    >
+                        sedprc@gmail.com
+                    </a>
+                </div>
+                <div>
+                    <h3
+                        class="text-sm font-medium text-zinc-500 uppercase tracking-wider mb-4"
+                    >
+                        Social
+                    </h3>
+                    <a
+                        href="https://www.linkedin.com/in/stefanoperelli/"
+                        class="block text-lg font-medium hover:text-teal-500 transition-colors"
+                    >
+                        LinkedIn ↗
+                    </a>
+                </div>
+            </div>
+        </main>
+        <Footer />
+    </div>
+</Layout>

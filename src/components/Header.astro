@@ -1,15 +1,26 @@
 ---
 import { CONTENT } from "../constants";
 
-// Default content for static parts (can be enhanced if full i18n needed everywhere,
-// for now keeping it simple based on usage in App.astro)
+// Default content for static parts
 const lang = "en";
 const t = CONTENT[lang];
 
 // Check current path to determine link behavior
 const pathname = Astro.url.pathname;
-const isHome = pathname === "/" || pathname === "";
-const aboutLink = isHome ? "#about" : "/#about";
+const isActive = (path: string) => {
+    if (path === "/") {
+        return pathname === "/";
+    }
+    return pathname.startsWith(path);
+};
+
+const getLinkClass = (path: string) => {
+    const baseClass = "text-xl font-medium transition-colors hidden sm:block";
+    const activeClass = "text-teal-600 dark:text-teal-400";
+    const inactiveClass = "hover:text-accent";
+
+    return `${baseClass} ${isActive(path) ? activeClass : inactiveClass}`;
+};
 ---
 
 <header
@@ -22,19 +33,15 @@ const aboutLink = isHome ? "#about" : "/#about";
         </p>
     </div>
     <nav class="flex items-center gap-6 md:gap-8">
+        <a href="/" class={getLinkClass("/")}> Home </a>
         <a
-            href={aboutLink}
-            class="text-xl font-medium hover:text-accent transition-colors hidden sm:block"
+            href="/about"
+            class={getLinkClass("/about")}
             data-i18n="labels.about"
         >
             {t.labels.about}
         </a>
-        <a
-            href="/blog"
-            class="text-xl font-medium hover:text-accent transition-colors hidden sm:block"
-        >
-            Blog
-        </a>
+        <a href="/blog" class={getLinkClass("/blog")}> Blog </a>
         <div class="flex gap-2">
             <button
                 id="lang-toggle"

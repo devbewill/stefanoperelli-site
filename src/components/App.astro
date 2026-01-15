@@ -2,6 +2,7 @@
 import { CONTENT } from "../constants";
 import ExperienceItem from "./ExperienceItem.astro";
 import Header from "./Header.astro";
+import Footer from "./Footer.astro";
 
 // Load content server-side for initial render (defaulting to English for SEO/SSR)
 const lang = "en";
@@ -215,27 +216,5 @@ const t = CONTENT[lang];
         </div>
     </main>
 
-    <footer
-        class="px-6 py-20 md:px-12 max-w-[1600px] mx-auto border-t border-zinc-200 dark:border-zinc-800"
-    >
-        <div
-            class="flex flex-col md:flex-row justify-between items-center gap-8 opacity-40 text-[10px] uppercase font-mono tracking-widest"
-        >
-            <span data-i18n="labels.footer">{t.labels.footer}</span>
-            <div class="flex gap-8">
-                <a
-                    href="#"
-                    class="hover:text-teal-500 transition-colors underline underline-offset-4"
-                >
-                    CV / PDF
-                </a>
-                <a
-                    href="#"
-                    class="hover:text-accent transition-colors underline underline-offset-4"
-                >
-                    LinkedIn
-                </a>
-            </div>
-        </div>
-    </footer>
+    <Footer />
 </div>
