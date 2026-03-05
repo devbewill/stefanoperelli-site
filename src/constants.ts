@@ -1,7 +1,8 @@
-import { Experience, Project, SkillCategory } from "./types";
+import { Experience, Project, SkillCategory, NewsletterItem } from "./types";
 
 export interface LanguageContent {
   bio: string;
+  now: string;
   labels: {
     about: string;
     experience: string;
@@ -9,15 +10,19 @@ export interface LanguageContent {
     skills: string;
     contact: string;
     footer: string;
+    now: string;
+    activities: string;
   };
   experiences: Experience[];
   projects: Project[];
   skills: SkillCategory[];
+  newsletters: NewsletterItem[];
 }
 
 export const CONTENT: Record<"it" | "en", LanguageContent> = {
   it: {
     bio: "Oltre 10 anni di esperienza nelle trasformazioni digitali. Specializzato nell'ottimizzazione dei processi e nel garantire l'allineamento strategico tra obiettivi di business e roadmap tecnologiche. Gestisco quotidianamente stakeholder complessi e coordino team cross-funzionali con un approccio orientato ai risultati.",
+    now: "Attualmente dedico la maggior parte del mio tempo esplorando l'ecosistema AI applicato al project/product management e sviluppando piccoli tool sperimentali.",
     labels: {
       about: "Info",
       experience: "Esperienza",
@@ -25,6 +30,8 @@ export const CONTENT: Record<"it" | "en", LanguageContent> = {
       skills: "Competenze",
       contact: "Contatti",
       footer: "Stefano Perelli / Portfolio 2025",
+      now: "Ora",
+      activities: "Attività Recenti",
     },
     experiences: [
       {
@@ -180,9 +187,18 @@ export const CONTENT: Record<"it" | "en", LanguageContent> = {
         ],
       },
     ],
+    newsletters: [
+      {
+        title: "Come gestire l'UX debt in team agili",
+        description: "Strategie pratiche per bilanciare la velocità di delivery e la qualità dell'esperienza utente.",
+        link: "https://stefanoperelli.substack.com",
+        date: "2026-03-01",
+      },
+    ],
   },
   en: {
     bio: "Over 10 years of experience in digital transformation. Specialized in process optimization and ensuring strategic alignment between business objectives and technology roadmaps. I lead complex stakeholder environments and coordinate cross-functional teams with a result-oriented approach.",
+    now: "Currently spending most of my time exploring the AI ecosystem applied to project/product management and building small experimental tools.",
     labels: {
       about: "About",
       experience: "Experience",
@@ -190,6 +206,8 @@ export const CONTENT: Record<"it" | "en", LanguageContent> = {
       skills: "Capabilities",
       contact: "Contact",
       footer: "Stefano Perelli / Portfolio 2025",
+      now: "Now",
+      activities: "Recent Activity",
     },
     experiences: [
       {
@@ -344,6 +362,14 @@ export const CONTENT: Record<"it" | "en", LanguageContent> = {
           "Technological Curiosity & Continuous Learning",
           "Collaborative Team-Working Methodologies",
         ],
+      },
+    ],
+    newsletters: [
+      {
+        title: "Managing UX debt in Agile teams",
+        description: "Practical strategies to balance delivery speed and user experience quality without going crazy.",
+        link: "https://stefanoperelli.substack.com",
+        date: "2026-03-01",
       },
     ],
   },

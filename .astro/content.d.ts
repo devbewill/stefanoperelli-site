@@ -174,9 +174,11 @@ declare module 'astro:content' {
 }>;
 "experiments": Record<string, {
   id: string;
-  body?: string;
+  render(): Render[".md"];
+  slug: string;
+  body: string;
   collection: "experiments";
-  data: any;
+  data: InferEntrySchema<"experiments">;
   rendered?: RenderedContent;
   filePath?: string;
 }>;
