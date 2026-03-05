@@ -2,9 +2,6 @@
 import { CONTENT } from "../constants";
 import { getCollection } from "astro:content";
 
-import Header from "./Header.astro";
-import Footer from "./Footer.astro";
-
 const lang = "en";
 const t = CONTENT[lang];
 
@@ -29,36 +26,31 @@ const allItems = [
         date: new Date(n.date),
         type: "NLTR",
         external: true,
+        pubDate: new Date(n.date),
     })),
 ]
-    .sort(
-        (a, b) =>
-            b.pubDate?.valueOf() - a.pubDate?.valueOf() ||
-            b.date?.valueOf() - a.date?.valueOf(),
-    )
-    .slice(0, 8);
+    .sort((a, b) => b.pubDate?.valueOf() - a.pubDate?.valueOf())
+    .slice(0, 20);
 
 const formatDate = (date: Date) =>
     new Date(date).toLocaleDateString("en-US", {
         month: "short",
         day: "2-digit",
-        year: "numeric",
+        year: "2-digit",
     });
 ---
 
 <div
-    class="h-screen overflow-hidden bg-white text-zinc-900 font-sans selection:bg-accent selection:text-white flex flex-col"
+    class="h-screen overflow-hidden bg-white text-zinc-900 font-sans selection:bg-accent selection:text-white flex flex-col p-8 md:p-16 lg:p-24 overflow-y-auto lg:overflow-hidden"
 >
-    <!-- Clean Top Bar -->
-    <header class="p-8 md:p-12 flex justify-between items-start outline-none">
-        <div class="space-y-1">
+    <!-- Top Bar -->
+    <header class="flex justify-between items-baseline mb-16 lg:mb-24 shrink-0">
+        <div class="flex flex-col gap-1">
             <span
-                class="text-[10px] font-black tracking-[0.2em] uppercase text-zinc-300 block"
-                >Identity</span
+                class="text-[9px] font-black tracking-widest uppercase text-zinc-400"
+                >Node Operator</span
             >
-            <span class="text-sm font-bold tracking-tight text-zinc-600"
-                >Stefano Perelli</span
-            >
+            <span class="text-xs font-bold text-zinc-900">Stefano Perelli</span>
         </div>
         <nav class="flex gap-12">
             <a
@@ -75,93 +67,114 @@ const formatDate = (date: Date) =>
     </header>
 
     <main
-        class="flex-1 flex flex-col max-w-5xl mx-auto w-full px-8 pb-4 overflow-hidden"
+        class="flex-1 flex flex-col lg:flex-row gap-16 lg:gap-32 items-start overflow-hidden"
     >
-        <!-- Brand Header -->
-        <div class="mb-12">
-            <h1
-                class="text-7xl md:text-9xl font-black tracking-tightest leading-none text-zinc-900"
-            >
-                RAWMODE<span class="text-accent">.</span>
-            </h1>
-            <p
-                class="text-zinc-400 font-medium mt-4 max-w-lg text-lg leading-snug"
-                data-i18n="bio"
-            >
-                {t.bio}
-            </p>
-        </div>
-
-        <!-- Single Column Activities -->
-        <div class="flex-1 flex flex-col justify-start gap-1 overflow-hidden">
-            <div class="flex items-center gap-4 mb-4">
-                <span
-                    class="text-[11px] font-black tracking-[0.3em] uppercase text-accent"
-                    >Latest Outputs</span
+        <!-- Brand / Focal Point -->
+        <section
+            class="lg:w-[45%] lg:h-full flex flex-col justify-between py-2"
+        >
+            <div class="space-y-12">
+                <h1
+                    class="text-[12vw] lg:text-[10vw] font-black tracking-tightest leading-[0.75] text-zinc-900"
                 >
-                <div class="h-[1px] flex-1 bg-zinc-50"></div>
+                    RAW<br />MODE<span class="text-accent">.</span>
+                </h1>
+                <p
+                    class="text-xl md:text-2xl font-medium text-zinc-400 leading-snug max-w-sm"
+                    data-i18n="bio"
+                >
+                    {t.bio}
+                </p>
             </div>
 
-            <div class="space-y-1 overflow-y-auto pr-2 no-scrollbar">
+            <!-- Mobile Only Activity Header -->
+            <div
+                class="lg:hidden flex items-center gap-4 mt-20 pt-12 border-t border-zinc-100"
+            >
+                <span
+                    class="text-[10px] font-black tracking-widest uppercase text-accent"
+                    >Latest Outputs</span
+                >
+            </div>
+        </section>
+
+        <!-- Activities Stream / High Contrast & No Cage -->
+        <section class="flex-1 lg:h-full flex flex-col overflow-hidden">
+            <div class="hidden lg:flex items-center gap-6 mb-12 shrink-0">
+                <span
+                    class="text-[10px] font-black tracking-[0.4em] uppercase text-accent"
+                    >Record Buffer // Active Stream</span
+                >
+                <div class="h-[1px] flex-1 bg-zinc-100"></div>
+                <span class="text-[9px] font-mono text-zinc-300 font-bold"
+                    >20 ITEMS</span
+                >
+            </div>
+
+            <div class="flex-1 overflow-y-auto no-scrollbar space-y-1">
                 {
                     allItems.map((item) => (
                         <a
                             href={item.link}
                             target={item.external ? "_blank" : "_self"}
-                            class="group flex flex-col md:flex-row md:items-center justify-between py-4 transition-all duration-300 hover:pl-4"
+                            class="group block py-3 transition-all duration-300"
                         >
-                            <div class="flex items-center gap-6">
-                                <div class="flex flex-col md:flex-row md:items-center gap-2 md:gap-4">
-                                    <span class="bg-zinc-100 text-zinc-900 text-[10px] font-black px-2 py-1 rounded group-hover:bg-accent group-hover:text-white transition-colors">
-                                        {item.type}
+                            <div class="flex flex-col md:flex-row md:items-baseline md:justify-between gap-4">
+                                <div class="flex items-baseline gap-6">
+                                    <span class="text-[10px] font-mono font-black text-zinc-900 w-12 shrink-0 group-hover:text-accent transition-colors">
+                                        // {item.type}
                                     </span>
-                                    <h3 class="text-xl md:text-3xl font-black tracking-tight group-hover:text-accent transition-colors">
+                                    <h3 class="text-2xl md:text-3xl font-black tracking-tight text-zinc-900 group-hover:text-accent transition-colors group-hover:translate-x-2 duration-500 ease-out">
                                         {item.title}
                                     </h3>
                                 </div>
-                            </div>
-                            <div class="mt-1 md:mt-0 md:text-right">
-                                <span class="text-xs md:text-sm font-mono font-bold text-zinc-400 group-hover:text-zinc-900 tabular-nums uppercase">
-                                    {formatDate(item.pubDate || item.date)}
+                                <span class="text-[10px] font-mono font-bold text-zinc-400 group-hover:text-zinc-900 tabular-nums uppercase whitespace-nowrap">
+                                    {new Date(item.pubDate).toLocaleDateString(
+                                        "en-US",
+                                        {
+                                            month: "short",
+                                            day: "2-digit",
+                                            year: "2-digit",
+                                        },
+                                    )}
                                 </span>
                             </div>
                         </a>
                     ))
                 }
             </div>
-        </div>
-
-        <!-- Integrated Small Footer -->
-        <footer
-            class="mt-auto py-8 flex flex-col md:flex-row justify-between items-center gap-4 border-t border-zinc-50 opacity-50"
-        >
-            <div class="flex items-center gap-3">
-                <div class="w-1.5 h-1.5 rounded-full bg-accent animate-pulse">
-                </div>
-                <span
-                    class="text-[10px] font-mono uppercase text-zinc-400 tracking-widest"
-                    >Milan / Buffer Active</span
-                >
-            </div>
-            <div class="flex gap-8 items-center">
-                <a
-                    href="https://linkedin.com/in/stefanoperelli/"
-                    target="_blank"
-                    class="text-[10px] font-black tracking-widest uppercase hover:text-accent transition-colors"
-                    >LinkedIn</a
-                >
-                <a
-                    href="mailto:sedprc@gmail.com"
-                    class="text-[10px] font-black tracking-widest uppercase hover:text-accent transition-colors"
-                    >Email</a
-                >
-                <span
-                    class="text-[10px] font-mono text-zinc-300 uppercase tracking-widest"
-                    >© 2026 Rawmode</span
-                >
-            </div>
-        </footer>
+        </section>
     </main>
+
+    <!-- Unified Minimal Footer -->
+    <footer
+        class="mt-16 lg:mt-24 pt-8 border-t border-zinc-50 flex flex-col md:flex-row justify-between items-center gap-6 shrink-0 opacity-40 hover:opacity-100 transition-opacity"
+    >
+        <div class="flex items-center gap-3">
+            <div class="w-1.5 h-1.5 rounded-full bg-accent animate-pulse"></div>
+            <span
+                class="text-[9px] font-mono uppercase text-zinc-500 tracking-widest"
+                >System Status: Operative // Milan</span
+            >
+        </div>
+        <div class="flex gap-12">
+            <a
+                href="https://linkedin.com/in/stefanoperelli/"
+                target="_blank"
+                class="text-[10px] font-black tracking-widest uppercase hover:text-accent"
+                >LinkedIn</a
+            >
+            <a
+                href="mailto:sedprc@gmail.com"
+                class="text-[10px] font-black tracking-widest uppercase hover:text-accent"
+                >Email Signal</a
+            >
+            <span
+                class="text-[10px] font-mono text-zinc-400 uppercase tracking-widest"
+                >© 2026 Rawmode Systems</span
+            >
+        </div>
+    </footer>
 </div>
 
 <style>
