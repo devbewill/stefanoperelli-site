@@ -1,6 +1,6 @@
 ---
 import { CONTENT } from "../constants";
-import ExperienceItem from "./ExperienceItem.astro";
+
 import Header from "./Header.astro";
 import Footer from "./Footer.astro";
 
@@ -55,7 +55,7 @@ const t = CONTENT[lang];
             </div>
 
             <div class="flex-1 space-y-32">
-                <section id="experience">
+                <section id="experience-placeholder">
                     <div
                         class="pt-8 border-t border-zinc-200 dark:border-zinc-800 mb-12"
                     >
@@ -66,150 +66,14 @@ const t = CONTENT[lang];
                             {t.labels.experience}
                         </h2>
                     </div>
-                    <div class="experience-list">
-                        <div class="lang-content-it hidden">
-                            {
-                                CONTENT.it.experiences.map((exp) => (
-                                    <ExperienceItem item={exp} />
-                                ))
-                            }
-                        </div>
-                        <div class="lang-content-en">
-                            {
-                                CONTENT.en.experiences.map((exp) => (
-                                    <ExperienceItem item={exp} />
-                                ))
-                            }
-                        </div>
-                    </div>
-                </section>
-
-                <section id="projects">
                     <div
-                        class="pt-8 border-t border-zinc-200 dark:border-zinc-800 mb-12"
+                        class="flex items-center justify-center p-16 border-2 border-dashed border-zinc-200 dark:border-zinc-800 rounded-xl bg-zinc-50 dark:bg-zinc-900/20"
                     >
-                        <h2
-                            class="text-sm font-medium text-zinc-500 uppercase tracking-wider"
-                            data-i18n="labels.projects"
+                        <p
+                            class="text-zinc-500 dark:text-zinc-400 text-sm italic"
                         >
-                            {t.labels.projects}
-                        </h2>
-                    </div>
-                    <div class="projects-list">
-                        <div class="lang-content-it hidden">
-                            {
-                                CONTENT.it.projects.map((project) => (
-                                    <div class="py-2 first:pt-0 group cursor-default border-b border-zinc-200 dark:border-zinc-800 last:border-b-0">
-                                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-16">
-                                            <div>
-                                                <a
-                                                    href={project.link}
-                                                    class="block text-sm group-hover:text-teal-500 transition-colors"
-                                                >
-                                                    <h3 class="text-lg font-bold mb-2">
-                                                        {project.title}
-                                                    </h3>
-                                                </a>
-                                                <p class="text-zinc-500 text-sm italic">
-                                                    {project.role}
-                                                </p>
-                                            </div>
-                                            <div>
-                                                <p class="text-sm leading-relaxed max-w-xl text-zinc-500 dark:text-zinc-400">
-                                                    {project.description}
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                ))
-                            }
-                        </div>
-                        <div class="lang-content-en">
-                            {
-                                CONTENT.en.projects.map((project) => (
-                                    <div class="py-2 first:pt-0 group cursor-default border-b border-zinc-200 dark:border-zinc-800 last:border-b-0">
-                                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-16">
-                                            <div>
-                                                <a
-                                                    href={project.link}
-                                                    class="block text-sm group-hover:text-teal-500 transition-colors"
-                                                >
-                                                    <h3 class="text-lg font-bold mb-2">
-                                                        {project.title}
-                                                    </h3>
-                                                </a>
-                                                <p class="text-zinc-500 text-sm italic">
-                                                    {project.role}
-                                                </p>
-                                            </div>
-                                            <div>
-                                                <p class="text-sm leading-relaxed max-w-xl text-zinc-500 dark:text-zinc-400">
-                                                    {project.description}
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                ))
-                            }
-                        </div>
-                    </div>
-                </section>
-
-                <section id="skills">
-                    <div
-                        class="pt-8 border-t border-zinc-200 dark:border-zinc-800 mb-12"
-                    >
-                        <h2
-                            class="text-sm font-medium text-zinc-500 uppercase tracking-wider"
-                            data-i18n="labels.skills"
-                        >
-                            {t.labels.skills}
-                        </h2>
-                    </div>
-                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
-                        {/* Render both */}
-                        <div class="contents lang-content-it hidden">
-                            {
-                                CONTENT.it.skills.map((cat) => (
-                                    <div class="space-y-6">
-                                        <h3 class="text-xs font-bold uppercase tracking-widest text-teal-600 dark:text-teal-400 border-l-2 border-accent pl-3">
-                                            {cat.title}
-                                        </h3>
-                                        <ul class="space-y-3">
-                                            {cat.skills.map((skill) => (
-                                                <li class="text-sm flex gap-3 items-start text-zinc-800 dark:text-zinc-300">
-                                                    <span class="text-accent mt-1">
-                                                        •
-                                                    </span>
-                                                    {skill}
-                                                </li>
-                                            ))}
-                                        </ul>
-                                    </div>
-                                ))
-                            }
-                        </div>
-                        <div class="contents lang-content-en">
-                            {
-                                CONTENT.en.skills.map((cat) => (
-                                    <div class="space-y-6">
-                                        <h3 class="text-xs font-bold uppercase tracking-widest text-teal-600 dark:text-teal-400 border-l-2 border-accent pl-3">
-                                            {cat.title}
-                                        </h3>
-                                        <ul class="space-y-3">
-                                            {cat.skills.map((skill) => (
-                                                <li class="text-sm flex gap-3 items-start text-zinc-800 dark:text-zinc-300">
-                                                    <span class="text-accent mt-1">
-                                                        •
-                                                    </span>
-                                                    {skill}
-                                                </li>
-                                            ))}
-                                        </ul>
-                                    </div>
-                                ))
-                            }
-                        </div>
+                            Work Experience Placeholder
+                        </p>
                     </div>
                 </section>
             </div>

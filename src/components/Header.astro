@@ -33,7 +33,7 @@ const getLinkClass = (path: string) => {
         </p>
     </div>
     <nav class="flex items-center gap-6 md:gap-8">
-        <!-- <a href="/" class={getLinkClass("/")}> Home </a>
+        <a href="/" class={getLinkClass("/")}> Home </a>
         <a
             href="/about"
             class={getLinkClass("/about")}
@@ -41,7 +41,14 @@ const getLinkClass = (path: string) => {
         >
             {t.labels.about}
         </a>
-        <a href="/blog" class={getLinkClass("/blog")}> Blog </a> -->
+        <a
+            href="/resume"
+            class={getLinkClass("/resume")}
+            data-i18n="labels.experience"
+        >
+            {t.labels.experience}
+        </a>
+        <a href="/blog" class={getLinkClass("/blog")}> Blog </a>
         <div class="flex gap-2">
             <button
                 id="lang-toggle"

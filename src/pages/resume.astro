@@ -1,0 +1,223 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { CONTENT } from "../constants";
+import ExperienceItem from "../components/ExperienceItem.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+
+// Load content server-side for initial render (defaulting to English for SEO/SSR)
+const lang = "en";
+const t = CONTENT[lang];
+---
+
+<Layout title="Resume | Stefano Perelli">
+    <div
+        class="min-h-screen bg-white dark:bg-black text-black dark:text-white transition-colors duration-500 font-sans selection:bg-teal-100 dark:selection:bg-teal-900/30"
+    >
+        <Header />
+
+        <main class="px-6 md:px-12 max-w-[1600px] mx-auto pb-32">
+            <div class="flex flex-col md:flex-row gap-12 md:gap-24">
+                <div class="w-full md:w-[368px] md:shrink-0">
+                    <div class="md:sticky md:top-16 space-y-12">
+                        <div
+                            id="about"
+                            class="pt-8 border-t border-zinc-200 dark:border-zinc-800"
+                        >
+                            <p
+                                class="text-md leading-relaxed text-zinc-800 dark:text-zinc-200"
+                                data-i18n="bio"
+                            >
+                                {t.bio}
+                            </p>
+                        </div>
+                        <div class="space-y-0">
+                            <div
+                                class="py-4 border-t border-zinc-200 dark:border-zinc-800 flex justify-between items-center group"
+                            >
+                                <a
+                                    href="mailto:sedprc@gmail.com"
+                                    class="text-sm hover:text-teal-500 transition-colors underline underline-offset-4 decoration-zinc-300 dark:decoration-zinc-700 group-hover:decoration-teal-500"
+                                >
+                                    Mail me
+                                </a>
+                            </div>
+                            <div
+                                class="py-4 border-t border-zinc-200 dark:border-zinc-800 border-b flex justify-between items-center group"
+                            >
+                                <a
+                                    href="https://www.linkedin.com/in/stefanoperelli/"
+                                    class="text-sm hover:text-accent transition-colors underline underline-offset-4 decoration-zinc-300 dark:decoration-zinc-700 group-hover:decoration-accent"
+                                >
+                                    Linkedin
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex-1 space-y-32">
+                    <section id="experience">
+                        <div
+                            class="pt-8 border-t border-zinc-200 dark:border-zinc-800 mb-12"
+                        >
+                            <h2
+                                class="text-sm font-medium text-zinc-500 uppercase tracking-wider"
+                                data-i18n="labels.experience"
+                            >
+                                {t.labels.experience}
+                            </h2>
+                        </div>
+                        <div class="experience-list">
+                            <div class="lang-content-it hidden">
+                                {
+                                    CONTENT.it.experiences.map((exp) => (
+                                        <ExperienceItem item={exp} />
+                                    ))
+                                }
+                            </div>
+                            <div class="lang-content-en">
+                                {
+                                    CONTENT.en.experiences.map((exp) => (
+                                        <ExperienceItem item={exp} />
+                                    ))
+                                }
+                            </div>
+                        </div>
+                    </section>
+
+                    <section id="projects">
+                        <div
+                            class="pt-8 border-t border-zinc-200 dark:border-zinc-800 mb-12"
+                        >
+                            <h2
+                                class="text-sm font-medium text-zinc-500 uppercase tracking-wider"
+                                data-i18n="labels.projects"
+                            >
+                                {t.labels.projects}
+                            </h2>
+                        </div>
+                        <div class="projects-list">
+                            <div class="lang-content-it hidden">
+                                {
+                                    CONTENT.it.projects.map((project) => (
+                                        <div class="py-2 first:pt-0 group cursor-default border-b border-zinc-200 dark:border-zinc-800 last:border-b-0">
+                                            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-16">
+                                                <div>
+                                                    <a
+                                                        href={project.link}
+                                                        class="block text-sm group-hover:text-teal-500 transition-colors"
+                                                    >
+                                                        <h3 class="text-lg font-bold mb-2">
+                                                            {project.title}
+                                                        </h3>
+                                                    </a>
+                                                    <p class="text-zinc-500 text-sm italic">
+                                                        {project.role}
+                                                    </p>
+                                                </div>
+                                                <div>
+                                                    <p class="text-sm leading-relaxed max-w-xl text-zinc-500 dark:text-zinc-400">
+                                                        {project.description}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ))
+                                }
+                            </div>
+                            <div class="lang-content-en">
+                                {
+                                    CONTENT.en.projects.map((project) => (
+                                        <div class="py-2 first:pt-0 group cursor-default border-b border-zinc-200 dark:border-zinc-800 last:border-b-0">
+                                            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-16">
+                                                <div>
+                                                    <a
+                                                        href={project.link}
+                                                        class="block text-sm group-hover:text-teal-500 transition-colors"
+                                                    >
+                                                        <h3 class="text-lg font-bold mb-2">
+                                                            {project.title}
+                                                        </h3>
+                                                    </a>
+                                                    <p class="text-zinc-500 text-sm italic">
+                                                        {project.role}
+                                                    </p>
+                                                </div>
+                                                <div>
+                                                    <p class="text-sm leading-relaxed max-w-xl text-zinc-500 dark:text-zinc-400">
+                                                        {project.description}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ))
+                                }
+                            </div>
+                        </div>
+                    </section>
+
+                    <section id="skills">
+                        <div
+                            class="pt-8 border-t border-zinc-200 dark:border-zinc-800 mb-12"
+                        >
+                            <h2
+                                class="text-sm font-medium text-zinc-500 uppercase tracking-wider"
+                                data-i18n="labels.skills"
+                            >
+                                {t.labels.skills}
+                            </h2>
+                        </div>
+                        <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
+                            {/* Render both */}
+                            <div class="contents lang-content-it hidden">
+                                {
+                                    CONTENT.it.skills.map((cat) => (
+                                        <div class="space-y-6">
+                                            <h3 class="text-xs font-bold uppercase tracking-widest text-teal-600 dark:text-teal-400 border-l-2 border-accent pl-3">
+                                                {cat.title}
+                                            </h3>
+                                            <ul class="space-y-3">
+                                                {cat.skills.map((skill) => (
+                                                    <li class="text-sm flex gap-3 items-start text-zinc-800 dark:text-zinc-300">
+                                                        <span class="text-accent mt-1">
+                                                            •
+                                                        </span>
+                                                        {skill}
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                        </div>
+                                    ))
+                                }
+                            </div>
+                            <div class="contents lang-content-en">
+                                {
+                                    CONTENT.en.skills.map((cat) => (
+                                        <div class="space-y-6">
+                                            <h3 class="text-xs font-bold uppercase tracking-widest text-teal-600 dark:text-teal-400 border-l-2 border-accent pl-3">
+                                                {cat.title}
+                                            </h3>
+                                            <ul class="space-y-3">
+                                                {cat.skills.map((skill) => (
+                                                    <li class="text-sm flex gap-3 items-start text-zinc-800 dark:text-zinc-300">
+                                                        <span class="text-accent mt-1">
+                                                            •
+                                                        </span>
+                                                        {skill}
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                        </div>
+                                    ))
+                                }
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </main>
+
+        <Footer />
+    </div>
+</Layout>
