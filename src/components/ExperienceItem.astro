@@ -12,7 +12,7 @@ const { title, company, location, period, details } = Astro.props;
 
 <div class="group grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
     <!-- Time / Location -->
-    <div class="lg:col-span-3 space-y-2">
+    <div class="lg:col-span-2 space-y-2">
         <div
             class="text-[10px] font-mono font-black text-zinc-900 uppercase tracking-[0.2em] group-hover:text-accent transition-colors"
         >
@@ -26,10 +26,10 @@ const { title, company, location, period, details } = Astro.props;
     </div>
 
     <!-- Core Content -->
-    <div class="lg:col-span-9 space-y-6">
+    <div class="lg:col-span-10 space-y-6">
         <div class="space-y-1">
             <h3
-                class="text-3xl md:text-5xl font-black tracking-tightest text-zinc-900 group-hover:text-accent transition-all duration-500"
+                class="text-2xl md:text-3xl font-black tracking-tightest text-zinc-900 group-hover:text-accent transition-all duration-500"
             >
                 {company}
             </h3>

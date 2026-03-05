@@ -6,26 +6,26 @@ import GlobalUI from "../components/GlobalUI.astro";
 const lang = "en";
 const t = CONTENT[lang];
 
-const blogPosts = await getCollection("blog");
-const experiments = await getCollection("experiments");
+const entries = await getCollection("entries", ({ data }) => {
+    return data.draft !== true;
+});
 
 const allItems = [
-    ...blogPosts.map((p) => ({
-        ...p.data,
-        link: `/blog/${p.slug}`,
-        type: "post",
-    })),
-    ...experiments.map((e) => ({
-        ...e.data,
-        link: `/experiments/${e.slug}`,
-        type: "exp",
+    ...entries.map((entry) => ({
+        ...entry.data,
+        slug: entry.slug,
+        link:
+            entry.data.type === "link"
+                ? entry.data.url
+                : `/entries/${entry.slug}`,
+        isExternal: entry.data.type === "link",
     })),
     ...CONTENT.en.newsletters.map((n) => ({
         ...n,
         date: new Date(n.date),
-        type: "nltr",
-        link: "#",
-        external: true,
+        type: "link", // Newsletter is effectively a link
+        link: n.link || "#",
+        isExternal: true,
         pubDate: new Date(n.date),
     })),
 ]
@@ -68,6 +68,12 @@ const formatDate = (date: Date) =>
                     allItems.map((item, index) => (
                         <a
                             href={item.link}
+                            target={item.isExternal ? "_blank" : undefined}
+                            rel={
+                                item.isExternal
+                                    ? "noopener noreferrer"
+                                    : undefined
+                            }
                             class="group flex items-center justify-between py-1.5 transition-all duration-300"
                         >
                             <div class="flex items-center gap-6 overflow-hidden">
@@ -75,10 +81,19 @@ const formatDate = (date: Date) =>
                                     {(index + 1).toString().padStart(2, "0")}
                                 </span>
                                 <span class="text-[10px] font-black text-accent bg-accent/5 px-2 py-0.5 rounded uppercase tracking-tighter w-10 text-center group-hover:bg-accent group-hover:text-white transition-all">
-                                    {item.type}
+                                    {item.type === "project"
+                                        ? "PRJ"
+                                        : item.type === "post"
+                                          ? "POST"
+                                          : item.type}
                                 </span>
                                 <h3 class="text-xl md:text-2xl font-black tracking-tighter text-zinc-900 group-hover:text-accent transition-colors truncate">
                                     {item.title}
+                                    {item.isExternal && (
+                                        <span class="ml-2 text-accent opacity-40 group-hover:opacity-100 transition-opacity">
+                                            ↗
+                                        </span>
+                                    )}
                                 </h3>
                             </div>
                             <div class="flex items-center gap-6 shrink-0">

@@ -3,10 +3,10 @@ import Layout from "../../layouts/Layout.astro";
 import GlobalUI from "../../components/GlobalUI.astro";
 import { getCollection } from "astro:content";
 
-const posts = (
+const projects = (
     await getCollection(
         "entries",
-        ({ data }) => data.type === "post" && data.draft !== true,
+        ({ data }) => data.type === "project" && data.draft !== true,
     )
 ).sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 
@@ -18,7 +18,7 @@ const formatDate = (date: Date) =>
     });
 ---
 
-<Layout title="Journal | Synthetic Mess">
+<Layout title="Projects | Synthetic Mess">
     <div
         class="min-h-screen bg-white text-zinc-900 font-sans selection:bg-accent selection:text-white flex flex-col relative overflow-x-hidden"
     >
@@ -32,34 +32,34 @@ const formatDate = (date: Date) =>
             >
                 <span
                     class="text-[11px] font-black tracking-[0.4em] uppercase text-zinc-900"
-                    >Archive Items // Journal</span
+                    >Selected Outputs // Projects</span
                 >
                 <span class="text-[10px] font-mono font-bold text-zinc-400"
-                    >INDEX_2026</span
+                    >PRJ_2026</span
                 >
             </header>
 
             <div class="flex flex-col space-y-0.5">
                 {
-                    posts.map((post, index) => (
+                    projects.map((prj, index) => (
                         <a
-                            href={`/entries/${post.slug}/`}
+                            href={`/entries/${prj.slug}/`}
                             class="group flex items-center justify-between py-1.5 transition-all duration-300"
                         >
                             <div class="flex items-center gap-6 overflow-hidden">
                                 <span class="text-[10px] font-mono font-bold text-zinc-300 group-hover:text-accent transition-colors w-6">
-                                    {(index + 1).toString().padStart(2, "0")}
+                                    PR_{(index + 1).toString().padStart(2, "0")}
                                 </span>
                                 <span class="text-[10px] font-black text-accent bg-accent/5 px-2 py-0.5 rounded uppercase tracking-tighter w-10 text-center group-hover:bg-accent group-hover:text-white transition-all">
-                                    POST
+                                    PRJ
                                 </span>
                                 <h3 class="text-xl md:text-2xl font-black tracking-tighter text-zinc-900 group-hover:text-accent transition-colors truncate">
-                                    {post.data.title}
+                                    {prj.data.title}
                                 </h3>
                             </div>
                             <div class="flex items-center gap-6 shrink-0">
                                 <span class="text-xs font-mono font-bold text-zinc-300 group-hover:text-zinc-900 transition-colors tabular-nums uppercase">
-                                    {formatDate(post.data.pubDate)}
+                                    {formatDate(prj.data.pubDate)}
                                 </span>
                             </div>
                         </a>

@@ -5,7 +5,7 @@ export default {
   theme: {
     extend: {
       colors: {
-        accent: '#6366f1', // Electric Indigo - High Contrast & Modern
+        accent: '#d2003fff', // Electric Indigo - High Contrast & Modern
         background: '#ffffff',
         foreground: '#000000',
         zinc: {

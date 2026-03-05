@@ -2,36 +2,109 @@
 import { CONTENT } from "../constants";
 const lang = "en";
 const t = CONTENT[lang];
+
+interface Props {
+    activeType?: string;
+}
+
+const { activeType } = Astro.props;
+const pathname = Astro.url.pathname;
+
+const isActive = (path: string) => {
+    if (path === "/") return pathname === "/";
+    return pathname === path || pathname.startsWith(path + "/");
+};
+
+// Mapping for content details
+const isJournalActive = isActive("/blog") || activeType === "post";
+const isExperimentsActive =
+    isActive("/projects") ||
+    activeType === "project" ||
+    pathname.startsWith("/experiments");
 ---
 
-<div class="text-right z-20">
-    <div class="mb-6">
+<!-- Mobile Toggle (Hidden on Desktop) -->
+<input type="checkbox" id="nav-toggle" class="peer hidden" />
+<label
+    for="nav-toggle"
+    class="lg:hidden fixed top-10 right-10 z-[60] pointer-events-auto cursor-pointer p-1"
+>
+    <div class="relative w-6 h-5">
         <span
-            class="text-[10px] font-black tracking-[0.3em] uppercase text-zinc-400 block mb-1"
-            >Curation</span
-        >
-        <span class="text-sm font-bold text-zinc-900">Stefano Perelli</span>
+            class="absolute top-0 left-0 w-full h-[3px] bg-zinc-900 transition-all origin-left group-peer-checked:rotate-45"
+        ></span>
+        <span
+            class="absolute top-1/2 left-0 -translate-y-1/2 w-full h-[3px] bg-zinc-900 transition-all group-peer-checked:opacity-0"
+        ></span>
+        <span
+            class="absolute bottom-0 left-0 w-full h-[3px] bg-zinc-900 transition-all origin-left group-peer-checked:-rotate-45"
+        ></span>
     </div>
-    <nav class="flex flex-col items-end gap-2">
+</label>
+
+<!-- Navigation Container -->
+<div
+    class="text-right z-20 pointer-events-auto
+    fixed lg:static top-0 right-0 h-screen lg:h-auto w-screen lg:w-auto
+    bg-white/95 lg:bg-transparent backdrop-blur-md lg:backdrop-blur-none
+    flex flex-col items-end justify-center lg:justify-start
+    p-10 lg:p-0
+    translate-x-full lg:translate-x-0 transition-transform duration-500 ease-in-out
+    peer-checked:translate-x-0"
+>
+    <!-- Header info (Hidden on Mobile for cleaner look) -->
+    <div class="mb-10 hidden lg:block">
+        <span
+            class="text-[10px] font-black tracking-[0.4em] uppercase text-zinc-300 block mb-1"
+            >Owner // System</span
+        >
+        <span class="text-sm font-black text-zinc-900">stefano_perelli</span>
+    </div>
+
+    <!-- Nav Links -->
+    <nav class="flex flex-col items-end gap-6 lg:gap-3">
+        <a
+            href="/"
+            class={`text-4xl lg:text-[11px] font-black tracking-widest uppercase transition-all hover:translate-x-[-4px] ${isActive("/") ? "text-accent" : "text-zinc-900 hover:text-accent"}`}
+            >Home</a
+        >
         <a
             href="/about"
-            class="text-xs font-black tracking-widest uppercase text-zinc-400 hover:text-accent transition-colors"
+            class={`text-4xl lg:text-[11px] font-black tracking-widest uppercase transition-all hover:translate-x-[-4px] ${isActive("/about") ? "text-accent" : "text-zinc-900 hover:text-accent"}`}
             >About</a
         >
         <a
             href="/resume"
-            class="text-xs font-black tracking-widest uppercase text-zinc-400 hover:text-accent transition-colors"
+            class={`text-4xl lg:text-[11px] font-black tracking-widest uppercase transition-all hover:translate-x-[-4px] ${isActive("/resume") ? "text-accent" : "text-zinc-900 hover:text-accent"}`}
             >Resume</a
         >
+
+        <div class="h-[1px] w-20 lg:w-8 bg-zinc-100 lg:bg-zinc-50 my-4 lg:my-2">
+        </div>
+
         <a
             href="/blog"
-            class="text-xs font-black tracking-widest uppercase text-zinc-400 hover:text-accent transition-colors"
-            >Blog</a
+            class={`text-4xl lg:text-[11px] font-black tracking-widest uppercase transition-all hover:translate-x-[-4px] ${isJournalActive ? "text-accent" : "text-zinc-900 hover:text-accent"}`}
+            >Journal</a
         >
         <a
-            href="/experiments"
-            class="text-xs font-black tracking-widest uppercase text-zinc-400 hover:text-accent transition-colors"
-            >Exp</a
+            href="/projects"
+            class={`text-4xl lg:text-[11px] font-black tracking-widest uppercase transition-all hover:translate-x-[-4px] ${isExperimentsActive ? "text-accent" : "text-zinc-900 hover:text-accent"}`}
+            >MVP</a
         >
     </nav>
 </div>
+
+<style>
+    /* Custom Hamburger Logic without JS */
+    #nav-toggle:checked ~ label div span:nth-child(1) {
+        transform: rotate(45deg) translate(2px, -1px);
+    }
+    #nav-toggle:checked ~ label div span:nth-child(2) {
+        opacity: 0;
+        transform: translate(-20px, -50%);
+    }
+    #nav-toggle:checked ~ label div span:nth-child(3) {
+        transform: rotate(-45deg) translate(2px, 1px);
+    }
+</style>

@@ -1,4 +1,5 @@
 ---
+type: 'post'
 title: 'My First Post'
 description: 'Lorem ipsum dolor sit amet'
 pubDate: 'Jan 15 2026'

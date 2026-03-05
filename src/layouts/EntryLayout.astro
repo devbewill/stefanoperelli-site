@@ -2,28 +2,31 @@
 import type { CollectionEntry } from "astro:content";
 import Layout from "./Layout.astro";
 import GlobalUI from "../components/GlobalUI.astro";
-import Footer from "../components/Footer.astro";
 
-type Props = CollectionEntry<"blog">["data"];
+type Props = CollectionEntry<"entries">["data"];
 
-const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
+const { title, description, pubDate, heroImage, type } = Astro.props;
 ---
 
-<Layout title={title}>
+<Layout title={`${title} | Synthetic Mess`}>
     <div
         class="min-h-screen bg-white text-zinc-900 font-sans selection:bg-accent selection:text-white flex flex-col relative"
     >
-        <GlobalUI />
+        <GlobalUI type={type} />
 
-        <main class="max-w-5xl mx-auto px-8 pt-48 pb-32 w-full">
+        <main class="max-w-4xl mx-auto px-8 pt-64 pb-32 w-full">
             <article>
-                <!-- Post Header -->
                 <header class="mb-16 md:mb-24">
                     <div class="flex items-center gap-4 mb-4">
                         <span
                             class="text-[10px] font-black tracking-[0.4em] uppercase text-accent"
-                            >Output // Active Log</span
                         >
+                            {
+                                type === "post"
+                                    ? "Transmission // Insight"
+                                    : "Artifact // Project"
+                            }
+                        </span>
                         <div class="h-[1px] flex-1 bg-zinc-50"></div>
                         <time
                             datetime={pubDate.toISOString()}
@@ -40,7 +43,7 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
                     </div>
 
                     <h1
-                        class="text-4xl md:text-7xl font-black tracking-tightest leading-[0.9] text-zinc-900 mb-8"
+                        class="text-4xl md:text-7xl font-black tracking-tightest leading-[0.9] text-zinc-900 mb-8 uppercase"
                     >
                         {title}
                     </h1>
@@ -54,38 +57,35 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
                     }
                 </header>
 
-                <!-- Hero Image -->
                 {
                     heroImage && (
-                        <div class="mb-16 md:mb-24 rounded-lg overflow-hidden border border-zinc-100 shadow-sm">
+                        <div class="mb-16 md:mb-24 rounded-sm overflow-hidden border border-zinc-100 shadow-sm">
                             <img
-                                width={1800}
-                                height={900}
+                                width={1600}
+                                height={800}
                                 src={heroImage}
                                 alt=""
-                                class="w-full object-cover max-h-[60vh]"
+                                class="w-full object-cover max-h-[60vh] grayscale hover:grayscale-0 transition-all duration-1000"
                             />
                         </div>
                     )
                 }
 
-                <!-- Markdown Content (Clean White Theme) -->
                 <div
                     class="prose prose-zinc max-w-none
-                    prose-h2:text-zinc-900 prose-h2:font-black prose-h2:tracking-tight prose-h2:text-3xl
+                    prose-h2:text-zinc-900 prose-h2:font-black prose-h2:tracking-tight prose-h2:text-3xl prose-h2:uppercase
                     prose-h3:text-zinc-900 prose-h3:font-bold prose-h3:text-xl
                     prose-p:text-zinc-600 prose-p:text-lg prose-p:leading-relaxed
                     prose-strong:text-zinc-900 prose-strong:font-bold
                     prose-a:text-accent prose-a:no-underline hover:prose-a:underline
                     prose-code:bg-zinc-50 prose-code:text-accent prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded-md prose-code:before:content-none prose-code:after:content-none
-                    prose-pre:bg-zinc-50 prose-pre:border prose-pre:border-zinc-100 prose-pre:rounded-lg prose-pre:p-8
-                    prose-img:rounded-lg prose-img:border prose-img:border-zinc-100
-                    prose-blockquote:border-l-accent prose-blockquote:bg-accent/5 prose-blockquote:py-2 prose-blockquote:px-8 prose-blockquote:rounded-r-lg"
+                    prose-pre:bg-zinc-50 prose-pre:border prose-pre:border-zinc-100 prose-pre:rounded-sm prose-pre:p-8
+                    prose-img:rounded-sm prose-img:border prose-img:border-zinc-100
+                    prose-blockquote:border-l-accent prose-blockquote:bg-accent/5 prose-blockquote:py-2 prose-blockquote:px-8 prose-blockquote:rounded-r-sm"
                 >
                     <slot />
                 </div>
 
-                <!-- Back Action -->
                 <div class="mt-32 pt-12 border-t border-zinc-50 text-center">
                     <button
                         onclick="history.back()"
@@ -99,7 +99,5 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
                 </div>
             </article>
         </main>
-
-        <Footer />
     </div>
 </Layout>
