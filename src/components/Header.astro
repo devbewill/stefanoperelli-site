@@ -1,107 +1,122 @@
 ---
 import { CONTENT } from "../constants";
 
-// Default content for static parts
 const lang = "en";
 const t = CONTENT[lang];
 
-// Check current path to determine link behavior
 const pathname = Astro.url.pathname;
 const isActive = (path: string) => {
-    if (path === "/") {
-        return pathname === "/";
-    }
+    if (path === "/") return pathname === "/";
     return pathname.startsWith(path);
 };
 
 const getLinkClass = (path: string) => {
-    const baseClass = "text-xl font-medium transition-colors hidden sm:block";
-    const activeClass = "text-teal-600 dark:text-teal-400";
-    const inactiveClass = "hover:text-accent";
-
-    return `${baseClass} ${isActive(path) ? activeClass : inactiveClass}`;
+    const base = "text-sm lg:text-lg font-black uppercase transition-colors";
+    const active = "text-accent bg-black dark:bg-white dark:text-black px-2";
+    const inactive =
+        "hover:text-accent hover:bg-black dark:hover:bg-white dark:hover:text-black px-2 pb-1";
+    return `${base} ${isActive(path) ? active : inactive}`;
 };
 ---
 
 <header
-    class="px-6 py-12 md:px-12 md:py-16 flex justify-between items-start max-w-[1600px] mx-auto"
+    class="border-b-[8px] md:border-b-[16px] border-black dark:border-white w-full"
 >
-    <div>
-        <h1 class="text-xl font-bold tracking-tight">stefano_perelli</h1>
-        <p class="text-md text-teal-600 dark:text-teal-400 font-medium">
-            turning digital messes into great products.
-        </p>
-    </div>
-    <nav class="flex items-center gap-6 md:gap-8">
-        <a href="/" class={getLinkClass("/")}> Home </a>
-        <a
-            href="/about"
-            class={getLinkClass("/about")}
-            data-i18n="labels.about"
+    <nav class="flex justify-end flex-wrap gap-x-1 gap-y-4 items-center p-2">
+        <a href="/" class={getLinkClass("/")}>Base</a>
+        <span class="text-xl font-black hidden lg:inline">/</span>
+        <a href="/about" class={getLinkClass("/about")} data-i18n="labels.about"
+            >{t.labels.about}</a
         >
-            {t.labels.about}
-        </a>
+        <span class="text-xl font-black hidden lg:inline">/</span>
         <a
             href="/resume"
             class={getLinkClass("/resume")}
-            data-i18n="labels.experience"
+            data-i18n="labels.experience">{t.labels.experience}</a
         >
-            {t.labels.experience}
-        </a>
-        <a href="/blog" class={getLinkClass("/blog")}> Blog </a>
-        <a href="/experiments" class={getLinkClass("/experiments")}>
-            Experiments
-        </a>
-        <div class="flex gap-2">
-            <button
-                id="lang-toggle"
-                class="text-[10px] font-mono tracking-widest border border-zinc-200 dark:border-zinc-800 px-3 py-1 rounded-full uppercase hover:border-teal-500 hover:text-teal-500 transition-colors"
-            >
-                {/* Default text, client script will update */}
-                EN
-            </button>
-            <button
-                id="theme-toggle"
-                class="text-[10px] font-mono tracking-widest border border-zinc-200 dark:border-zinc-800 px-3 py-1 rounded-full uppercase hover:border-accent hover:text-accent transition-colors"
-            >
-                <span class="dark:hidden">Dark</span>
-                <span class="hidden dark:inline">Light</span>
-            </button>
-        </div>
+        <span class="text-xl font-black hidden lg:inline">/</span>
+        <a href="/blog" class={getLinkClass("/blog")}>Blog</a>
+        <span class="text-xl font-black hidden lg:inline">/</span>
+        <a href="/experiments" class={getLinkClass("/experiments")}>Exp</a>
     </nav>
+    <div
+        class="px-4 py-8 md:px-8 md:py-16 max-w-[1800px] mx-auto flex flex-col gap-16"
+    >
+        <div
+            class="flex flex-col xl:flex-row justify-between items-start xl:items-end gap-12"
+        >
+            <div>
+                <h1
+                    class="text-[16vw] sm:text-[14vw] lg:text-[10vw] font-black tracking-extreme uppercase leading-[0.8] m-0 p-0 whitespace-nowrap"
+                >
+                    RAWMODE
+                </h1>
+                <div class="mt-8 flex flex-wrap gap-2">
+                    <p
+                        class="text-xl md:text-3xl font-black bg-black text-white dark:bg-white dark:text-black inline-block px-4 py-2 uppercase tracking-tighter"
+                    >
+                        learn, build, share
+                    </p>
+                    <p
+                        class="text-xl md:text-3xl font-black bg-accent text-black inline-block px-4 py-2 uppercase tracking-tighter"
+                    >
+                        Stefano Perelli
+                    </p>
+                </div>
+            </div>
+
+            <div class="flex gap-4 shrink-0">
+                <button
+                    id="lang-toggle"
+                    class="text-xl font-black uppercase tracking-tighter border-[6px] border-black dark:border-white px-2 hover:bg-accent hover:border-accent hover:text-black transition-colors"
+                >
+                    EN
+                </button>
+                <button
+                    id="theme-toggle"
+                    class="text-xl font-black uppercase tracking-tighter border-[6px] border-black dark:border-white px-2 hover:bg-accent hover:border-accent hover:text-black transition-colors"
+                >
+                    <span class="dark:hidden">DARK</span>
+                    <span class="hidden dark:inline">LIGHT</span>
+                </button>
+            </div>
+        </div>
+    </div>
 </header>
 
 <script is:inline>
-    // Global Header Logic (Theme + I18n)
+    // Copying the standard header script but making sure it works perfectly
     const CONTENT = {
         it: {
             labels: {
                 about: "Info",
                 experience: "Esperienza",
-                projects: "Progetti Selezionati",
+                projects: "Progetti",
                 skills: "Competenze",
                 contact: "Contatti",
-                footer: "Stefano Perelli / Portfolio 2025",
+                now: "Ora",
+                activities: "Attività",
             },
-            bio: "Oltre 10 anni di esperienza nelle trasformazioni digitali. Specializzato nell'ottimizzazione dei processi e nel garantire l'allineamento strategico tra obiettivi di business e roadmap tecnologiche. Gestisco quotidianamente stakeholder complessi e coordino team cross-funzionali con un approccio orientato ai risultati.",
+            bio: "Oltre 10 anni di esperienza nelle trasformazioni digitali. Allineamento strategico e roadmap. Design estremo.",
+            now: "Studio AI e project management ignorando le UI noiose.",
         },
         en: {
             labels: {
                 about: "About",
                 experience: "Experience",
-                projects: "Selected Projects",
-                skills: "Capabilities",
+                projects: "Projects",
+                skills: "Skills",
                 contact: "Contact",
-                footer: "Stefano Perelli / Portfolio 2025",
+                now: "Now",
+                activities: "Activity",
             },
-            bio: "Over 10 years of experience in digital transformation. Specialized in process optimization and ensuring strategic alignment between business objectives and technology roadmaps. I lead complex stakeholder environments and coordinate cross-functional teams with a result-oriented approach.",
+            bio: "10+ years driving digital transformation. Eradicating boring UIs while aligning strategy and tech roadmaps.",
+            now: "Exploring the AI ecosystem and building experimental tools with aggressive brutalism.",
         },
     };
 
     function initHeader() {
-        // Theme Logic
         const themeToggle = document.getElementById("theme-toggle");
-        // Clone to replace any existing listener if this script runs multiple times
         const newThemeToggle = themeToggle?.cloneNode(true);
         if (themeToggle && newThemeToggle) {
             themeToggle.parentNode.replaceChild(newThemeToggle, themeToggle);
@@ -112,7 +127,6 @@ const getLinkClass = (path: string) => {
             });
         }
 
-        // Lang Logic
         const langToggle = document.getElementById("lang-toggle");
         let currentLang = localStorage.getItem("lang") || "en";
 
@@ -120,16 +134,10 @@ const getLinkClass = (path: string) => {
             currentLang = lang;
             localStorage.setItem("lang", lang);
 
-            // Update Toggle Text only
-            // Note: If we are on blog, we might NOT want to translate main content
-            // because there is no content to translate (unless we move some labels there).
-            // But we SHOULD update labels in the header.
-
             const newLangToggle = document.getElementById("lang-toggle");
             if (newLangToggle)
                 newLangToggle.textContent = lang === "it" ? "EN" : "IT";
 
-            // Update Simple Text Elements (Global)
             document.querySelectorAll("[data-i18n]").forEach((el) => {
                 const key = el.getAttribute("data-i18n");
                 const keys = key.split(".");
@@ -138,8 +146,6 @@ const getLinkClass = (path: string) => {
                 if (val) el.textContent = val;
             });
 
-            // Toggle Complex Content Blocks (Specific to Home App)
-            // We check if these exist before trying to toggle
             if (document.querySelector(".lang-content-it")) {
                 if (lang === "it") {
                     document
@@ -159,11 +165,9 @@ const getLinkClass = (path: string) => {
             }
         };
 
-        // Initial Render
         updateLang(currentLang);
 
         const newLangToggle = document.getElementById("lang-toggle");
-        // Replace listener
         const fresherLangToggle = newLangToggle?.cloneNode(true);
         if (newLangToggle && fresherLangToggle) {
             newLangToggle.parentNode.replaceChild(
@@ -176,7 +180,6 @@ const getLinkClass = (path: string) => {
         }
     }
 
-    // Run on load
     initHeader();
     document.addEventListener("astro:page-load", initHeader);
 </script>

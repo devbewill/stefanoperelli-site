@@ -1,15 +1,45 @@
 body {
-  transition: background-color 0.4s ease, color 0.4s ease;
+  transition: background-color 0s, color 0s;
 }
+
+/* Brutalist Selection */
+::selection {
+  background: #00ffc3ff;
+  color: #000;
+}
+
+/* Scrollbar */
 ::-webkit-scrollbar {
-  width: 4px;
+  width: 12px;
 }
 ::-webkit-scrollbar-track {
   background: transparent;
+  border-left: 2px solid #000;
+}
+.dark ::-webkit-scrollbar-track {
+  border-left: 2px solid #fff;
 }
 ::-webkit-scrollbar-thumb {
-  background: #333;
+  background: #00ffc3ff;
+  border: 2px solid #000;
 }
-.dark ::webkit-scrollbar-thumb {
-  background: #666;
+.dark ::-webkit-scrollbar-thumb {
+  border: 2px solid #fff;
+}
+
+/* Extreme Hover */
+.brutal-row {
+  transition: transform 0.1s;
+}
+.brutal-row:hover {
+  background-color: #00ffc3ff;
+  color: #000 !important;
+  /* transform: translateX(12px); */
+}
+.brutal-row:hover * {
+  border-color: #000 !important;
+}
+.brutal-row:hover .activity-arrow {
+  opacity: 1 !important;
+  transform: rotate(45deg);
 }
