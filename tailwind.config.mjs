@@ -5,20 +5,20 @@ export default {
   theme: {
     extend: {
       colors: {
-        accent: '#2E5BFF', // Cobalt Blue - High Contrast
+        accent: '#6366f1', // Electric Indigo - High Contrast & Modern
         background: '#ffffff',
         foreground: '#000000',
         zinc: {
           50: '#fafafa',
           100: '#f4f4f5',
           200: '#e4e4e7',
-          300: '#d4d4d8',
-          400: '#a1a1aa',
-          500: '#71717a',
-          600: '#52525b',
-          700: '#3f3f46',
-          800: '#27272a',
-          900: '#18181b',
+          300: '#94a3b8', // Darkened for legibility (was #d4d4d8)
+          400: '#71717a',
+          500: '#52525b',
+          600: '#3f3f46',
+          700: '#27272a',
+          800: '#18181b',
+          900: '#09090b',
         }
       },
       fontFamily: {

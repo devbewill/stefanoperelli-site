@@ -1,139 +1,86 @@
 ---
-import Layout from "../layouts/Layout.astro";
-import Header from "../components/Header.astro";
-import Footer from "../components/Footer.astro";
 import { CONTENT } from "../constants";
+import Layout from "../layouts/Layout.astro";
+import GlobalUI from "../components/GlobalUI.astro";
 
-const t = CONTENT["en"];
+const lang = "en";
+const t = CONTENT[lang];
 ---
 
-<Layout title="About | Stefano Perelli">
+<Layout title="About | Synthetic Mess">
     <div
-        class="min-h-screen bg-background text-white selection:bg-accent selection:text-black"
+        class="h-screen w-full bg-white text-zinc-900 font-sans selection:bg-accent selection:text-white overflow-hidden relative flex flex-col"
     >
-        <div class="bg-mesh"></div>
-        <Header />
+        <GlobalUI />
 
-        <main class="max-w-[1800px] mx-auto px-4 sm:px-8 py-12 md:py-24">
-            <div
-                class="grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-16 xl:gap-24"
-            >
-                <!-- Main Content -->
-                <div class="space-y-24">
-                    <section class="space-y-8">
-                        <div
-                            class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-white/5 text-[10px] font-mono text-zinc-500 uppercase tracking-widest"
-                        >
-                            Identity Profile // 01
-                        </div>
-                        <h1
-                            class="text-6xl md:text-9xl font-black tracking-tighter leading-none mb-12 accent-gradient"
-                        >
-                            ABOUT<span class="text-white">.</span>
-                        </h1>
-                        <p
-                            class="text-2xl md:text-5xl font-black tracking-tighter leading-tight max-w-5xl text-zinc-300"
-                            data-i18n="bio"
-                        >
-                            {t.bio}
-                        </p>
-                    </section>
-
-                    <div
-                        class="grid grid-cols-1 md:grid-cols-2 gap-12 pt-24 border-t border-white/10"
+        <!-- Central Focus Layer -->
+        <main
+            class="flex-1 flex flex-col items-center z-10 overflow-y-auto no-scrollbar pt-64 pb-32"
+        >
+            <div class="w-full max-w-2xl px-4 space-y-16">
+                <header class="space-y-6">
+                    <span
+                        class="text-[10px] font-black tracking-[0.4em] uppercase text-accent"
+                        >Section // Manifesto</span
                     >
-                        <article class="space-y-6">
-                            <h2
-                                class="text-3xl font-black tracking-tight text-white"
-                            >
-                                Philosophy
-                            </h2>
-                            <p
-                                class="text-lg font-medium tracking-tight leading-relaxed text-zinc-400"
-                            >
-                                I believe in radical transparency, extreme
-                                continuous improvement, and the raw power of
-                                well-structured chaos. User-centric,
-                                data-driven, and utterly opposed to boring
-                                interfaces.
-                            </p>
-                        </article>
-                        <article class="space-y-6">
-                            <h2
-                                class="text-3xl font-black tracking-tight text-white"
-                            >
-                                Background
-                            </h2>
-                            <p
-                                class="text-lg font-medium tracking-tight leading-relaxed text-zinc-400"
-                            >
-                                I am dedicated to building high-quality,
-                                high-performance digital products. Bridging the
-                                gap between complex engineering and ruthless
-                                business goals with a focus on technical
-                                excellence.
-                            </p>
-                        </article>
+                    <h2
+                        class="text-4xl md:text-5xl font-black tracking-tighter text-zinc-900 leading-[1.1]"
+                    >
+                        {t.bio}
+                    </h2>
+                </header>
+
+                <div
+                    class="grid grid-cols-1 md:grid-cols-2 gap-12 pt-8 border-t border-zinc-100"
+                >
+                    <div class="space-y-4">
+                        <h3
+                            class="text-[10px] font-black tracking-[0.3em] uppercase text-accent italic underline decoration-2 underline-offset-4"
+                        >
+                            Philosophy
+                        </h3>
+                        <p
+                            class="text-base md:text-lg font-bold text-zinc-500 leading-relaxed"
+                        >
+                            {t.about_content.philosophy}
+                        </p>
+                    </div>
+                    <div class="space-y-4">
+                        <h3
+                            class="text-[10px] font-black tracking-[0.3em] uppercase text-accent italic underline decoration-2 underline-offset-4"
+                        >
+                            Background
+                        </h3>
+                        <p
+                            class="text-base md:text-lg font-bold text-zinc-500 leading-relaxed"
+                        >
+                            {t.about_content.background}
+                        </p>
                     </div>
                 </div>
 
-                <!-- Sidebar/Contact -->
-                <aside class="space-y-12">
-                    <div class="glass-card p-12 space-y-8 sticky top-32">
-                        <div class="space-y-2">
-                            <h2
-                                class="text-xl font-black tracking-tight uppercase"
-                            >
-                                Get in Touch
-                            </h2>
-                            <p class="text-sm text-zinc-500 font-mono">
-                                Status: Awaiting Signal
-                            </p>
-                        </div>
-
-                        <div class="space-y-4">
-                            <a
-                                href="mailto:sedprc@gmail.com"
-                                class="block w-full text-center py-4 bg-white text-black font-bold uppercase tracking-tight hover:bg-accent hover:shadow-[0_0_20px_rgba(0,255,195,0.3)] transition-all"
-                            >
-                                Email Node
-                            </a>
-                            <a
-                                href="https://linkedin.com/in/stefanoperelli/"
-                                target="_blank"
-                                class="block w-full text-center py-4 border border-white/20 font-bold uppercase tracking-tight hover:bg-white/5 transition-all"
-                            >
-                                LinkedIn Link
-                            </a>
-                        </div>
-
-                        <div class="pt-8 border-t border-white/10">
-                            <div class="flex items-center gap-3">
-                                <div
-                                    class="w-1.5 h-1.5 rounded-full bg-accent animate-pulse"
-                                >
-                                </div>
-                                <span
-                                    class="text-[10px] font-mono uppercase tracking-widest text-zinc-500 text-center mx-auto"
-                                    >Milan Local Node // active</span
-                                >
-                            </div>
-                        </div>
-                    </div>
-                </aside>
-            </div>
-
-            <div
-                class="mt-24 pt-12 border-t border-white/5 flex justify-center"
-            >
-                <a
-                    href="/"
-                    class="px-8 py-4 border border-white/20 font-bold uppercase tracking-tight hover:bg-white hover:text-black transition-all"
+                <div
+                    class="pt-8 flex justify-between items-end opacity-20 group hover:opacity-100 transition-opacity"
                 >
-                    Return to Home
-                </a>
+                    <span
+                        class="text-[9px] font-mono uppercase tracking-[0.4em]"
+                        >End of Dossier</span
+                    >
+                    <span class="text-[8px] font-mono tabular-nums"
+                        >HASH: 6366F1_SYNTH</span
+                    >
+                </div>
             </div>
         </main>
-        <Footer />
     </div>
 </Layout>
+
+<style>
+    .no-scrollbar::-webkit-scrollbar {
+        display: none;
+    }
+    .no-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+</style>

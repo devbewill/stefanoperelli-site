@@ -1,6 +1,7 @@
 ---
 import { CONTENT } from "../constants";
 import { getCollection } from "astro:content";
+import GlobalUI from "../components/GlobalUI.astro";
 
 const lang = "en";
 const t = CONTENT[lang];
@@ -12,177 +13,96 @@ const allItems = [
     ...blogPosts.map((p) => ({
         ...p.data,
         link: `/blog/${p.slug}`,
-        type: "POST",
-        external: false,
+        type: "post",
     })),
     ...experiments.map((e) => ({
         ...e.data,
         link: `/experiments/${e.slug}`,
-        type: "EXP",
-        external: false,
+        type: "exp",
     })),
     ...CONTENT.en.newsletters.map((n) => ({
         ...n,
         date: new Date(n.date),
-        type: "NLTR",
+        type: "nltr",
+        link: "#",
         external: true,
         pubDate: new Date(n.date),
     })),
 ]
-    .sort((a, b) => b.pubDate?.valueOf() - a.pubDate?.valueOf())
+    .sort(
+        (a, b) =>
+            (b.pubDate || b.date).valueOf() - (a.pubDate || a.date).valueOf(),
+    )
     .slice(0, 20);
 
 const formatDate = (date: Date) =>
     new Date(date).toLocaleDateString("en-US", {
-        month: "short",
+        month: "2-digit",
         day: "2-digit",
         year: "2-digit",
     });
 ---
 
 <div
-    class="h-screen overflow-hidden bg-white text-zinc-900 font-sans selection:bg-accent selection:text-white flex flex-col p-8 md:p-16 lg:p-24 overflow-y-auto lg:overflow-hidden"
+    class="h-screen w-full bg-white text-zinc-900 font-sans selection:bg-accent selection:text-white overflow-hidden relative flex flex-col"
 >
-    <!-- Top Bar -->
-    <header class="flex justify-between items-baseline mb-16 lg:mb-24 shrink-0">
-        <div class="flex flex-col gap-1">
-            <span
-                class="text-[9px] font-black tracking-widest uppercase text-zinc-400"
-                >Node Operator</span
-            >
-            <span class="text-xs font-bold text-zinc-900">Stefano Perelli</span>
-        </div>
-        <nav class="flex gap-12">
-            <a
-                href="/about"
-                class="text-xs font-black tracking-widest uppercase hover:text-accent transition-colors"
-                >About</a
-            >
-            <a
-                href="/resume"
-                class="text-xs font-black tracking-widest uppercase hover:text-accent transition-colors"
-                >Resume</a
-            >
-        </nav>
-    </header>
+    <GlobalUI />
 
-    <main
-        class="flex-1 flex flex-col lg:flex-row gap-16 lg:gap-32 items-start overflow-hidden"
-    >
-        <!-- Brand / Focal Point -->
-        <section
-            class="lg:w-[45%] lg:h-full flex flex-col justify-between py-2"
-        >
-            <div class="space-y-12">
-                <h1
-                    class="text-[12vw] lg:text-[10vw] font-black tracking-tightest leading-[0.75] text-zinc-900"
-                >
-                    RAW<br />MODE<span class="text-accent">.</span>
-                </h1>
-                <p
-                    class="text-xl md:text-2xl font-medium text-zinc-400 leading-snug max-w-sm"
-                    data-i18n="bio"
-                >
-                    {t.bio}
-                </p>
-            </div>
-
-            <!-- Mobile Only Activity Header -->
+    <!-- Central Focus Layer -->
+    <main class="flex-1 flex flex-col justify-center items-center z-10">
+        <div class="w-full max-w-3xl px-4">
             <div
-                class="lg:hidden flex items-center gap-4 mt-20 pt-12 border-t border-zinc-100"
+                class="mb-10 flex justify-between items-end border-b-2 border-zinc-100 pb-3"
             >
                 <span
-                    class="text-[10px] font-black tracking-widest uppercase text-accent"
-                    >Latest Outputs</span
+                    class="text-[11px] font-black tracking-[0.4em] uppercase text-zinc-900"
+                    >Buffer Outputs // 01—20</span
                 >
-            </div>
-        </section>
-
-        <!-- Activities Stream / High Contrast & No Cage -->
-        <section class="flex-1 lg:h-full flex flex-col overflow-hidden">
-            <div class="hidden lg:flex items-center gap-6 mb-12 shrink-0">
-                <span
-                    class="text-[10px] font-black tracking-[0.4em] uppercase text-accent"
-                    >Record Buffer // Active Stream</span
-                >
-                <div class="h-[1px] flex-1 bg-zinc-100"></div>
-                <span class="text-[9px] font-mono text-zinc-300 font-bold"
-                    >20 ITEMS</span
+                <span class="text-[10px] font-mono font-bold text-zinc-400"
+                    >SESSION_2026</span
                 >
             </div>
 
-            <div class="flex-1 overflow-y-auto no-scrollbar space-y-1">
+            <div class="flex flex-col space-y-0.5">
                 {
-                    allItems.map((item) => (
+                    allItems.map((item, index) => (
                         <a
                             href={item.link}
-                            target={item.external ? "_blank" : "_self"}
-                            class="group block py-3 transition-all duration-300"
+                            class="group flex items-center justify-between py-1.5 transition-all duration-300"
                         >
-                            <div class="flex flex-col md:flex-row md:items-baseline md:justify-between gap-4">
-                                <div class="flex items-baseline gap-6">
-                                    <span class="text-[10px] font-mono font-black text-zinc-900 w-12 shrink-0 group-hover:text-accent transition-colors">
-                                        // {item.type}
-                                    </span>
-                                    <h3 class="text-2xl md:text-3xl font-black tracking-tight text-zinc-900 group-hover:text-accent transition-colors group-hover:translate-x-2 duration-500 ease-out">
-                                        {item.title}
-                                    </h3>
-                                </div>
-                                <span class="text-[10px] font-mono font-bold text-zinc-400 group-hover:text-zinc-900 tabular-nums uppercase whitespace-nowrap">
-                                    {new Date(item.pubDate).toLocaleDateString(
-                                        "en-US",
-                                        {
-                                            month: "short",
-                                            day: "2-digit",
-                                            year: "2-digit",
-                                        },
-                                    )}
+                            <div class="flex items-center gap-6 overflow-hidden">
+                                <span class="text-[10px] font-mono font-bold text-zinc-300 group-hover:text-accent transition-colors w-6">
+                                    {(index + 1).toString().padStart(2, "0")}
                                 </span>
+                                <span class="text-[10px] font-black text-accent bg-accent/5 px-2 py-0.5 rounded uppercase tracking-tighter w-10 text-center group-hover:bg-accent group-hover:text-white transition-all">
+                                    {item.type}
+                                </span>
+                                <h3 class="text-xl md:text-2xl font-black tracking-tighter text-zinc-900 group-hover:text-accent transition-colors truncate">
+                                    {item.title}
+                                </h3>
+                            </div>
+                            <div class="flex items-center gap-6 shrink-0">
+                                <span class="text-xs font-mono font-bold text-zinc-300 group-hover:text-zinc-900 transition-colors tabular-nums uppercase">
+                                    {formatDate(item.pubDate || item.date)}
+                                </span>
+                                <svg
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    class="w-4 h-4 text-accent opacity-0 group-hover:opacity-100 transition-all transform -translate-x-3 group-hover:translate-x-0"
+                                    stroke="currentColor"
+                                    stroke-width="4"
+                                >
+                                    <path
+                                        d="M5 12h14m-7-7l7 7-7 7"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                    />
+                                </svg>
                             </div>
                         </a>
                     ))
                 }
             </div>
-        </section>
+        </div>
     </main>
-
-    <!-- Unified Minimal Footer -->
-    <footer
-        class="mt-16 lg:mt-24 pt-8 border-t border-zinc-50 flex flex-col md:flex-row justify-between items-center gap-6 shrink-0 opacity-40 hover:opacity-100 transition-opacity"
-    >
-        <div class="flex items-center gap-3">
-            <div class="w-1.5 h-1.5 rounded-full bg-accent animate-pulse"></div>
-            <span
-                class="text-[9px] font-mono uppercase text-zinc-500 tracking-widest"
-                >System Status: Operative // Milan</span
-            >
-        </div>
-        <div class="flex gap-12">
-            <a
-                href="https://linkedin.com/in/stefanoperelli/"
-                target="_blank"
-                class="text-[10px] font-black tracking-widest uppercase hover:text-accent"
-                >LinkedIn</a
-            >
-            <a
-                href="mailto:sedprc@gmail.com"
-                class="text-[10px] font-black tracking-widest uppercase hover:text-accent"
-                >Email Signal</a
-            >
-            <span
-                class="text-[10px] font-mono text-zinc-400 uppercase tracking-widest"
-                >© 2026 Rawmode Systems</span
-            >
-        </div>
-    </footer>
 </div>
-
-<style>
-    .no-scrollbar::-webkit-scrollbar {
-        display: none;
-    }
-    .no-scrollbar {
-        -ms-overflow-style: none;
-        scrollbar-width: none;
-    }
-</style>

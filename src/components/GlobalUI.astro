@@ -1,0 +1,29 @@
+---
+import BrandIdentity from "./BrandIdentity.astro";
+import SidebarNav from "./SidebarNav.astro";
+import FooterStatus from "./FooterStatus.astro";
+import ContactLinks from "./ContactLinks.astro";
+---
+
+<!-- Fixed UI Layer Shell -->
+<div class="fixed inset-0 pointer-events-none z-50">
+    <!-- Top Left -->
+    <div
+        class="absolute top-10 left-10 lg:top-20 lg:left-20 pointer-events-auto"
+    >
+        <BrandIdentity />
+    </div>
+
+    <!-- Top Right -->
+    <div
+        class="absolute top-10 right-10 lg:top-20 lg:right-20 pointer-events-auto"
+    >
+        <SidebarNav />
+    </div>
+
+    <!-- Bottom Left -->
+    <FooterStatus />
+
+    <!-- Bottom Right -->
+    <ContactLinks />
+</div>

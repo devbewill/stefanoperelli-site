@@ -13,6 +13,11 @@ export interface LanguageContent {
     now: string;
     activities: string;
   };
+  about_content: {
+    philosophy: string;
+    background: string;
+  };
+  resume_bio: string;
   experiences: Experience[];
   projects: Project[];
   skills: SkillCategory[];
@@ -33,6 +38,11 @@ export const CONTENT: Record<"it" | "en", LanguageContent> = {
       now: "Ora",
       activities: "Attività Recenti",
     },
+    about_content: {
+      philosophy: "Credo che la tecnologia debba essere invisibile: uno strumento potente che abilita il business senza diventare un ostacolo. Il mio approccio si basa sulla sintesi tra rigore tecnico e visione strategica.",
+      background: "Con oltre 10 anni trascorsi tra startup e grandi enterprise, ho imparato che il disordine (the mess) è parte del processo creativo, ma la sintesi (the synthetic) è ciò che porta valore reale.",
+    },
+    resume_bio: "Product Director & Delivery Manager con una forte passione per la costruzione di prodotti digitali complessi e scalabili.",
     experiences: [
       {
         period: "Giu 2025",
@@ -209,6 +219,11 @@ export const CONTENT: Record<"it" | "en", LanguageContent> = {
       now: "Now",
       activities: "Recent Activity",
     },
+    about_content: {
+      philosophy: "I believe that technology should be invisible: a powerful tool that enables business without becoming an obstacle. My approach is based on the synthesis of technical rigor and strategic vision.",
+      background: "With over 10 years spent between startups and large enterprises, I've learned that disorder (the mess) is part of the creative process, but synthesis (the synthetic) is what brings real value.",
+    },
+    resume_bio: "Product Director & Delivery Manager with a strong passion for building complex and scalable digital products.",
     experiences: [
       {
         period: "Jun 2025",

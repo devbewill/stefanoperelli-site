@@ -1,255 +1,121 @@
 ---
-import Layout from "../layouts/Layout.astro";
 import { CONTENT } from "../constants";
-import ExperienceItem from "../components/ExperienceItem.astro";
-import Header from "../components/Header.astro";
+import Layout from "../layouts/Layout.astro";
+import GlobalUI from "../components/GlobalUI.astro";
 import Footer from "../components/Footer.astro";
+import ExperienceItem from "../components/ExperienceItem.astro";
 
 const lang = "en";
 const t = CONTENT[lang];
 ---
 
-<Layout title="Resume | Stefano Perelli">
+<Layout title="Resume | Synthetic Mess">
     <div
-        class="min-h-screen bg-background text-white selection:bg-accent selection:text-black"
+        class="min-h-screen bg-white text-zinc-900 font-sans selection:bg-accent selection:text-white flex flex-col"
     >
-        <div class="bg-mesh"></div>
-        <Header />
+        <GlobalUI />
 
-        <main class="max-w-[1800px] mx-auto px-4 sm:px-8 py-12 md:py-24">
-            <!-- Hero Header -->
-            <header class="mb-24 space-y-6">
-                <div
-                    class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-white/5 text-[10px] font-mono text-zinc-500 uppercase tracking-widest"
-                >
-                    Operational Dossier // V2026
+        <main
+            class="flex-1 flex flex-col max-w-5xl mx-auto w-full px-8 pt-64 pb-32"
+        >
+            <header class="mb-24">
+                <div class="flex items-center gap-4 mb-4">
+                    <span
+                        class="text-[10px] font-black tracking-[0.4em] uppercase text-accent"
+                        >Dossier // Profile</span
+                    >
+                    <div class="h-[1px] flex-1 bg-zinc-50"></div>
                 </div>
                 <h1
-                    class="text-6xl md:text-9xl font-black tracking-tighter leading-none mb-6 accent-gradient"
+                    class="text-6xl md:text-9xl font-black tracking-tightest leading-none text-zinc-900"
                 >
-                    RESUME<span class="text-white">.</span>
+                    RESUME<span class="text-accent italic">.</span>
                 </h1>
                 <p
-                    class="text-2xl md:text-4xl text-zinc-400 font-bold tracking-tight max-w-4xl leading-tight"
+                    class="text-xl md:text-2xl text-zinc-400 font-medium mt-6 max-w-2xl leading-snug"
+                    data-i18n="resume_bio"
                 >
-                    10+ years of digital transformation, product management, and
-                    building high-performing teams with technical excellence.
+                    {t.resume_bio}
                 </p>
             </header>
 
-            <div
-                class="grid grid-cols-1 lg:grid-cols-[1fr_2.5fr] gap-16 xl:gap-24"
-            >
-                <!-- Sidebar: Details & Skills -->
-                <aside class="space-y-16">
-                    <!-- Skills Section -->
-                    <div class="space-y-12">
-                        <div class="border-b border-white/10 pb-4">
-                            <h2
-                                class="text-xl font-black tracking-tight uppercase"
-                            >
-                                Skills Cluster
-                            </h2>
-                        </div>
-
-                        <!-- IT Skills -->
-                        <div class="lang-content-it hidden space-y-8">
-                            {
-                                CONTENT.it.skills.map((cat) => (
-                                    <div class="space-y-4">
-                                        <h3 class="text-xs font-mono text-accent uppercase tracking-widest">
-                                            {cat.title}
-                                        </h3>
-                                        <ul class="flex flex-wrap gap-2">
-                                            {cat.skills.map((skill) => (
-                                                <li class="px-3 py-1.5 rounded bg-white/5 border border-white/10 text-sm font-bold tracking-tight text-zinc-300">
-                                                    {skill}
-                                                </li>
-                                            ))}
-                                        </ul>
-                                    </div>
-                                ))
-                            }
-                        </div>
-
-                        <!-- EN Skills -->
-                        <div class="lang-content-en space-y-8">
-                            {
-                                CONTENT.en.skills.map((cat) => (
-                                    <div class="space-y-4">
-                                        <h3 class="text-xs font-mono text-accent uppercase tracking-widest">
-                                            {cat.title}
-                                        </h3>
-                                        <ul class="flex flex-wrap gap-2">
-                                            {cat.skills.map((skill) => (
-                                                <li class="px-3 py-1.5 rounded bg-white/5 border border-white/10 text-sm font-bold tracking-tight text-zinc-300">
-                                                    {skill}
-                                                </li>
-                                            ))}
-                                        </ul>
-                                    </div>
-                                ))
-                            }
-                        </div>
-                    </div>
-
-                    <!-- Contact/Action -->
-                    <div class="pt-8 border-t border-white/10 space-y-4">
-                        <a
-                            href="mailto:sedprc@gmail.com"
-                            class="flex items-center justify-between p-4 glass-card group"
-                        >
-                            <span class="font-bold">Encrypted Mail</span>
-                            <span class="text-accent">↗</span>
-                        </a>
-                    </div>
-                </aside>
-
-                <!-- Main Content: Experience & Projects -->
-                <div class="space-y-24">
-                    <!-- Experience -->
-                    <section class="space-y-12">
-                        <div
-                            class="flex items-center justify-between border-b border-white/10 pb-4"
-                        >
-                            <h2
-                                class="text-3xl font-black tracking-tight"
-                                data-i18n="labels.experience"
-                            >
-                                {t.labels.experience}
-                            </h2>
-                        </div>
-
-                        <div class="space-y-1">
-                            <div class="lang-content-it hidden">
-                                {
-                                    CONTENT.it.experiences.map((exp) => (
-                                        <div class="hover:bg-white/[0.02] transition-colors p-4 -mx-4 rounded-xl">
-                                            <ExperienceItem item={exp} />
-                                        </div>
-                                    ))
-                                }
-                            </div>
-                            <div class="lang-content-en">
-                                {
-                                    CONTENT.en.experiences.map((exp) => (
-                                        <div class="hover:bg-white/[0.02] transition-colors p-4 -mx-4 rounded-xl">
-                                            <ExperienceItem item={exp} />
-                                        </div>
-                                    ))
-                                }
-                            </div>
-                        </div>
-                    </section>
-
-                    <!-- Projects -->
-                    <section class="space-y-12">
-                        <div
-                            class="flex items-center justify-between border-b border-white/10 pb-4"
-                        >
-                            <h2
-                                class="text-3xl font-black tracking-tight"
-                                data-i18n="labels.projects"
-                            >
-                                {t.labels.projects}
-                            </h2>
-                        </div>
-
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <!-- IT Projects -->
-                            <div class="lang-content-it hidden contents">
-                                {
-                                    CONTENT.it.projects.map((project) => (
-                                        <a
-                                            href={project.link}
-                                            target="_blank"
-                                            class="glass-card p-8 flex flex-col justify-between group h-full"
-                                        >
-                                            <div class="space-y-4">
-                                                <span class="text-[10px] font-mono text-accent uppercase tracking-[0.2em]">
-                                                    {project.role}
-                                                </span>
-                                                <h3 class="text-2xl font-black tracking-tight group-hover:text-accent transition-colors">
-                                                    {project.title}
-                                                </h3>
-                                                <p class="text-zinc-400 text-sm leading-relaxed">
-                                                    {project.description}
-                                                </p>
-                                            </div>
-                                            <div class="mt-8 flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-zinc-500 group-hover:text-white transition-colors">
-                                                View Project Case
-                                                <svg
-                                                    viewBox="0 0 24 24"
-                                                    fill="none"
-                                                    class="w-4 h-4"
-                                                    stroke="currentColor"
-                                                    stroke-width="3"
-                                                >
-                                                    <path
-                                                        d="M7 17L17 7M17 7H7M17 7V17"
-                                                        stroke-linecap="round"
-                                                        stroke-linejoin="round"
-                                                    />
-                                                </svg>
-                                            </div>
-                                        </a>
-                                    ))
-                                }
-                            </div>
-                            <!-- EN Projects -->
-                            <div class="lang-content-en contents">
-                                {
-                                    CONTENT.en.projects.map((project) => (
-                                        <a
-                                            href={project.link}
-                                            target="_blank"
-                                            class="glass-card p-8 flex flex-col justify-between group h-full"
-                                        >
-                                            <div class="space-y-4">
-                                                <span class="text-[10px] font-mono text-accent uppercase tracking-[0.2em]">
-                                                    {project.role}
-                                                </span>
-                                                <h3 class="text-2xl font-black tracking-tight group-hover:text-accent transition-colors">
-                                                    {project.title}
-                                                </h3>
-                                                <p class="text-zinc-400 text-sm leading-relaxed">
-                                                    {project.description}
-                                                </p>
-                                            </div>
-                                            <div class="mt-8 flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-zinc-500 group-hover:text-white transition-colors">
-                                                View Project Case
-                                                <svg
-                                                    viewBox="0 0 24 24"
-                                                    fill="none"
-                                                    class="w-4 h-4"
-                                                    stroke="currentColor"
-                                                    stroke-width="3"
-                                                >
-                                                    <path
-                                                        d="M7 17L17 7M17 7H7M17 7V17"
-                                                        stroke-linecap="round"
-                                                        stroke-linejoin="round"
-                                                    />
-                                                </svg>
-                                            </div>
-                                        </a>
-                                    ))
-                                }
-                            </div>
-                        </div>
-                    </section>
+            <section class="mb-32">
+                <div class="flex items-center gap-6 mb-16">
+                    <h2
+                        class="text-[11px] font-black tracking-[0.5em] uppercase text-zinc-900"
+                    >
+                        Professional Record
+                    </h2>
+                    <div class="h-[1px] flex-1 bg-zinc-100"></div>
                 </div>
-            </div>
+                <div class="space-y-1">
+                    {
+                        t.experiences.map((exp) => (
+                            <div class="py-12 border-b border-zinc-50 first:border-t">
+                                <ExperienceItem {...exp} />
+                            </div>
+                        ))
+                    }
+                </div>
+            </section>
 
-            <div
-                class="mt-24 pt-12 border-t border-white/5 flex justify-center"
-            >
-                <a
-                    href="/"
-                    class="px-8 py-4 border border-white/20 font-bold uppercase tracking-tight hover:bg-white hover:text-black transition-all"
-                >
-                    Return to Base
-                </a>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-24">
+                <section>
+                    <div class="flex items-center gap-6 mb-12">
+                        <h2
+                            class="text-[11px] font-black tracking-[0.5em] uppercase text-zinc-900"
+                        >
+                            Capabilities
+                        </h2>
+                        <div class="h-[1px] flex-1 bg-zinc-100"></div>
+                    </div>
+                    <div class="space-y-12">
+                        {
+                            t.skills.map((category) => (
+                                <div class="space-y-4">
+                                    <h3 class="text-[10px] font-black tracking-widest uppercase text-accent italic">
+                                        {category.title}
+                                    </h3>
+                                    <div class="flex flex-wrap gap-x-6 gap-y-2">
+                                        {category.skills.map((skill) => (
+                                            <span class="text-lg font-bold text-zinc-900">
+                                                {skill}
+                                            </span>
+                                        ))}
+                                    </div>
+                                </div>
+                            ))
+                        }
+                    </div>
+                </section>
+
+                <section>
+                    <div class="flex items-center gap-6 mb-12">
+                        <h2
+                            class="text-[11px] font-black tracking-[0.5em] uppercase text-zinc-900"
+                        >
+                            Selected Key Projects
+                        </h2>
+                        <div class="h-[1px] flex-1 bg-zinc-100"></div>
+                    </div>
+                    <div class="space-y-12">
+                        {
+                            t.projects.map((project) => (
+                                <div class="group space-y-2">
+                                    <span class="text-[9px] font-mono font-bold text-zinc-400 group-hover:text-accent uppercase tabular-nums tracking-widest transition-colors">
+                                        {project.role}
+                                    </span>
+                                    <h3 class="text-2xl md:text-3xl font-black tracking-tight text-zinc-900">
+                                        {project.title}
+                                    </h3>
+                                    <p class="text-zinc-500 text-sm font-medium leading-relaxed">
+                                        {project.description}
+                                    </p>
+                                </div>
+                            ))
+                        }
+                    </div>
+                </section>
             </div>
         </main>
         <Footer />

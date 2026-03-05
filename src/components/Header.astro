@@ -11,77 +11,44 @@ const isActive = (path: string) => {
 };
 ---
 
-<header class="fixed top-0 left-0 w-full z-50 bg-white/80 backdrop-blur-md">
-    <div
-        class="max-w-7xl mx-auto px-6 md:px-12 lg:px-20 h-24 flex items-center justify-between"
-    >
-        <a
-            href="/"
-            class="text-xl font-black tracking-tightest hover:opacity-70 transition-opacity"
-        >
-            RAWMODE<span class="text-accent">.</span>
+<header
+    class="fixed top-0 left-0 w-full z-50 p-8 md:p-12 lg:p-16 flex justify-between items-start pointer-events-none"
+>
+    <div class="pointer-events-auto">
+        <a href="/" class="group flex flex-col">
+            <h1
+                class="text-2xl lg:text-3xl font-black tracking-tightest leading-none text-zinc-900"
+            >
+                SYNTHETIC MESS<span class="text-accent">_</span>
+            </h1>
+            <span
+                class="text-[8px] font-bold text-accent uppercase tracking-[0.2em] opacity-0 group-hover:opacity-100 transition-opacity"
+            >
+                Order is overrated.
+            </span>
         </a>
-
-        <nav class="flex items-center gap-6 md:gap-12">
-            <a
-                href="/about"
-                class={`text-sm font-bold tracking-tight py-1 transition-colors ${isActive("/about") ? "text-accent" : "text-zinc-500 hover:text-black"}`}
-                data-i18n="labels.about">{t.labels.about}</a
-            >
-            <a
-                href="/resume"
-                class={`text-sm font-bold tracking-tight py-1 transition-colors ${isActive("/resume") ? "text-accent" : "text-zinc-500 hover:text-black"}`}
-                data-i18n="labels.experience">{t.labels.experience}</a
-            >
-            <a
-                href="/blog"
-                class={`text-sm font-bold tracking-tight py-1 transition-colors ${isActive("/blog") ? "text-accent" : "text-zinc-500 hover:text-black"}`}
-                >Blog</a
-            >
-            <a
-                href="/experiments"
-                class={`text-sm font-bold tracking-tight py-1 transition-colors ${isActive("/experiments") ? "text-accent" : "text-zinc-500 hover:text-black"}`}
-                >Exp</a
-            >
-        </nav>
-
-        <div class="hidden md:flex items-center gap-4">
-            <button
-                id="lang-toggle"
-                class="text-[10px] font-black tracking-widest text-zinc-400 hover:text-black transition-colors"
-            >
-                EN/IT
-            </button>
-        </div>
     </div>
+
+    <nav class="flex gap-8 lg:gap-12 pointer-events-auto items-center">
+        <a
+            href="/about"
+            class={`text-[10px] font-black tracking-widest uppercase transition-colors ${isActive("/about") ? "text-accent" : "text-zinc-400 hover:text-black"}`}
+            data-i18n="labels.about">{t.labels.about}</a
+        >
+        <a
+            href="/resume"
+            class={`text-[10px] font-black tracking-widest uppercase transition-colors ${isActive("/resume") ? "text-accent" : "text-zinc-400 hover:text-black"}`}
+            data-i18n="labels.experience">{t.labels.experience}</a
+        >
+        <a
+            href="/blog"
+            class={`text-[10px] font-black tracking-widest uppercase transition-colors ${isActive("/blog") ? "text-accent" : "text-zinc-400 hover:text-black"}`}
+            >Blog</a
+        >
+        <a
+            href="/experiments"
+            class={`text-[10px] font-black tracking-widest uppercase transition-colors ${isActive("/experiments") ? "text-accent" : "text-zinc-400 hover:text-black"}`}
+            >Exp</a
+        >
+    </nav>
 </header>
-
-<div class="h-24"></div>
-
-<script is:inline>
-    function initHeader() {
-        const langToggle = document.getElementById("lang-toggle");
-        let currentLang = localStorage.getItem("lang") || "en";
-
-        const updateLang = (lang) => {
-            currentLang = lang;
-            localStorage.setItem("lang", lang);
-
-            // Simple reload for now as we're testing the home page only
-            // In a full app we'd use reactive updates
-            document.querySelectorAll("[data-i18n]").forEach((el) => {
-                // ... translation logic ...
-            });
-        };
-
-        if (langToggle) {
-            langToggle.addEventListener("click", () => {
-                const newLang = currentLang === "it" ? "en" : "it";
-                updateLang(newLang);
-                window.location.reload(); // Quick fix for testing
-            });
-        }
-    }
-    initHeader();
-    document.addEventListener("astro:page-load", initHeader);
-</script>

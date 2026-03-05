@@ -1,7 +1,7 @@
 ---
 import type { CollectionEntry } from "astro:content";
 import Layout from "./Layout.astro";
-import Header from "../components/Header.astro";
+import GlobalUI from "../components/GlobalUI.astro";
 import Footer from "../components/Footer.astro";
 
 type Props = CollectionEntry<"blog">["data"];
@@ -11,56 +11,43 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 
 <Layout title={title}>
     <div
-        class="min-h-screen bg-background text-white selection:bg-accent selection:text-black"
+        class="min-h-screen bg-white text-zinc-900 font-sans selection:bg-accent selection:text-white flex flex-col relative"
     >
-        <div class="bg-mesh"></div>
-        <Header />
+        <GlobalUI />
 
-        <main class="max-w-[1800px] mx-auto px-4 sm:px-8 py-12 md:py-24">
-            <article class="max-w-4xl mx-auto">
+        <main class="max-w-5xl mx-auto px-8 pt-48 pb-32 w-full">
+            <article>
                 <!-- Post Header -->
-                <header class="space-y-8 mb-16 md:mb-24">
-                    <div class="flex flex-wrap items-center gap-4">
+                <header class="mb-16 md:mb-24">
+                    <div class="flex items-center gap-4 mb-4">
                         <span
-                            class="px-3 py-1 rounded bg-accent text-black text-[10px] font-black tracking-widest uppercase"
+                            class="text-[10px] font-black tracking-[0.4em] uppercase text-accent"
+                            >Output // Active Log</span
                         >
-                            Secure Entry
-                        </span>
+                        <div class="h-[1px] flex-1 bg-zinc-50"></div>
                         <time
                             datetime={pubDate.toISOString()}
-                            class="text-xs font-mono text-zinc-500"
+                            class="text-[10px] font-mono font-bold text-zinc-400"
                         >
                             {
                                 pubDate.toLocaleDateString("en-us", {
                                     year: "numeric",
-                                    month: "long",
+                                    month: "short",
                                     day: "numeric",
                                 })
                             }
                         </time>
-                        {
-                            updatedDate && (
-                                <span class="text-xs font-mono text-zinc-500 uppercase">
-                                    [Revised:{" "}
-                                    {updatedDate.toLocaleDateString("en-us", {
-                                        month: "short",
-                                        day: "numeric",
-                                    })}
-                                    ]
-                                </span>
-                            )
-                        }
                     </div>
 
                     <h1
-                        class="text-4xl md:text-7xl font-black tracking-tight leading-[0.9] accent-gradient"
+                        class="text-4xl md:text-7xl font-black tracking-tightest leading-[0.9] text-zinc-900 mb-8"
                     >
                         {title}
                     </h1>
 
                     {
                         description && (
-                            <p class="text-xl md:text-2xl text-zinc-400 font-medium leading-relaxed">
+                            <p class="text-xl md:text-2xl text-zinc-400 font-medium leading-relaxed max-w-2xl">
                                 {description}
                             </p>
                         )
@@ -70,7 +57,7 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
                 <!-- Hero Image -->
                 {
                     heroImage && (
-                        <div class="mb-16 md:mb-24 rounded-3xl overflow-hidden border border-white/10 shadow-2xl">
+                        <div class="mb-16 md:mb-24 rounded-lg overflow-hidden border border-zinc-100 shadow-sm">
                             <img
                                 width={1800}
                                 height={900}
@@ -82,41 +69,33 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
                     )
                 }
 
-                <!-- Markdown Content -->
+                <!-- Markdown Content (Clean White Theme) -->
                 <div
-                    class="prose prose-zinc prose-invert max-w-none
-                    prose-h2:text-white prose-h2:font-black prose-h2:tracking-tight prose-h2:text-3xl
-                    prose-h3:text-white prose-h3:font-bold prose-h3:text-xl
-                    prose-p:text-zinc-400 prose-p:text-lg prose-p:leading-relaxed
-                    prose-strong:text-white prose-strong:font-bold
+                    class="prose prose-zinc max-w-none
+                    prose-h2:text-zinc-900 prose-h2:font-black prose-h2:tracking-tight prose-h2:text-3xl
+                    prose-h3:text-zinc-900 prose-h3:font-bold prose-h3:text-xl
+                    prose-p:text-zinc-600 prose-p:text-lg prose-p:leading-relaxed
+                    prose-strong:text-zinc-900 prose-strong:font-bold
                     prose-a:text-accent prose-a:no-underline hover:prose-a:underline
-                    prose-code:bg-white/5 prose-code:text-accent prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded-md prose-code:before:content-none prose-code:after:content-none
-                    prose-pre:bg-zinc-900/50 prose-pre:border prose-pre:border-white/10 prose-pre:rounded-2xl prose-pre:p-8
-                    prose-img:rounded-3xl prose-img:border prose-img:border-white/10 prose-img:shadow-xl
-                    prose-blockquote:border-l-accent prose-blockquote:bg-accent/5 prose-blockquote:py-2 prose-blockquote:px-8 prose-blockquote:rounded-r-2xl"
+                    prose-code:bg-zinc-50 prose-code:text-accent prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded-md prose-code:before:content-none prose-code:after:content-none
+                    prose-pre:bg-zinc-50 prose-pre:border prose-pre:border-zinc-100 prose-pre:rounded-lg prose-pre:p-8
+                    prose-img:rounded-lg prose-img:border prose-img:border-zinc-100
+                    prose-blockquote:border-l-accent prose-blockquote:bg-accent/5 prose-blockquote:py-2 prose-blockquote:px-8 prose-blockquote:rounded-r-lg"
                 >
                     <slot />
                 </div>
 
                 <!-- Back Action -->
-                <div
-                    class="mt-24 pt-12 border-t border-white/10 flex justify-between items-center"
-                >
+                <div class="mt-32 pt-12 border-t border-zinc-50 text-center">
                     <button
                         onclick="history.back()"
-                        class="px-8 py-4 border border-white/20 font-bold uppercase tracking-tight hover:bg-white hover:text-black transition-all"
+                        class="text-xs font-black tracking-[0.3em] uppercase inline-flex items-center gap-4 hover:text-accent group transition-colors"
                     >
-                        ← Step Back
+                        <span
+                            class="h-[1px] w-8 bg-zinc-100 group-hover:bg-accent group-hover:w-16 transition-all"
+                        ></span>
+                        Revert Stream
                     </button>
-                    <div
-                        class="hidden sm:flex items-center gap-3 text-zinc-600 font-mono text-[10px] uppercase tracking-widest"
-                    >
-                        <div
-                            class="w-2 h-2 rounded-full bg-accent animate-pulse"
-                        >
-                        </div>
-                        Data Integrity Verified
-                    </div>
                 </div>
             </article>
         </main>
