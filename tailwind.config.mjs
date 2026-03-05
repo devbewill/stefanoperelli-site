@@ -5,24 +5,31 @@ export default {
   theme: {
     extend: {
       colors: {
-        accent: '#00ffc3ff', // Acid Lime
-        surface: {
-          light: '#ffffff',
-          dark: '#000000',
-        },
+        accent: '#2E5BFF', // Cobalt Blue - High Contrast
+        background: '#ffffff',
+        foreground: '#000000',
+        zinc: {
+          50: '#fafafa',
+          100: '#f4f4f5',
+          200: '#e4e4e7',
+          300: '#d4d4d8',
+          400: '#a1a1aa',
+          500: '#71717a',
+          600: '#52525b',
+          700: '#3f3f46',
+          800: '#27272a',
+          900: '#18181b',
+        }
       },
       fontFamily: {
-        sans: ['"Geist Sans"', '"Helvetica Neue"', 'Helvetica', 'Arial', 'sans-serif'],
-        mono: ['"Geist Mono"', '"Space Mono"', '"JetBrains Mono"', 'monospace'],
+        sans: ['"Geist Sans"', 'system-ui', 'sans-serif'],
+        mono: ['"Geist Mono"', 'monospace'],
+      },
+      backgroundImage: {
+        'soft-glow': 'radial-gradient(circle at center, var(--tw-gradient-stops))',
       },
       letterSpacing: {
-        tighter: '-.04em',
-        tightest: '-.08em',
-        extreme: '-.12em',
-      },
-      fontSize: {
-        '10xl': '10rem',
-        'vw': '10vw',
+        tightest: '-.06em',
       }
     },
   },

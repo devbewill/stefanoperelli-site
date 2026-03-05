@@ -8,106 +8,132 @@ const t = CONTENT["en"];
 ---
 
 <Layout title="About | Stefano Perelli">
- <div
- class="min-h-screen bg-white dark:bg-black text-black dark:text-white font-sans selection:bg-accent selection:text-black"
- >
- <Header />
+    <div
+        class="min-h-screen bg-background text-white selection:bg-accent selection:text-black"
+    >
+        <div class="bg-mesh"></div>
+        <Header />
 
- <main class="max-w-[1800px] mx-auto w-full">
- <div class="grid grid-cols-1 lg:grid-cols-[2fr_1fr] w-full">
- <!-- Main Content -->
- <div
- class="p-4 md:p-8 xl:min-h-[calc(100vh-320px)] border-b-[8px] lg:border-b-0 lg:border-r-[16px] border-black dark:border-white flex flex-col gap-12"
- >
- <div>
- <h1
- class="text-6xl md:text-[8vw] font-black tracking-tight leading-none mb-12"
- >
- ABOUT.
- </h1>
- <p
- class="text-3xl md:text-5xl font-black tracking-tighter leading-[1.1] max-w-5xl"
- data-i18n="bio"
- >
- {t.bio}
- </p>
- </div>
+        <main class="max-w-[1800px] mx-auto px-4 sm:px-8 py-12 md:py-24">
+            <div
+                class="grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-16 xl:gap-24"
+            >
+                <!-- Main Content -->
+                <div class="space-y-24">
+                    <section class="space-y-8">
+                        <div
+                            class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-white/5 text-[10px] font-mono text-zinc-500 uppercase tracking-widest"
+                        >
+                            Identity Profile // 01
+                        </div>
+                        <h1
+                            class="text-6xl md:text-9xl font-black tracking-tighter leading-none mb-12 accent-gradient"
+                        >
+                            ABOUT<span class="text-white">.</span>
+                        </h1>
+                        <p
+                            class="text-2xl md:text-5xl font-black tracking-tighter leading-tight max-w-5xl text-zinc-300"
+                            data-i18n="bio"
+                        >
+                            {t.bio}
+                        </p>
+                    </section>
 
- <div
- class="space-y-12 mt-12 pt-12 border-t-[8px] border-black dark:border-white"
- >
- <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
- <div>
- <h2
- class="text-4xl md:text-5xl font-black tracking-tight mb-4"
- >
- Philosophy
- </h2>
- <p
- class="text-xl md:text-2xl font-bold tracking-tighter leading-tight opacity-80"
- >
- I believe in radical transparency, extreme
- continuous improvement, and the raw power of
- well-structured chaos. User-centric,
- data-driven, and utterly opposed to boring
- interfaces.
- </p>
- </div>
- <div>
- <h2
- class="text-4xl md:text-5xl font-black tracking-tight mb-4"
- >
- Background
- </h2>
- <p
- class="text-xl md:text-2xl font-bold tracking-tighter leading-tight opacity-80"
- >
- I am dedicated to building high-quality,
- brutalist-inspired digital products.
- Bridging the gap between absurdly complex
- engineering and ruthless business goals.
- </p>
- </div>
- </div>
- </div>
- </div>
+                    <div
+                        class="grid grid-cols-1 md:grid-cols-2 gap-12 pt-24 border-t border-white/10"
+                    >
+                        <article class="space-y-6">
+                            <h2
+                                class="text-3xl font-black tracking-tight text-white"
+                            >
+                                Philosophy
+                            </h2>
+                            <p
+                                class="text-lg font-medium tracking-tight leading-relaxed text-zinc-400"
+                            >
+                                I believe in radical transparency, extreme
+                                continuous improvement, and the raw power of
+                                well-structured chaos. User-centric,
+                                data-driven, and utterly opposed to boring
+                                interfaces.
+                            </p>
+                        </article>
+                        <article class="space-y-6">
+                            <h2
+                                class="text-3xl font-black tracking-tight text-white"
+                            >
+                                Background
+                            </h2>
+                            <p
+                                class="text-lg font-medium tracking-tight leading-relaxed text-zinc-400"
+                            >
+                                I am dedicated to building high-quality,
+                                high-performance digital products. Bridging the
+                                gap between complex engineering and ruthless
+                                business goals with a focus on technical
+                                excellence.
+                            </p>
+                        </article>
+                    </div>
+                </div>
 
- <!-- Sidebar -->
- <div class="p-4 md:p-8 flex flex-col justify-between">
- <div>
- <h2
- class="text-4xl md:text-6xl font-black tracking-tight mb-8"
- >
- CONTACT.
- </h2>
- <a
- href="mailto:sedprc@gmail.com"
- class="block text-2xl md:text-4xl font-black tracking-tight border-[6px] border-black dark:border-white py-6 px-4 text-center hover:bg-accent hover:text-black hover:border-accent transition-colors mb-6"
- >
- sedprc@gmail.com
- </a>
- <a
- href="https://linkedin.com/in/stefanoperelli/"
- target="_blank"
- class="block text-2xl md:text-4xl font-black tracking-tight border-[6px] border-black dark:border-white py-6 px-4 text-center hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-colors"
- >
- LinkedIn ↗
- </a>
- </div>
- </div>
- </div>
+                <!-- Sidebar/Contact -->
+                <aside class="space-y-12">
+                    <div class="glass-card p-12 space-y-8 sticky top-32">
+                        <div class="space-y-2">
+                            <h2
+                                class="text-xl font-black tracking-tight uppercase"
+                            >
+                                Get in Touch
+                            </h2>
+                            <p class="text-sm text-zinc-500 font-mono">
+                                Status: Awaiting Signal
+                            </p>
+                        </div>
 
- <div
- class="p-8 border-y-[8px] border-black dark:border-white mt-16 lg:mt-0"
- >
- <a
- href="/"
- class="inline-block text-3xl font-black tracking-tight bg-black text-white dark:bg-white dark:text-black px-6 py-4 hover:bg-accent hover:text-black dark:hover:bg-accent transition-colors"
- >
- ← BACK TO BASE
- </a>
- </div>
- </main>
- <Footer />
- </div>
+                        <div class="space-y-4">
+                            <a
+                                href="mailto:sedprc@gmail.com"
+                                class="block w-full text-center py-4 bg-white text-black font-bold uppercase tracking-tight hover:bg-accent hover:shadow-[0_0_20px_rgba(0,255,195,0.3)] transition-all"
+                            >
+                                Email Node
+                            </a>
+                            <a
+                                href="https://linkedin.com/in/stefanoperelli/"
+                                target="_blank"
+                                class="block w-full text-center py-4 border border-white/20 font-bold uppercase tracking-tight hover:bg-white/5 transition-all"
+                            >
+                                LinkedIn Link
+                            </a>
+                        </div>
+
+                        <div class="pt-8 border-t border-white/10">
+                            <div class="flex items-center gap-3">
+                                <div
+                                    class="w-1.5 h-1.5 rounded-full bg-accent animate-pulse"
+                                >
+                                </div>
+                                <span
+                                    class="text-[10px] font-mono uppercase tracking-widest text-zinc-500 text-center mx-auto"
+                                    >Milan Local Node // active</span
+                                >
+                            </div>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+
+            <div
+                class="mt-24 pt-12 border-t border-white/5 flex justify-center"
+            >
+                <a
+                    href="/"
+                    class="px-8 py-4 border border-white/20 font-bold uppercase tracking-tight hover:bg-white hover:text-black transition-all"
+                >
+                    Return to Home
+                </a>
+            </div>
+        </main>
+        <Footer />
+    </div>
 </Layout>

@@ -18,78 +18,90 @@ const formatDate = (date: Date) =>
 
 <Layout title="Experiments | Stefano Perelli">
     <div
-        class="min-h-screen bg-white dark:bg-black text-black dark:text-white font-sans selection:bg-accent selection:text-black"
+        class="min-h-screen bg-background text-white selection:bg-accent selection:text-black"
     >
+        <div class="bg-mesh"></div>
         <Header />
 
-        <main class="max-w-[1800px] mx-auto w-full">
-            <div
-                class="p-4 md:p-8 xl:min-h-[calc(100vh-400px)] border-b-[8px] border-black dark:border-white"
-            >
-                <h1
-                    class="text-6xl md:text-[8vw] font-black tracking-extreme leading-none mb-6"
+        <main class="max-w-[1800px] mx-auto px-4 sm:px-8 py-12 md:py-24">
+            <header class="mb-24 space-y-6">
+                <div
+                    class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-white/5 text-[10px] font-mono text-zinc-500 uppercase tracking-widest"
                 >
-                    EXPERIMENTS.
+                    Experimental Lab // Prototyping
+                </div>
+                <h1
+                    class="text-6xl md:text-9xl font-black tracking-tighter leading-none mb-6 accent-gradient"
+                >
+                    EXPERIMENTS<span class="text-white">.</span>
                 </h1>
                 <p
-                    class="text-2xl md:text-5xl font-black tracking-tighter leading-[1.1] max-w-5xl"
+                    class="text-2xl md:text-4xl text-zinc-400 font-bold tracking-tight max-w-4xl leading-tight"
                 >
                     Side projects, prototypes, and things I'm building or
                     exploring in the lab.
                 </p>
-            </div>
+            </header>
 
-            <div class="border-black dark:border-white">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {
                     experiments.map((exp) => (
                         <a
                             href={`/experiments/${exp.slug}/`}
-                            class="brutal-row block border-b-[8px] border-black dark:border-white p-4 md:p-8 relative group overflow-hidden"
+                            class="glass-card p-8 group flex flex-col justify-between h-full"
                         >
-                            <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 relative z-10">
-                                <div class="flex-1 w-full">
-                                    <div class="flex flex-col md:flex-row md:items-center gap-3 mb-1">
-                                        <span class="inline-block bg-accent text-black group-hover:bg-black group-hover:text-accent dark:group-hover:bg-black dark:group-hover:text-accent px-2 py-0.5 text-xs md:text-sm font-black tracking-tight whitespace-nowrap transition-colors">
-                                            EXP
-                                        </span>
-                                        <span class="text-xs md:text-sm font-black tracking-tight opacity-50 block md:hidden">
-                                            {formatDate(exp.data.pubDate)}
-                                        </span>
-                                    </div>
-                                    <h2 class="text-xl md:text-2xl lg:text-3xl font-bold tracking-tight leading-tight mt-1 max-w-[95%]">
-                                        {exp.data.title}
-                                    </h2>
-                                    <p class="text-xs md:text-sm font-medium tracking-normal mt-1 max-w-4xl opacity-80 leading-normal">
-                                        {exp.data.description}
-                                    </p>
-                                    <div class="flex flex-wrap gap-2 mt-4">
-                                        {exp.data.tags.map((tag) => (
-                                            <span class="text-[10px] md:text-xs font-bold tracking-normal px-2 py-1 border-2 border-black dark:border-white text-black dark:text-white group-hover:border-accent group-hover:text-accent dark:group-hover:border-accent dark:group-hover:text-accent transition-colors">
-                                                {tag}
-                                            </span>
-                                        ))}
-                                    </div>
-                                </div>
-                                <div class="hidden md:flex flex-row lg:flex-col items-center lg:items-end justify-between lg:justify-center shrink-0 text-right gap-4">
-                                    <span class="text-sm md:text-base font-black tracking-tight">
+                            <div class="space-y-4">
+                                <div class="flex items-center justify-between">
+                                    <span class="px-2 py-1 rounded bg-accent text-black text-[10px] font-black tracking-widest uppercase">
+                                        Exp
+                                    </span>
+                                    <span class="text-xs font-mono text-zinc-500">
                                         {formatDate(exp.data.pubDate)}
                                     </span>
-                                    <span class="activity-arrow text-2xl md:text-3xl opacity-20 font-black transition-transform">
-                                        →
-                                    </span>
                                 </div>
+                                <h2 class="text-2xl md:text-3xl font-bold tracking-tight group-hover:text-accent transition-colors">
+                                    {exp.data.title}
+                                </h2>
+                                <p class="text-zinc-400 text-sm leading-relaxed line-clamp-2">
+                                    {exp.data.description}
+                                </p>
+                                <div class="flex flex-wrap gap-2 pt-4">
+                                    {exp.data.tags.map((tag) => (
+                                        <span class="text-[10px] font-bold tracking-tight px-2 py-1 border border-white/10 rounded-md text-zinc-500 group-hover:border-accent/30 group-hover:text-accent/70 transition-colors">
+                                            {tag}
+                                        </span>
+                                    ))}
+                                </div>
+                            </div>
+                            <div class="mt-8 flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-zinc-500 group-hover:text-white transition-colors">
+                                Access Prototype
+                                <svg
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    class="w-4 h-4"
+                                    stroke="currentColor"
+                                    stroke-width="3"
+                                >
+                                    <path
+                                        d="M7 17L17 7M17 7H7M17 7V17"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                    />
+                                </svg>
                             </div>
                         </a>
                     ))
                 }
             </div>
 
-            <div class="p-8 border-b-[8px] border-black dark:border-white">
+            <div
+                class="mt-24 pt-12 border-t border-white/5 flex justify-center"
+            >
                 <a
                     href="/"
-                    class="inline-block text-3xl font-black tracking-tightest bg-black text-white dark:bg-white dark:text-black px-6 py-4 hover:bg-accent hover:text-black dark:hover:bg-accent transition-colors"
+                    class="px-8 py-4 border border-white/20 font-bold uppercase tracking-tight hover:bg-white hover:text-black transition-all"
                 >
-                    ← BACK TO BASE
+                    Return to Base
                 </a>
             </div>
         </main>

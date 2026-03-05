@@ -11,251 +11,165 @@ const t = CONTENT[lang];
 const blogPosts = await getCollection("blog");
 const experiments = await getCollection("experiments");
 
-const fromBlog = blogPosts.map((item) => ({
-    type: "POST",
-    title: item.data.title,
-    description: item.data.description,
-    link: `/blog/${item.slug}`,
-    date: item.data.pubDate,
-    external: false,
-}));
-
-const fromExperiments = experiments.map((item) => ({
-    type: "EXP",
-    title: item.data.title,
-    description: item.data.description,
-    link: `/experiments/${item.slug}`,
-    date: item.data.pubDate,
-    external: false,
-}));
-
-const fromNewslettersIt = CONTENT.it.newsletters.map((n) => ({
-    type: "NLTR",
-    title: n.title,
-    description: n.description ?? "",
-    link: n.link,
-    date: new Date(n.date),
-    external: true,
-}));
-
-const fromNewslettersEn = CONTENT.en.newsletters.map((n) => ({
-    type: "NLTR",
-    title: n.title,
-    description: n.description ?? "",
-    link: n.link,
-    date: new Date(n.date),
-    external: true,
-}));
-
-const sortByDate = (a, b) =>
-    new Date(b.date).getTime() - new Date(a.date).getTime();
-const itActivities = [...fromBlog, ...fromExperiments, ...fromNewslettersIt]
-    .sort(sortByDate)
-    .slice(0, 10);
-const enActivities = [...fromBlog, ...fromExperiments, ...fromNewslettersEn]
-    .sort(sortByDate)
-    .slice(0, 10);
+const allItems = [
+    ...blogPosts.map((p) => ({
+        ...p.data,
+        link: `/blog/${p.slug}`,
+        type: "POST",
+        external: false,
+    })),
+    ...experiments.map((e) => ({
+        ...e.data,
+        link: `/experiments/${e.slug}`,
+        type: "EXP",
+        external: false,
+    })),
+    ...CONTENT.en.newsletters.map((n) => ({
+        ...n,
+        date: new Date(n.date),
+        type: "NLTR",
+        external: true,
+    })),
+]
+    .sort(
+        (a, b) =>
+            b.pubDate?.valueOf() - a.pubDate?.valueOf() ||
+            b.date?.valueOf() - a.date?.valueOf(),
+    )
+    .slice(0, 8);
 
 const formatDate = (date: Date) =>
     new Date(date).toLocaleDateString("en-US", {
         month: "short",
+        day: "2-digit",
         year: "numeric",
-        day: "numeric",
     });
 ---
 
 <div
-    class="min-h-screen bg-white dark:bg-black text-black dark:text-white font-sans selection:bg-accent selection:text-black"
+    class="h-screen overflow-hidden bg-white text-zinc-900 font-sans selection:bg-accent selection:text-white flex flex-col"
 >
-    <Header />
-
-    <main class="max-w-[1800px] mx-auto w-full">
-        <!-- Grid Layout -->
-        <div class="grid grid-cols-1 xl:grid-cols-[1fr_2fr] w-full">
-            <!-- Sidebar: About & Now -->
-            <div
-                class="xl:border-r-[16px] border-b-[16px] xl:border-b-0 border-black dark:border-white p-4 md:p-8 xl:min-h-[calc(100vh-320px)] flex flex-col gap-16"
+    <!-- Clean Top Bar -->
+    <header class="p-8 md:p-12 flex justify-between items-start outline-none">
+        <div class="space-y-1">
+            <span
+                class="text-[10px] font-black tracking-[0.2em] uppercase text-zinc-300 block"
+                >Identity</span
             >
-                <!-- Bio -->
-                <div>
-                    <h2
-                        class="text-2xl md:text-3xl font-black tracking-tightest mb-3"
-                    >
-                        INFO.
-                    </h2>
-                    <p
-                        class="text-lg md:text-xl font-bold tracking-tight leading-[1.2]"
-                        data-i18n="bio"
-                    >
-                        {t.bio}
-                    </p>
-                </div>
+            <span class="text-sm font-bold tracking-tight text-zinc-600"
+                >Stefano Perelli</span
+            >
+        </div>
+        <nav class="flex gap-12">
+            <a
+                href="/about"
+                class="text-xs font-black tracking-widest uppercase hover:text-accent transition-colors"
+                >About</a
+            >
+            <a
+                href="/resume"
+                class="text-xs font-black tracking-widest uppercase hover:text-accent transition-colors"
+                >Resume</a
+            >
+        </nav>
+    </header>
 
-                <!-- Now -->
-                <div>
-                    <h2
-                        class="flex items-center gap-2 text-2xl md:text-3xl font-black tracking-tightest mb-3 border-t-[8px] border-black dark:border-white pt-4"
-                    >
-                        <span data-i18n="labels.now">{t.labels.now}</span>
-                        <span
-                            class="w-4 h-4 md:w-5 md:h-5 bg-accent rounded-full animate-bounce"
-                        ></span>
-                    </h2>
-                    <p
-                        class="text-lg md:text-xl font-bold tracking-tight leading-[1.2]"
-                        data-i18n="now"
-                    >
-                        {t.now}
-                    </p>
-                </div>
+    <main
+        class="flex-1 flex flex-col max-w-5xl mx-auto w-full px-8 pb-4 overflow-hidden"
+    >
+        <!-- Brand Header -->
+        <div class="mb-12">
+            <h1
+                class="text-7xl md:text-9xl font-black tracking-tightest leading-none text-zinc-900"
+            >
+                RAWMODE<span class="text-accent">.</span>
+            </h1>
+            <p
+                class="text-zinc-400 font-medium mt-4 max-w-lg text-lg leading-snug"
+                data-i18n="bio"
+            >
+                {t.bio}
+            </p>
+        </div>
 
-                <!-- Links -->
-                <div class="mt-auto">
-                    <a
-                        href="mailto:sedprc@gmail.com"
-                        class="block w-full text-center text-xl font-black tracking-tightest border-[6px] border-black dark:border-white py-3 hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-colors mb-4"
-                    >
-                        EMAIL ↗
-                    </a>
-                    <a
-                        href="https://linkedin.com/in/stefanoperelli/"
-                        target="_blank"
-                        class="block w-full text-center text-xl font-black tracking-tightest border-[6px] border-black dark:border-white py-3 hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-colors"
-                    >
-                        LINKEDIN ↗
-                    </a>
-                </div>
+        <!-- Single Column Activities -->
+        <div class="flex-1 flex flex-col justify-start gap-1 overflow-hidden">
+            <div class="flex items-center gap-4 mb-4">
+                <span
+                    class="text-[11px] font-black tracking-[0.3em] uppercase text-accent"
+                    >Latest Outputs</span
+                >
+                <div class="h-[1px] flex-1 bg-zinc-50"></div>
             </div>
 
-            <!-- Main Content: Activity -->
-            <div
-                class="p-0 border-l-[16px] border-black dark:border-white -ml-[16px]"
-            >
-                <div
-                    class="p-4 md:p-6 border-b-[8px] border-black dark:border-white"
-                >
-                    <h2
-                        class="text-3xl md:text-5xl font-black tracking-tight leading-none uppercase"
-                        data-i18n="labels.activities"
-                    >
-                        {t.labels.activities}
-                    </h2>
-                </div>
-
-                <!-- IT -->
-                <div class="lang-content-it hidden">
-                    {
-                        itActivities.map((activity) => (
-                            <a
-                                href={activity.link}
-                                target={activity.external ? "_blank" : "_self"}
-                                rel={
-                                    activity.external
-                                        ? "noopener noreferrer"
-                                        : ""
-                                }
-                                class="brutal-row block border-b-[4px] border-black dark:border-white p-3 md:p-4 relative group overflow-hidden"
-                            >
-                                <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 relative z-10">
-                                    <div class="flex-1 w-full">
-                                        <div class="flex flex-col md:flex-row md:items-center gap-3 mb-1">
-                                            <span class="inline-block bg-black text-white dark:bg-white dark:text-black group-hover:bg-black group-hover:text-accent dark:group-hover:bg-black dark:group-hover:text-accent px-2 py-0.5 text-xs md:text-sm font-black tracking-tight whitespace-nowrap">
-                                                {activity.type}
-                                            </span>
-                                            <span class="text-xs md:text-sm font-black tracking-tight opacity-50 block md:hidden">
-                                                {formatDate(activity.date)}
-                                            </span>
-                                        </div>
-                                        <div class="flex items-center gap-2">
-                                            <h3 class="text-xl md:text-2xl lg:text-3xl font-bold tracking-tight leading-tight mt-1 max-w-[95%]">
-                                                {activity.title}
-                                            </h3>
-                                        </div>
-                                        {activity.description && (
-                                            <p class="text-xs md:text-sm font-medium tracking-normal mt-1 max-w-4xl opacity-80 leading-normal">
-                                                {activity.description}
-                                            </p>
-                                        )}
-                                    </div>
-                                    <div class="hidden md:flex flex-row lg:flex-col items-center lg:items-end justify-between lg:justify-center shrink-0 text-right gap-4">
-                                        <span class="text-sm md:text-base font-black tracking-tight">
-                                            {formatDate(activity.date)}
-                                        </span>
-                                        {activity.external && (
-                                            <span class="activity-arrow text-2xl md:text-3xl opacity-20 font-black transition-transform">
-                                                ↗
-                                            </span>
-                                        )}
-                                        {!activity.external && (
-                                            <span class="activity-arrow text-2xl md:text-3xl opacity-20 font-black transition-transform">
-                                                →
-                                            </span>
-                                        )}
-                                    </div>
+            <div class="space-y-1 overflow-y-auto pr-2 no-scrollbar">
+                {
+                    allItems.map((item) => (
+                        <a
+                            href={item.link}
+                            target={item.external ? "_blank" : "_self"}
+                            class="group flex flex-col md:flex-row md:items-center justify-between py-4 transition-all duration-300 hover:pl-4"
+                        >
+                            <div class="flex items-center gap-6">
+                                <div class="flex flex-col md:flex-row md:items-center gap-2 md:gap-4">
+                                    <span class="bg-zinc-100 text-zinc-900 text-[10px] font-black px-2 py-1 rounded group-hover:bg-accent group-hover:text-white transition-colors">
+                                        {item.type}
+                                    </span>
+                                    <h3 class="text-xl md:text-3xl font-black tracking-tight group-hover:text-accent transition-colors">
+                                        {item.title}
+                                    </h3>
                                 </div>
-                            </a>
-                        ))
-                    }
-                </div>
-
-                <!-- EN -->
-                <div class="lang-content-en">
-                    {
-                        enActivities.map((activity) => (
-                            <a
-                                href={activity.link}
-                                target={activity.external ? "_blank" : "_self"}
-                                rel={
-                                    activity.external
-                                        ? "noopener noreferrer"
-                                        : ""
-                                }
-                                class="brutal-row block border-b-[4px] border-black dark:border-white p-3 md:p-4 relative group overflow-hidden"
-                            >
-                                <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 relative z-10">
-                                    <div class="flex-1 w-full">
-                                        <div class="flex flex-col md:flex-row md:items-center gap-3 mb-1">
-                                            <span class="inline-block bg-black text-white dark:bg-white dark:text-black group-hover:bg-black group-hover:text-accent dark:group-hover:bg-black dark:group-hover:text-accent px-2 py-0.5 text-xs md:text-sm font-black tracking-tight whitespace-nowrap">
-                                                {activity.type}
-                                            </span>
-                                            <span class="text-xs md:text-sm font-black tracking-tight opacity-50 block md:hidden">
-                                                {formatDate(activity.date)}
-                                            </span>
-                                        </div>
-                                        <div class="flex items-center gap-2">
-                                            <h3 class="text-xl md:text-2xl lg:text-3xl font-bold tracking-tight leading-tight mt-1 max-w-[95%]">
-                                                {activity.title}
-                                            </h3>
-                                        </div>
-                                        {activity.description && (
-                                            <p class="text-xs md:text-sm font-medium tracking-normal mt-1 max-w-4xl opacity-80 leading-normal">
-                                                {activity.description}
-                                            </p>
-                                        )}
-                                    </div>
-                                    <div class="hidden md:flex flex-row lg:flex-col items-center lg:items-end justify-between lg:justify-center shrink-0 text-right gap-4">
-                                        <span class="text-sm md:text-base font-black tracking-tight">
-                                            {formatDate(activity.date)}
-                                        </span>
-                                        {activity.external && (
-                                            <span class="activity-arrow text-2xl md:text-3xl opacity-20 font-black transition-transform">
-                                                ↗
-                                            </span>
-                                        )}
-                                        {!activity.external && (
-                                            <span class="activity-arrow text-2xl md:text-3xl opacity-20 font-black transition-transform">
-                                                →
-                                            </span>
-                                        )}
-                                    </div>
-                                </div>
-                            </a>
-                        ))
-                    }
-                </div>
+                            </div>
+                            <div class="mt-1 md:mt-0 md:text-right">
+                                <span class="text-xs md:text-sm font-mono font-bold text-zinc-400 group-hover:text-zinc-900 tabular-nums uppercase">
+                                    {formatDate(item.pubDate || item.date)}
+                                </span>
+                            </div>
+                        </a>
+                    ))
+                }
             </div>
         </div>
-    </main>
 
-    <Footer />
+        <!-- Integrated Small Footer -->
+        <footer
+            class="mt-auto py-8 flex flex-col md:flex-row justify-between items-center gap-4 border-t border-zinc-50 opacity-50"
+        >
+            <div class="flex items-center gap-3">
+                <div class="w-1.5 h-1.5 rounded-full bg-accent animate-pulse">
+                </div>
+                <span
+                    class="text-[10px] font-mono uppercase text-zinc-400 tracking-widest"
+                    >Milan / Buffer Active</span
+                >
+            </div>
+            <div class="flex gap-8 items-center">
+                <a
+                    href="https://linkedin.com/in/stefanoperelli/"
+                    target="_blank"
+                    class="text-[10px] font-black tracking-widest uppercase hover:text-accent transition-colors"
+                    >LinkedIn</a
+                >
+                <a
+                    href="mailto:sedprc@gmail.com"
+                    class="text-[10px] font-black tracking-widest uppercase hover:text-accent transition-colors"
+                    >Email</a
+                >
+                <span
+                    class="text-[10px] font-mono text-zinc-300 uppercase tracking-widest"
+                    >© 2026 Rawmode</span
+                >
+            </div>
+        </footer>
+    </main>
 </div>
+
+<style>
+    .no-scrollbar::-webkit-scrollbar {
+        display: none;
+    }
+    .no-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+</style>

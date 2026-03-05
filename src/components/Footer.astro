@@ -5,31 +5,39 @@ const lang = "en";
 const t = CONTENT[lang];
 ---
 
-<footer
- class="border-t-[16px] border-black dark:border-white w-full bg-black text-white dark:bg-white dark:text-black"
->
- <div
- class="px-4 py-8 md:px-8 md:py-16 max-w-[1800px] mx-auto flex flex-col md:flex-row justify-between items-center gap-8"
- >
- <span
- class="text-2xl md:text-4xl font-black tracking-tighter"
- data-i18n="labels.footer"
- >
- {t.labels.footer}
- </span>
- <div class="flex flex-wrap gap-4 md:gap-8">
- <a
- href="#"
- class="text-2xl md:text-4xl font-black tracking-tighter hover:text-accent transition-colors"
- >
- CV_PDF ↗
- </a>
- <a
- href="https://www.linkedin.com/in/stefanoperelli/"
- class="text-2xl md:text-4xl font-black tracking-tighter hover:text-accent transition-colors"
- >
- LINKEDIN ↗
- </a>
- </div>
- </div>
+<footer class="py-12 border-t border-zinc-50 bg-white">
+    <div
+        class="max-w-5xl mx-auto px-8 flex flex-col md:flex-row justify-between items-center gap-6 opacity-60 hover:opacity-100 transition-opacity"
+    >
+        <div class="flex items-center gap-3">
+            <div class="w-1.5 h-1.5 rounded-full bg-accent animate-pulse"></div>
+            <span
+                class="text-[10px] font-mono uppercase text-zinc-400 tracking-widest"
+                >Milan / Node Active</span
+            >
+        </div>
+
+        <div class="flex gap-8 items-center">
+            <a
+                href="/"
+                class="text-[10px] font-black tracking-widest uppercase hover:text-accent transition-colors"
+                >Home</a
+            >
+            <a
+                href="https://linkedin.com/in/stefanoperelli/"
+                target="_blank"
+                class="text-[10px] font-black tracking-widest uppercase hover:text-accent transition-colors"
+                >LinkedIn</a
+            >
+            <a
+                href="mailto:sedprc@gmail.com"
+                class="text-[10px] font-black tracking-widest uppercase hover:text-accent transition-colors"
+                >Contact</a
+            >
+            <span
+                class="text-[10px] font-mono text-zinc-300 uppercase tracking-widest"
+                >© 2026 Rawmode</span
+            >
+        </div>
+    </div>
 </footer>
