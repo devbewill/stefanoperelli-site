@@ -66,10 +66,10 @@ const formatDate = (date: Date) =>
               href={item.link}
               target={item.isExternal ? "_blank" : undefined}
               rel={item.isExternal ? "noopener noreferrer" : undefined}
-              class="group flex items-start justify-between py-2 transition-all duration-300"
+              class="group flex items-start justify-between py-2 md:py-2 transition-all duration-300 hover:bg-zinc-50 rounded-lg px-2 -mx-2"
             >
-              <div class="flex items-center gap-6 flex-1 min-w-0">
-                <span class="text-[10px] font-mono font-bold text-zinc-300 group-hover:text-accent transition-colors w-6 shrink-0">
+              <div class="flex items-center gap-3 md:gap-6 flex-1 min-w-0">
+                <span class="hidden md:block text-[10px] font-mono font-bold text-zinc-300 group-hover:text-accent transition-colors w-6 shrink-0">
                   {(index + 1).toString().padStart(2, "0")}
                 </span>
                 <span
@@ -78,7 +78,7 @@ const formatDate = (date: Date) =>
                   {TAG_STYLES[item.type as keyof typeof TAG_STYLES]?.label ||
                     item.type}
                 </span>
-                <h3 class="text-xl font-black tracking-tight text-zinc-900 group-hover:text-accent transition-colors line-clamp-2 leading-tight">
+                <h3 class="text-base md:text-xl font-black tracking-tight text-zinc-900 group-hover:text-accent transition-colors line-clamp-2 leading-tight flex-1 min-w-0">
                   {item.title}
                   {item.isExternal && (
                     <span class="ml-2 text-accent opacity-40 group-hover:opacity-100 transition-opacity">
@@ -87,14 +87,14 @@ const formatDate = (date: Date) =>
                   )}
                 </h3>
               </div>
-              <div class="flex items-center gap-6 shrink-0 self-center">
+              <div class="flex items-center gap-2 md:gap-6 shrink-0 self-center mt-1 md:mt-0">
                 <span class="text-xs font-mono font-bold text-zinc-300 group-hover:text-zinc-900 transition-colors tabular-nums uppercase">
                   {formatDate(item.pubDate || item.date)}
                 </span>
                 <svg
                   viewBox="0 0 24 24"
                   fill="none"
-                  class="w-4 h-4 text-accent opacity-0 group-hover:opacity-100 transition-all transform -translate-x-3 group-hover:translate-x-0"
+                  class="w-4 h-4 text-accent opacity-0 md:opacity-0 group-hover:opacity-100 transition-all transform -translate-x-3 md:-translate-x-3 group-hover:translate-x-0"
                   stroke="currentColor"
                   stroke-width="4"
                 >
