@@ -5,70 +5,70 @@ import { getCollection } from "astro:content";
 import { TAG_STYLES } from "../../constants";
 
 const posts = (
-    await getCollection(
-        "entries",
-        ({ data }) => data.type === "post" && data.draft !== true,
-    )
+  await getCollection(
+    "entries",
+    ({ data }) => data.type === "post" && data.draft !== true,
+  )
 ).sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 
 const formatDate = (date: Date) =>
-    new Date(date).toLocaleDateString("en-US", {
-        month: "2-digit",
-        day: "2-digit",
-        year: "2-digit",
-    });
+  new Date(date).toLocaleDateString("en-US", {
+    month: "2-digit",
+    day: "2-digit",
+    year: "2-digit",
+  });
 ---
 
 <Layout title="Journal | Synthetic Mess">
-    <div
-        class="min-h-screen bg-white text-zinc-900 font-sans selection:bg-accent selection:text-white flex flex-col relative overflow-x-hidden"
+  <div
+    class="min-h-screen bg-white text-zinc-900 font-sans selection:bg-accent selection:text-white flex flex-col relative overflow-x-hidden"
+  >
+    <GlobalUI />
+
+    <main
+      class="flex-1 flex flex-col max-w-3xl mx-auto w-full px-4 pt-64 pb-32"
     >
-        <GlobalUI />
-
-        <main
-            class="flex-1 flex flex-col max-w-3xl mx-auto w-full px-4 pt-64 pb-32"
+      <header
+        class="mb-12 flex justify-between items-end border-b-2 border-zinc-100 pb-3"
+      >
+        <span
+          class="text-[11px] font-black tracking-[0.4em] uppercase text-zinc-900"
+          >Archive Items // Journal</span
         >
-            <header
-                class="mb-12 flex justify-between items-end border-b-2 border-zinc-100 pb-3"
-            >
-                <span
-                    class="text-[11px] font-black tracking-[0.4em] uppercase text-zinc-900"
-                    >Archive Items // Journal</span
-                >
-                <span class="text-[10px] font-mono font-bold text-zinc-400"
-                    >INDEX_2026</span
-                >
-            </header>
+        <span class="text-[10px] font-mono font-bold text-zinc-400"
+          >INDEX_2026</span
+        >
+      </header>
 
-            <div class="flex flex-col space-y-0.5">
-                {
-                    posts.map((post, index) => (
-                        <a
-                            href={`/entries/${post.slug}/`}
-                            class="group flex items-center justify-between py-1.5 transition-all duration-300"
-                        >
-                            <div class="flex items-center gap-6 overflow-hidden">
-                                <span class="text-[10px] font-mono font-bold text-zinc-300 group-hover:text-accent transition-colors w-6">
-                                    {(index + 1).toString().padStart(2, "0")}
-                                </span>
-                                <span
-                                    class={`text-[10px] font-black px-2 py-0.5 rounded uppercase tracking-tighter w-10 text-center group-hover:text-white transition-all ${TAG_STYLES.post.bg} ${TAG_STYLES.post.text} ${TAG_STYLES.post.hover}`}
-                                >
-                                    {TAG_STYLES.post.label}
-                                </span>
-                                <h3 class="text-xl md:text-2xl font-black tracking-tighter text-zinc-900 group-hover:text-accent transition-colors truncate">
-                                    {post.data.title}
-                                </h3>
-                            </div>
-                            <div class="flex items-center gap-6 shrink-0">
-                                <span class="text-xs font-mono font-bold text-zinc-300 group-hover:text-zinc-900 transition-colors tabular-nums uppercase">
-                                    {formatDate(post.data.pubDate)}
-                                </span>
-                            </div>
-                        </a>
-                    ))
-                }
-            </div>
-        </main>
-    </div>
+      <div class="flex flex-col space-y-0.5">
+        {
+          posts.map((post, index) => (
+            <a
+              href={`/entries/${post.slug}/`}
+              class="group flex items-center justify-between py-1.5 transition-all duration-300"
+            >
+              <div class="flex items-center gap-6 overflow-hidden">
+                <span class="text-[10px] font-mono font-bold text-zinc-300 group-hover:text-accent transition-colors w-6">
+                  {(index + 1).toString().padStart(2, "0")}
+                </span>
+                <span
+                  class={`text-[10px] font-black px-2 py-0.5 rounded uppercase tracking-tighter w-10 text-center group-hover:text-white transition-all ${TAG_STYLES.post.bg} ${TAG_STYLES.post.text} ${TAG_STYLES.post.hover}`}
+                >
+                  {TAG_STYLES.post.label}
+                </span>
+                <h3 class="text-xl md:text-2xl font-black tracking-tighter text-zinc-900 group-hover:text-accent transition-colors truncate">
+                  {post.data.title}
+                </h3>
+              </div>
+              <div class="flex items-center gap-6 shrink-0">
+                <span class="text-xs font-mono font-bold text-zinc-300 group-hover:text-zinc-900 transition-colors tabular-nums uppercase">
+                  {formatDate(post.data.pubDate)}
+                </span>
+              </div>
+            </a>
+          ))
+        }
+      </div>
+    </main>
+  </div>
 </Layout>

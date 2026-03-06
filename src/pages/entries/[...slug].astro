@@ -4,13 +4,13 @@ import EntryLayout from "../../layouts/EntryLayout.astro";
 import { render } from "astro:content";
 
 export async function getStaticPaths() {
-    const entries = await getCollection("entries", ({ data }) => {
-        return data.type !== "link"; // Links don't have separate pages
-    });
-    return entries.map((entry) => ({
-        params: { slug: entry.slug },
-        props: entry,
-    }));
+  const entries = await getCollection("entries", ({ data }) => {
+    return data.type !== "link"; // Links don't have separate pages
+  });
+  return entries.map((entry) => ({
+    params: { slug: entry.slug },
+    props: entry,
+  }));
 }
 type Props = CollectionEntry<"entries">;
 
@@ -19,5 +19,5 @@ const { Content } = await render(entry);
 ---
 
 <EntryLayout {...entry.data}>
-    <Content />
+  <Content />
 </EntryLayout>

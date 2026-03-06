@@ -9,70 +9,70 @@ const { title, description, pubDate, heroImage, type } = Astro.props;
 ---
 
 <Layout title={`${title} | Synthetic Mess`}>
-    <div
-        class="min-h-screen bg-white text-zinc-900 font-sans selection:bg-accent selection:text-white flex flex-col relative"
-    >
-        <GlobalUI type={type} />
+  <div
+    class="min-h-screen bg-white text-zinc-900 font-sans selection:bg-accent selection:text-white flex flex-col relative"
+  >
+    <GlobalUI type={type} />
 
-        <main class="max-w-4xl mx-auto px-8 pt-64 pb-32 w-full">
-            <article>
-                <header class="mb-16 md:mb-24">
-                    <div class="flex items-center gap-4 mb-4">
-                        <span
-                            class="text-[10px] font-black tracking-[0.4em] uppercase text-accent"
-                        >
-                            {
-                                type === "post"
-                                    ? "Transmission // Insight"
-                                    : "Artifact // Project"
-                            }
-                        </span>
-                        <div class="h-[1px] flex-1 bg-zinc-50"></div>
-                        <time
-                            datetime={pubDate.toISOString()}
-                            class="text-[10px] font-mono font-bold text-zinc-400"
-                        >
-                            {
-                                pubDate.toLocaleDateString("en-us", {
-                                    year: "numeric",
-                                    month: "short",
-                                    day: "numeric",
-                                })
-                            }
-                        </time>
-                    </div>
+    <main class="max-w-4xl mx-auto px-8 pt-64 pb-32 w-full">
+      <article>
+        <header class="mb-16 md:mb-24">
+          <div class="flex items-center gap-4 mb-4">
+            <span
+              class="text-[10px] font-black tracking-[0.4em] uppercase text-accent"
+            >
+              {
+                type === "post"
+                  ? "Transmission // Insight"
+                  : "Artifact // Project"
+              }
+            </span>
+            <div class="h-[1px] flex-1 bg-zinc-50"></div>
+            <time
+              datetime={pubDate.toISOString()}
+              class="text-[10px] font-mono font-bold text-zinc-400"
+            >
+              {
+                pubDate.toLocaleDateString("en-us", {
+                  year: "numeric",
+                  month: "short",
+                  day: "numeric",
+                })
+              }
+            </time>
+          </div>
 
-                    <h1
-                        class="text-4xl md:text-7xl font-black tracking-tightest leading-[0.9] text-zinc-900 mb-8 uppercase"
-                    >
-                        {title}
-                    </h1>
+          <h1
+            class="text-4xl md:text-7xl font-black tracking-tightest leading-[0.9] text-zinc-900 mb-8 uppercase"
+          >
+            {title}
+          </h1>
 
-                    {
-                        description && (
-                            <p class="text-xl md:text-2xl text-zinc-400 font-medium leading-relaxed max-w-2xl">
-                                {description}
-                            </p>
-                        )
-                    }
-                </header>
+          {
+            description && (
+              <p class="text-xl md:text-2xl text-zinc-400 font-medium leading-relaxed max-w-2xl">
+                {description}
+              </p>
+            )
+          }
+        </header>
 
-                {
-                    heroImage && (
-                        <div class="mb-16 md:mb-24 rounded-sm overflow-hidden border border-zinc-100 shadow-sm">
-                            <img
-                                width={1600}
-                                height={800}
-                                src={heroImage}
-                                alt=""
-                                class="w-full object-cover max-h-[60vh] grayscale hover:grayscale-0 transition-all duration-1000"
-                            />
-                        </div>
-                    )
-                }
+        {
+          heroImage && (
+            <div class="mb-16 md:mb-24 rounded-sm overflow-hidden border border-zinc-100 shadow-sm">
+              <img
+                width={1600}
+                height={800}
+                src={heroImage}
+                alt=""
+                class="w-full object-cover max-h-[60vh] grayscale hover:grayscale-0 transition-all duration-1000"
+              />
+            </div>
+          )
+        }
 
-                <div
-                    class="prose prose-zinc max-w-none
+        <div
+          class="prose prose-zinc max-w-none
                     prose-h2:text-zinc-900 prose-h2:font-black prose-h2:tracking-tight prose-h2:text-3xl prose-h2:uppercase
                     prose-h3:text-zinc-900 prose-h3:font-bold prose-h3:text-xl
                     prose-p:text-zinc-600 prose-p:text-lg prose-p:leading-relaxed
@@ -82,22 +82,22 @@ const { title, description, pubDate, heroImage, type } = Astro.props;
                     prose-pre:bg-zinc-50 prose-pre:border prose-pre:border-zinc-100 prose-pre:rounded-sm prose-pre:p-8
                     prose-img:rounded-sm prose-img:border prose-img:border-zinc-100
                     prose-blockquote:border-l-accent prose-blockquote:bg-accent/5 prose-blockquote:py-2 prose-blockquote:px-8 prose-blockquote:rounded-r-sm"
-                >
-                    <slot />
-                </div>
+        >
+          <slot />
+        </div>
 
-                <div class="mt-32 pt-12 border-t border-zinc-50 text-center">
-                    <button
-                        onclick="history.back()"
-                        class="text-xs font-black tracking-[0.3em] uppercase inline-flex items-center gap-4 hover:text-accent group transition-colors"
-                    >
-                        <span
-                            class="h-[1px] w-8 bg-zinc-100 group-hover:bg-accent group-hover:w-16 transition-all"
-                        ></span>
-                        Revert Stream
-                    </button>
-                </div>
-            </article>
-        </main>
-    </div>
+        <div class="mt-32 pt-12 border-t border-zinc-50 text-center">
+          <button
+            onclick="history.back()"
+            class="text-xs font-black tracking-[0.3em] uppercase inline-flex items-center gap-4 hover:text-accent group transition-colors"
+          >
+            <span
+              class="h-[1px] w-8 bg-zinc-100 group-hover:bg-accent group-hover:w-16 transition-all"
+            ></span>
+            Revert Stream
+          </button>
+        </div>
+      </article>
+    </main>
+  </div>
 </Layout>

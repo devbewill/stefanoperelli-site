@@ -3,121 +3,112 @@ import { CONTENT, TAG_STYLES } from "../constants";
 import { getCollection } from "astro:content";
 import GlobalUI from "../components/GlobalUI.astro";
 
-const lang = "en";
-const t = CONTENT[lang];
+const t = CONTENT;
 
 const entries = await getCollection("entries", ({ data }) => {
-    return data.draft !== true;
+  return data.draft !== true;
 });
 
 const allItems = [
-    ...entries.map((entry) => ({
-        ...entry.data,
-        slug: entry.slug,
-        link:
-            entry.data.type === "link"
-                ? entry.data.url
-                : `/entries/${entry.slug}`,
-        isExternal: entry.data.type === "link",
-    })),
-    ...CONTENT.en.newsletters.map((n) => ({
-        ...n,
-        date: new Date(n.date),
-        type: "link", // Newsletter is effectively a link
-        link: n.link || "#",
-        isExternal: true,
-        pubDate: new Date(n.date),
-    })),
+  ...entries.map((entry) => ({
+    ...entry.data,
+    slug: entry.slug,
+    link:
+      entry.data.type === "link" ? entry.data.url : `/entries/${entry.slug}`,
+    isExternal: entry.data.type === "link",
+  })),
+  ...CONTENT.newsletters.map((n) => ({
+    ...n,
+    date: new Date(n.date),
+    type: "link", // Newsletter is effectively a link
+    link: n.link || "#",
+    isExternal: true,
+    pubDate: new Date(n.date),
+  })),
 ]
-    .sort(
-        (a, b) =>
-            (b.pubDate || b.date).valueOf() - (a.pubDate || a.date).valueOf(),
-    )
-    .slice(0, 20);
+  .sort(
+    (a, b) => (b.pubDate || b.date).valueOf() - (a.pubDate || a.date).valueOf(),
+  )
+  .slice(0, 20);
 
 const formatDate = (date: Date) =>
-    new Date(date).toLocaleDateString("en-US", {
-        month: "2-digit",
-        day: "2-digit",
-        year: "2-digit",
-    });
+  new Date(date).toLocaleDateString("en-US", {
+    month: "2-digit",
+    day: "2-digit",
+    year: "2-digit",
+  });
 ---
 
 <div
-    class="h-screen w-full bg-white text-zinc-900 font-sans selection:bg-accent selection:text-white overflow-hidden relative flex flex-col"
+  class="h-screen w-full bg-white text-zinc-900 font-sans selection:bg-accent selection:text-white overflow-hidden relative flex flex-col"
 >
-    <GlobalUI />
+  <GlobalUI />
 
-    <!-- Central Focus Layer -->
-    <main class="flex-1 flex flex-col justify-center items-center z-10">
-        <div class="w-full max-w-3xl px-4">
-            <div
-                class="mb-10 flex justify-between items-end border-b-2 border-zinc-100 pb-3"
+  <!-- Central Focus Layer -->
+  <main class="flex-1 flex flex-col justify-center items-center z-10">
+    <div class="w-full max-w-3xl px-4">
+      <div
+        class="mb-10 flex justify-between items-end border-b-2 border-zinc-100 pb-3"
+      >
+        <span
+          class="text-[11px] font-black tracking-[0.4em] uppercase text-zinc-900"
+          >Buffer Outputs // 01—20</span
+        >
+        <span class="text-[10px] font-mono font-bold text-zinc-400"
+          >SESSION_2026</span
+        >
+      </div>
+
+      <div class="flex flex-col space-y-0.5">
+        {
+          allItems.map((item, index) => (
+            <a
+              href={item.link}
+              target={item.isExternal ? "_blank" : undefined}
+              rel={item.isExternal ? "noopener noreferrer" : undefined}
+              class="group flex items-center justify-between py-1.5 transition-all duration-300"
             >
+              <div class="flex items-center gap-6 overflow-hidden flex-1">
+                <span class="text-[10px] font-mono font-bold text-zinc-300 group-hover:text-accent transition-colors w-6">
+                  {(index + 1).toString().padStart(2, "0")}
+                </span>
                 <span
-                    class="text-[11px] font-black tracking-[0.4em] uppercase text-zinc-900"
-                    >Buffer Outputs // 01—20</span
+                  class={`text-[10px] font-black px-2 py-0.5 rounded uppercase tracking-tighter w-10 text-center group-hover:text-white transition-all ${TAG_STYLES[item.type as keyof typeof TAG_STYLES]?.bg || "bg-zinc-100"} ${TAG_STYLES[item.type as keyof typeof TAG_STYLES]?.text || "text-zinc-400"} ${TAG_STYLES[item.type as keyof typeof TAG_STYLES]?.hover || "group-hover:bg-zinc-400"}`}
                 >
-                <span class="text-[10px] font-mono font-bold text-zinc-400"
-                    >SESSION_2026</span
+                  {TAG_STYLES[item.type as keyof typeof TAG_STYLES]?.label ||
+                    item.type}
+                </span>
+                <h3 class="text-xl md:text-2xl font-black tracking-tighter text-zinc-900 group-hover:text-accent transition-colors truncate">
+                  {item.title}
+                  {item.isExternal && (
+                    <span class="ml-2 text-accent opacity-40 group-hover:opacity-100 transition-opacity">
+                      ↗
+                    </span>
+                  )}
+                </h3>
+              </div>
+              <div class="flex items-center gap-6 shrink-0">
+                <span class="text-xs font-mono font-bold text-zinc-300 group-hover:text-zinc-900 transition-colors tabular-nums uppercase">
+                  {formatDate(item.pubDate || item.date)}
+                </span>
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  class="w-4 h-4 text-accent opacity-0 group-hover:opacity-100 transition-all transform -translate-x-3 group-hover:translate-x-0"
+                  stroke="currentColor"
+                  stroke-width="4"
                 >
-            </div>
-
-            <div class="flex flex-col space-y-0.5">
-                {
-                    allItems.map((item, index) => (
-                        <a
-                            href={item.link}
-                            target={item.isExternal ? "_blank" : undefined}
-                            rel={
-                                item.isExternal
-                                    ? "noopener noreferrer"
-                                    : undefined
-                            }
-                            class="group flex items-center justify-between py-1.5 transition-all duration-300"
-                        >
-                            <div class="flex items-center gap-6 overflow-hidden">
-                                <span class="text-[10px] font-mono font-bold text-zinc-300 group-hover:text-accent transition-colors w-6">
-                                    {(index + 1).toString().padStart(2, "0")}
-                                </span>
-                                <span
-                                    class={`text-[10px] font-black px-2 py-0.5 rounded uppercase tracking-tighter w-10 text-center group-hover:text-white transition-all ${TAG_STYLES[item.type as keyof typeof TAG_STYLES]?.bg || "bg-zinc-100"} ${TAG_STYLES[item.type as keyof typeof TAG_STYLES]?.text || "text-zinc-400"} ${TAG_STYLES[item.type as keyof typeof TAG_STYLES]?.hover || "group-hover:bg-zinc-400"}`}
-                                >
-                                    {TAG_STYLES[
-                                        item.type as keyof typeof TAG_STYLES
-                                    ]?.label || item.type}
-                                </span>
-                                <h3 class="text-xl md:text-2xl font-black tracking-tighter text-zinc-900 group-hover:text-accent transition-colors truncate">
-                                    {item.title}
-                                    {item.isExternal && (
-                                        <span class="ml-2 text-accent opacity-40 group-hover:opacity-100 transition-opacity">
-                                            ↗
-                                        </span>
-                                    )}
-                                </h3>
-                            </div>
-                            <div class="flex items-center gap-6 shrink-0">
-                                <span class="text-xs font-mono font-bold text-zinc-300 group-hover:text-zinc-900 transition-colors tabular-nums uppercase">
-                                    {formatDate(item.pubDate || item.date)}
-                                </span>
-                                <svg
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    class="w-4 h-4 text-accent opacity-0 group-hover:opacity-100 transition-all transform -translate-x-3 group-hover:translate-x-0"
-                                    stroke="currentColor"
-                                    stroke-width="4"
-                                >
-                                    <path
-                                        d="M5 12h14m-7-7l7 7-7 7"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                    />
-                                </svg>
-                            </div>
-                        </a>
-                    ))
-                }
-            </div>
-        </div>
-    </main>
+                  <path
+                    d="M5 12h14m-7-7l7 7-7 7"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </div>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </main>
 </div>
