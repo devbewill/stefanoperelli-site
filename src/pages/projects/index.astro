@@ -2,6 +2,7 @@
 import Layout from "../../layouts/Layout.astro";
 import GlobalUI from "../../components/GlobalUI.astro";
 import { getCollection } from "astro:content";
+import { TAG_STYLES } from "../../constants";
 
 const projects = (
     await getCollection(
@@ -50,8 +51,10 @@ const formatDate = (date: Date) =>
                                 <span class="text-[10px] font-mono font-bold text-zinc-300 group-hover:text-accent transition-colors w-6">
                                     PR_{(index + 1).toString().padStart(2, "0")}
                                 </span>
-                                <span class="text-[10px] font-black text-accent bg-accent/5 px-2 py-0.5 rounded uppercase tracking-tighter w-10 text-center group-hover:bg-accent group-hover:text-white transition-all">
-                                    PRJ
+                                <span
+                                    class={`text-[10px] font-black px-2 py-0.5 rounded uppercase tracking-tighter w-10 text-center group-hover:text-white transition-all ${TAG_STYLES.project.bg} ${TAG_STYLES.project.text} ${TAG_STYLES.project.hover}`}
+                                >
+                                    {TAG_STYLES.project.label}
                                 </span>
                                 <h3 class="text-xl md:text-2xl font-black tracking-tighter text-zinc-900 group-hover:text-accent transition-colors truncate">
                                     {prj.data.title}

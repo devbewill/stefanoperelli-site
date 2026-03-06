@@ -24,6 +24,27 @@ export interface LanguageContent {
   newsletters: NewsletterItem[];
 }
 
+export const TAG_STYLES = {
+  post: {
+    label: "POST",
+    bg: "bg-accent/5",
+    text: "text-accent",
+    hover: "group-hover:bg-accent",
+  },
+  project: {
+    label: "PRG",
+    bg: "bg-blue-600/10",
+    text: "text-blue-600",
+    hover: "group-hover:bg-blue-600",
+  },
+  link: {
+    label: "LINK",
+    bg: "bg-green-500/10",
+    text: "text-green-500",
+    hover: "group-hover:bg-green-500",
+  },
+} as const;
+
 export const CONTENT: Record<"it" | "en", LanguageContent> = {
   it: {
     bio: "Oltre 10 anni di esperienza nelle trasformazioni digitali. Specializzato nell'ottimizzazione dei processi e nel garantire l'allineamento strategico tra obiettivi di business e roadmap tecnologiche. Gestisco quotidianamente stakeholder complessi e coordino team cross-funzionali con un approccio orientato ai risultati.",

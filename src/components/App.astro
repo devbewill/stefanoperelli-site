@@ -1,5 +1,5 @@
 ---
-import { CONTENT } from "../constants";
+import { CONTENT, TAG_STYLES } from "../constants";
 import { getCollection } from "astro:content";
 import GlobalUI from "../components/GlobalUI.astro";
 
@@ -80,12 +80,12 @@ const formatDate = (date: Date) =>
                                 <span class="text-[10px] font-mono font-bold text-zinc-300 group-hover:text-accent transition-colors w-6">
                                     {(index + 1).toString().padStart(2, "0")}
                                 </span>
-                                <span class="text-[10px] font-black text-accent bg-accent/5 px-2 py-0.5 rounded uppercase tracking-tighter w-10 text-center group-hover:bg-accent group-hover:text-white transition-all">
-                                    {item.type === "project"
-                                        ? "PRJ"
-                                        : item.type === "post"
-                                          ? "POST"
-                                          : item.type}
+                                <span
+                                    class={`text-[10px] font-black px-2 py-0.5 rounded uppercase tracking-tighter w-10 text-center group-hover:text-white transition-all ${TAG_STYLES[item.type as keyof typeof TAG_STYLES]?.bg || "bg-zinc-100"} ${TAG_STYLES[item.type as keyof typeof TAG_STYLES]?.text || "text-zinc-400"} ${TAG_STYLES[item.type as keyof typeof TAG_STYLES]?.hover || "group-hover:bg-zinc-400"}`}
+                                >
+                                    {TAG_STYLES[
+                                        item.type as keyof typeof TAG_STYLES
+                                    ]?.label || item.type}
                                 </span>
                                 <h3 class="text-xl md:text-2xl font-black tracking-tighter text-zinc-900 group-hover:text-accent transition-colors truncate">
                                     {item.title}
