@@ -38,7 +38,7 @@ export const CONTENT = {
     philosophy:
       "I believe that technology should be invisible: a powerful tool that enables business without becoming an obstacle. My approach is based on the synthesis of technical rigor and strategic vision.",
     background:
-      "With over 10 years spent between startups and large enterprises, I've learned that disorder (the mess) is part of the creative process, but synthesis (the synthetic) is what brings real value.",
+      "A long time spent between startups and large enterprises, I've learned that disorder (the mess) is part of the creative process, but synthesis (the synthetic) is what brings real value.",
   },
   resume_bio:
     "Product Director & Delivery Manager with a strong passion for building complex and scalable digital products.",
@@ -202,7 +202,7 @@ export const CONTENT = {
       description:
         "GLM is a versatile AI agent that has become my go-to for a wide range of tasks. Whether it's brainstorming ideas, summarizing complex information, or even just having a casual conversation, GLM consistently delivers impressive results. Its ability to understand context and provide relevant responses makes it an invaluable tool in my daily workflow.",
       link: "https://z.ai/model-api",
-      date: "2026-01-06",
+      date: "2026-02-28",
     },
   ],
 };

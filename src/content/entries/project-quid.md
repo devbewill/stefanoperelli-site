@@ -2,7 +2,7 @@
 type: "project"
 title: "Quid - Turn notes into tasks with AI"
 description: "Transmuting notes into tasks. A workspace designed to close the gap between potential energy (ideas) and kinetic energy (actions)."
-pubDate: "2026-03-05"
+pubDate: "2026-02-06"
 role: "Full Stack Developer & Interaction Designer"
 tools: ["Next.js", "Gemini 1.5 Flash", "Convex", "Framer Motion"]
 year: "2026"
