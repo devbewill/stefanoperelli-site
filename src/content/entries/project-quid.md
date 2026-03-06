@@ -38,3 +38,5 @@ Once the MVP was ready, I tested it with my own workflow.
 **The Refinement**: My initial thought was that _more_ tasks = more productivity. The reality was that QUID made it too easy to clutter my task list with low-value actions transformed from incidental notes.
 
 **Verdict**: The "Notes and Tasks as the same object" philosophy is technically sound and feels elegant, but the UI needs to guard against "Task Inflations." The project proved that AI is great at breaking things down, but the human still needs a "gatekeeper" mode to prevent overwhelm.
+
+[See in action](https://quid-notes.vercel.app/landing-page)
