@@ -40,7 +40,7 @@ const formatDate = (date: Date) =>
 ---
 
 <div
-  class="h-screen w-full bg-white text-zinc-900 font-sans selection:bg-accent selection:text-white overflow-hidden relative flex flex-col"
+  class="h-screen w-full bg-ink-white text-ink-text font-ink overflow-hidden relative flex flex-col"
 >
   <GlobalUI />
 
@@ -48,13 +48,13 @@ const formatDate = (date: Date) =>
   <main class="flex-1 flex flex-col justify-center items-center z-10">
     <div class="w-full max-w-3xl px-4">
       <div
-        class="mb-10 flex justify-between items-end border-b-2 border-zinc-100 pb-3"
+        class="mb-10 flex justify-between items-end border-b border-ink-black pb-3"
       >
         <span
-          class="text-[11px] font-black tracking-[0.4em] uppercase text-zinc-900"
+          class="text-[11px] font-semibold tracking-[0.4em] uppercase text-ink-text"
           >Buffer Outputs // 01—20</span
         >
-        <span class="text-[10px] font-mono font-bold text-zinc-400"
+        <span class="text-[10px] font-ink font-semibold text-ink-text-tertiary"
           >SESSION_2026</span
         >
       </div>
@@ -66,37 +66,37 @@ const formatDate = (date: Date) =>
               href={item.link}
               target={item.isExternal ? "_blank" : undefined}
               rel={item.isExternal ? "noopener noreferrer" : undefined}
-              class="group flex items-start justify-between py-2 md:py-2 transition-all duration-300 hover:bg-zinc-50 rounded-lg px-2 -mx-2"
+              class="group flex items-start justify-between py-2 md:py-2 transition-all duration-200 hover:bg-ink-light border-b border-ink-black/10 last:border-0 px-2 -mx-2"
             >
               <div class="flex items-center gap-3 md:gap-6 flex-1 min-w-0">
-                <span class="hidden md:block text-[10px] font-mono font-bold text-zinc-300 group-hover:text-accent transition-colors w-6 shrink-0">
+                <span class="hidden md:block text-[10px] font-ink font-semibold text-ink-text-tertiary group-hover:text-ink-text transition-colors w-6 shrink-0">
                   {(index + 1).toString().padStart(2, "0")}
                 </span>
                 <span
-                  class={`text-[10px] font-black px-2 py-0.5 rounded uppercase tracking-tighter w-10 text-center group-hover:text-white transition-all shrink-0 ${TAG_STYLES[item.type as keyof typeof TAG_STYLES]?.bg || "bg-zinc-100"} ${TAG_STYLES[item.type as keyof typeof TAG_STYLES]?.text || "text-zinc-400"} ${TAG_STYLES[item.type as keyof typeof TAG_STYLES]?.hover || "group-hover:bg-zinc-400"}`}
+                  class={`text-[10px] font-semibold px-2 py-0.5 border border-ink-black uppercase tracking-tighter w-10 text-center group-hover:bg-ink-black group-hover:text-ink-white transition-all shrink-0 bg-ink-white text-ink-text`}
                 >
                   {TAG_STYLES[item.type as keyof typeof TAG_STYLES]?.label ||
                     item.type}
                 </span>
-                <h3 class="text-base md:text-xl font-black tracking-tight text-zinc-900 group-hover:text-accent transition-colors line-clamp-2 leading-tight flex-1 min-w-0">
+                <h3 class="text-base md:text-xl font-semibold tracking-ink-tight text-ink-text group-hover:text-ink-black transition-colors line-clamp-2 leading-tight flex-1 min-w-0">
                   {item.title}
                   {item.isExternal && (
-                    <span class="ml-2 text-accent opacity-40 group-hover:opacity-100 transition-opacity">
+                    <span class="ml-2 text-ink-text opacity-40 group-hover:opacity-100 transition-opacity">
                       ↗
                     </span>
                   )}
                 </h3>
               </div>
               <div class="flex items-center gap-2 md:gap-6 shrink-0 self-center mt-1 md:mt-0">
-                <span class="text-xs font-mono font-bold text-zinc-300 group-hover:text-zinc-900 transition-colors tabular-nums uppercase">
+                <span class="text-xs font-ink font-semibold text-ink-text-tertiary group-hover:text-ink-text transition-colors tabular-nums uppercase">
                   {formatDate(item.pubDate || item.date)}
                 </span>
                 <svg
                   viewBox="0 0 24 24"
                   fill="none"
-                  class="w-4 h-4 text-accent opacity-0 md:opacity-0 group-hover:opacity-100 transition-all transform -translate-x-3 md:-translate-x-3 group-hover:translate-x-0"
+                  class="w-4 h-4 text-ink-text opacity-0 md:opacity-0 group-hover:opacity-100 transition-all transform -translate-x-3 md:-translate-x-3 group-hover:translate-x-0"
                   stroke="currentColor"
-                  stroke-width="4"
+                  stroke-width="2"
                 >
                   <path
                     d="M5 12h14m-7-7l7 7-7 7"

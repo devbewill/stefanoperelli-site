@@ -21,7 +21,7 @@ const formatDate = (date: Date) =>
 
 <Layout title="Projects | Synthetic Mess">
   <div
-    class="min-h-screen bg-white text-zinc-900 font-sans selection:bg-accent selection:text-white flex flex-col relative overflow-x-hidden"
+    class="min-h-screen bg-ink-white text-ink-text font-ink flex flex-col relative overflow-x-hidden"
   >
     <GlobalUI />
 
@@ -29,13 +29,13 @@ const formatDate = (date: Date) =>
       class="flex-1 flex flex-col max-w-3xl mx-auto w-full px-4 pt-64 pb-32"
     >
       <header
-        class="mb-12 flex justify-between items-end border-b-2 border-zinc-100 pb-3"
+        class="mb-12 flex justify-between items-end border-b border-ink-black pb-3"
       >
         <span
-          class="text-[11px] font-black tracking-[0.4em] uppercase text-zinc-900"
+          class="text-[11px] font-semibold tracking-[0.4em] uppercase text-ink-text"
           >Selected Outputs // Projects</span
         >
-        <span class="text-[10px] font-mono font-bold text-zinc-400"
+        <span class="text-[10px] font-ink font-semibold text-ink-text-tertiary"
           >PRJ_2026</span
         >
       </header>
@@ -45,23 +45,23 @@ const formatDate = (date: Date) =>
           projects.map((prj, index) => (
             <a
               href={`/entries/${prj.slug}/`}
-              class="group flex items-center justify-between py-1.5 transition-all duration-300"
+              class="group flex items-center justify-between py-1.5 transition-all duration-200 border-b border-ink-black/10 last:border-0"
             >
               <div class="flex items-center gap-6 overflow-hidden">
-                <span class="text-[10px] font-mono font-bold text-zinc-300 group-hover:text-accent transition-colors w-6">
+                <span class="text-[10px] font-ink font-semibold text-ink-text-tertiary group-hover:text-ink-text transition-colors w-6">
                   PR_{(index + 1).toString().padStart(2, "0")}
                 </span>
                 <span
-                  class={`text-[10px] font-black px-2 py-0.5 rounded uppercase tracking-tighter w-10 text-center group-hover:text-white transition-all ${TAG_STYLES.project.bg} ${TAG_STYLES.project.text} ${TAG_STYLES.project.hover}`}
+                  class="text-[10px] font-semibold px-2 py-0.5 border border-ink-black uppercase tracking-tighter w-10 text-center group-hover:bg-ink-black group-hover:text-ink-white transition-all bg-ink-white text-ink-text"
                 >
                   {TAG_STYLES.project.label}
                 </span>
-                <h3 class="text-xl md:text-2xl font-black tracking-tighter text-zinc-900 group-hover:text-accent transition-colors truncate">
+                <h3 class="text-xl md:text-2xl font-semibold tracking-ink-tight text-ink-text group-hover:text-ink-black transition-colors truncate">
                   {prj.data.title}
                 </h3>
               </div>
               <div class="flex items-center gap-6 shrink-0">
-                <span class="text-xs font-mono font-bold text-zinc-300 group-hover:text-zinc-900 transition-colors tabular-nums uppercase">
+                <span class="text-xs font-ink font-semibold text-ink-text-tertiary group-hover:text-ink-text transition-colors tabular-nums uppercase">
                   {formatDate(prj.data.pubDate)}
                 </span>
               </div>

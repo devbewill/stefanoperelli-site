@@ -29,13 +29,13 @@ const isExperimentsActive =
 >
   <div class="relative w-6 h-5">
     <span
-      class="absolute top-0 left-0 w-full h-[3px] bg-zinc-900 transition-all origin-left group-peer-checked:rotate-45"
+      class="absolute top-0 left-0 w-full h-[1px] bg-ink-black transition-all origin-left group-peer-checked:rotate-45"
     ></span>
     <span
-      class="absolute top-1/2 left-0 -translate-y-1/2 w-full h-[3px] bg-zinc-900 transition-all group-peer-checked:opacity-0"
+      class="absolute top-1/2 left-0 -translate-y-1/2 w-full h-[1px] bg-ink-black transition-all group-peer-checked:opacity-0"
     ></span>
     <span
-      class="absolute bottom-0 left-0 w-full h-[3px] bg-zinc-900 transition-all origin-left group-peer-checked:-rotate-45"
+      class="absolute bottom-0 left-0 w-full h-[1px] bg-ink-black transition-all origin-left group-peer-checked:-rotate-45"
     ></span>
   </div>
 </label>
@@ -44,54 +44,54 @@ const isExperimentsActive =
 <div
   class="text-right z-20 pointer-events-auto
     fixed lg:static top-0 right-0 h-screen lg:h-auto w-screen lg:w-auto
-    bg-white/95 lg:bg-transparent backdrop-blur-md lg:backdrop-blur-none
+    bg-ink-white lg:bg-transparent
     flex flex-col items-end justify-center lg:justify-start
     p-10 lg:p-0
-    translate-x-full lg:translate-x-0 transition-transform duration-500 ease-in-out
-    peer-checked:translate-x-0"
+    translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out
+    peer-checked:translate-x-0 border-l lg:border-l-0 border-ink-black"
 >
   <!-- Header info (Hidden on Mobile for cleaner look) -->
   <div class="mb-10 hidden lg:block text-right">
     <span
-      class="text-[10px] font-black tracking-[0.4em] uppercase text-zinc-300 block mb-1"
+      class="text-[10px] font-semibold tracking-[0.4em] uppercase text-ink-text-tertiary block mb-1"
       >Owner // System</span
     >
-    <span class="text-sm font-black text-zinc-900 leading-none"
+    <span class="text-sm font-semibold text-ink-text leading-none"
       >stefano_perelli</span
     >
   </div>
 
   <!-- Mobile Header info (Visible inside menu) -->
   <div class="lg:hidden mb-12 flex flex-col items-center">
-    <span class="text-xs font-black text-zinc-900">stefano_perelli</span>
+    <span class="text-xs font-semibold text-ink-text">stefano_perelli</span>
   </div>
 
   <!-- Nav Links -->
-  <nav class="flex flex-col items-end">
+  <nav class="flex flex-col items-end space-y-4 lg:space-y-0">
     <a
       href="/"
-      class={`text-4xl lg:text-[11px] font-black tracking-widest uppercase transition-all hover:translate-x-[-4px] ${isActive("/") ? "text-accent" : "text-zinc-900 hover:text-accent"}`}
+      class={`text-4xl lg:text-[11px] font-semibold tracking-widest uppercase transition-all hover:translate-x-[-4px] ${isActive("/") ? "text-ink-black border-b border-ink-black" : "text-ink-text hover:text-ink-black border-b border-transparent hover:border-ink-black"}`}
       >{t.labels.about === "About" ? "Home" : "Inizio"}</a
     >
     <a
       href="/about"
-      class={`text-4xl lg:text-[11px] font-black tracking-widest uppercase transition-all hover:translate-x-[-4px] ${isActive("/about") ? "text-accent" : "text-zinc-900 hover:text-accent"}`}
+      class={`text-4xl lg:text-[11px] font-semibold tracking-widest uppercase transition-all hover:translate-x-[-4px] ${isActive("/about") ? "text-ink-black border-b border-ink-black" : "text-ink-text hover:text-ink-black border-b border-transparent hover:border-ink-black"}`}
       >{t.labels.about}</a
     >
     <a
       href="/resume"
-      class={`text-4xl lg:text-[11px] font-black tracking-widest uppercase transition-all hover:translate-x-[-4px] ${isActive("/resume") ? "text-accent" : "text-zinc-900 hover:text-accent"}`}
+      class={`text-4xl lg:text-[11px] font-semibold tracking-widest uppercase transition-all hover:translate-x-[-4px] ${isActive("/resume") ? "text-ink-black border-b border-ink-black" : "text-ink-text hover:text-ink-black border-b border-transparent hover:border-ink-black"}`}
       >Resume</a
     >
 
     <a
       href="/blog"
-      class={`text-4xl lg:text-[11px] font-black tracking-widest uppercase transition-all hover:translate-x-[-4px] ${isJournalActive ? "text-accent" : "text-zinc-900 hover:text-accent"}`}
+      class={`text-4xl lg:text-[11px] font-semibold tracking-widest uppercase transition-all hover:translate-x-[-4px] ${isJournalActive ? "text-ink-black border-b border-ink-black" : "text-ink-text hover:text-ink-black border-b border-transparent hover:border-ink-black"}`}
       >Journal</a
     >
     <a
       href="/projects"
-      class={`text-4xl lg:text-[11px] font-black tracking-widest uppercase transition-all hover:translate-x-[-4px] ${isExperimentsActive ? "text-accent" : "text-zinc-900 hover:text-accent"}`}
+      class={`text-4xl lg:text-[11px] font-semibold tracking-widest uppercase transition-all hover:translate-x-[-4px] ${isExperimentsActive ? "text-ink-black border-b border-ink-black" : "text-ink-text hover:text-ink-black border-b border-transparent hover:border-ink-black"}`}
       >MVP</a
     >
   </nav>

@@ -10,7 +10,7 @@ const { title, description, pubDate, heroImage, type } = Astro.props;
 
 <Layout title={`${title} | Synthetic Mess`}>
   <div
-    class="min-h-screen bg-white text-zinc-900 font-sans selection:bg-accent selection:text-white flex flex-col relative"
+    class="min-h-screen bg-ink-white text-ink-text font-ink flex flex-col relative"
   >
     <GlobalUI type={type} />
 
@@ -19,7 +19,7 @@ const { title, description, pubDate, heroImage, type } = Astro.props;
         <header class="mb-16 md:mb-24">
           <div class="flex items-center gap-4 mb-4">
             <span
-              class="text-[10px] font-black tracking-[0.4em] uppercase text-accent"
+              class="text-[10px] font-semibold tracking-[0.4em] uppercase text-ink-text"
             >
               {
                 type === "post"
@@ -27,10 +27,10 @@ const { title, description, pubDate, heroImage, type } = Astro.props;
                   : "Artifact // Project"
               }
             </span>
-            <div class="h-[1px] flex-1 bg-zinc-50"></div>
+            <div class="h-[1px] flex-1 bg-ink-black"></div>
             <time
               datetime={pubDate.toISOString()}
-              class="text-[10px] font-mono font-bold text-zinc-400"
+              class="text-[10px] font-ink font-semibold text-ink-text-tertiary"
             >
               {
                 pubDate.toLocaleDateString("en-us", {
@@ -43,14 +43,14 @@ const { title, description, pubDate, heroImage, type } = Astro.props;
           </div>
 
           <h1
-            class="text-4xl md:text-7xl font-black tracking-tightest leading-[0.9] text-zinc-900 mb-8 uppercase"
+            class="text-4xl md:text-7xl font-semibold tracking-ink-tight leading-[0.9] text-ink-text mb-8 uppercase"
           >
             {title}
           </h1>
 
           {
             description && (
-              <p class="text-xl md:text-2xl text-zinc-400 font-medium leading-relaxed max-w-2xl">
+              <p class="text-xl md:text-2xl text-ink-text-secondary font-semibold leading-relaxed max-w-2xl">
                 {description}
               </p>
             )
@@ -59,7 +59,7 @@ const { title, description, pubDate, heroImage, type } = Astro.props;
 
         {
           heroImage && (
-            <div class="mb-16 md:mb-24 rounded-sm overflow-hidden border border-zinc-100 shadow-sm">
+            <div class="mb-16 md:mb-24 overflow-hidden border border-ink-black">
               <img
                 width={1600}
                 height={800}
@@ -73,26 +73,26 @@ const { title, description, pubDate, heroImage, type } = Astro.props;
 
         <div
           class="prose prose-zinc max-w-none
-                    prose-h2:text-zinc-900 prose-h2:font-black prose-h2:tracking-tight prose-h2:text-3xl prose-h2:uppercase
-                    prose-h3:text-zinc-900 prose-h3:font-bold prose-h3:text-xl
-                    prose-p:text-zinc-600 prose-p:text-lg prose-p:leading-relaxed
-                    prose-strong:text-zinc-900 prose-strong:font-bold
-                    prose-a:text-accent prose-a:no-underline hover:prose-a:underline
-                    prose-code:bg-zinc-50 prose-code:text-accent prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded-md prose-code:before:content-none prose-code:after:content-none
-                    prose-pre:bg-zinc-50 prose-pre:border prose-pre:border-zinc-100 prose-pre:rounded-sm prose-pre:p-8
-                    prose-img:rounded-sm prose-img:border prose-img:border-zinc-100
-                    prose-blockquote:border-l-accent prose-blockquote:bg-accent/5 prose-blockquote:py-2 prose-blockquote:px-8 prose-blockquote:rounded-r-sm"
+                    prose-h2:text-ink-text prose-h2:font-semibold prose-h2:tracking-ink-tight prose-h2:text-3xl prose-h2:uppercase
+                    prose-h3:text-ink-text prose-h3:font-semibold prose-h3:text-xl
+                    prose-p:text-ink-text-secondary prose-p:text-lg prose-p:leading-relaxed
+                    prose-strong:text-ink-text prose-strong:font-semibold
+                    prose-a:text-ink-text prose-a:border-b prose-a:border-ink-black/30 hover:prose-a:border-ink-black
+                    prose-code:bg-ink-light prose-code:text-ink-text prose-code:px-1.5 prose-code:py-0.5 prose-code:border prose-code:border-ink-black prose-code:before:content-none prose-code:after:content-none
+                    prose-pre:bg-ink-light prose-pre:border prose-pre:border-ink-black prose-pre:p-8
+                    prose-img:border prose-img:border-ink-black
+                    prose-blockquote:border-l-ink-black prose-blockquote:bg-ink-light prose-blockquote:py-2 prose-blockquote:px-8"
         >
           <slot />
         </div>
 
-        <div class="mt-32 pt-12 border-t border-zinc-50 text-center">
+        <div class="mt-32 pt-12 border-t border-ink-black text-center">
           <button
             onclick="history.back()"
-            class="text-xs font-black tracking-[0.3em] uppercase inline-flex items-center gap-4 hover:text-accent group transition-colors"
+            class="text-xs font-semibold tracking-[0.3em] uppercase inline-flex items-center gap-4 hover:text-ink-black group transition-colors"
           >
             <span
-              class="h-[1px] w-8 bg-zinc-100 group-hover:bg-accent group-hover:w-16 transition-all"
+              class="h-[1px] w-8 bg-ink-black group-hover:w-16 transition-all"
             ></span>
             Revert Stream
           </button>
