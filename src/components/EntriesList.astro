@@ -61,13 +61,14 @@ const getPrefix = (entry: Entry) => {
         class="group flex items-center justify-between py-1.5 md:py-2 transition-all duration-200 border-b border-ink-black/10 last:border-0 hover:bg-ink-light"
       >
         <div class="flex items-center gap-3 md:gap-6 overflow-hidden flex-1 min-w-0">
-          <span class="text-[10px] font-ink font-semibold text-ink-text-tertiary group-hover:text-ink-text transition-colors w-6">
+          {/* <span class="text-[10px] font-ink font-semibold text-ink-text-tertiary group-hover:text-ink-text transition-colors w-6">
             {getPrefix(entry)}
+          </span> */}
+                    <span class="text-xs font-ink font-semibold text-ink-text-tertiary group-hover:text-ink-text transition-colors tabular-nums uppercase">
+            {formatDate(entry.pubDate || entry.date)}
           </span>
-          <span class="text-[10px] font-ink font-semibold px-2 py-0.5 border border-ink-black uppercase tracking-tighter w-10 text-center group-hover:bg-ink-black group-hover:text-ink-white transition-all bg-ink-white text-ink-text">
-            {getTagLabel(entry.type)}
-          </span>
-          <h3 class="text-base md:text-xl font-ink font-semibold tracking-ink-tight text-ink-text group-hover:text-ink-black transition-colors truncate">
+
+          <h3 class="text-base md:text-md font-ink font-semibold tracking-ink-tight text-ink-text group-hover:text-ink-black transition-colors">
             {entry.title}
             {entry.isExternal && (
               <span class="ml-2 text-ink-text opacity-40 group-hover:opacity-100 transition-opacity">
@@ -77,8 +78,8 @@ const getPrefix = (entry: Entry) => {
           </h3>
         </div>
         <div class="flex items-center gap-2 md:gap-6 shrink-0">
-          <span class="text-xs font-ink font-semibold text-ink-text-tertiary group-hover:text-ink-text transition-colors tabular-nums uppercase">
-            {formatDate(entry.pubDate || entry.date)}
+          <span class="text-[10px] font-ink font-semibold px-2 py-0.5 border border-ink-black uppercase tracking-tighter w-10 text-center group-hover:bg-ink-black group-hover:text-ink-white transition-all bg-ink-white text-ink-text">
+            {getTagLabel(entry.type)}
           </span>
         </div>
       </a>
