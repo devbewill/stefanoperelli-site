@@ -10,40 +10,40 @@ interface Props {
 const { period, company, role, description, details } = Astro.props;
 ---
 
-<div class="group grid grid-cols-1 lg:grid-cols-12 gap-8 items-start border-b border-ink-black/10 pb-8 last:border-0">
+<div class="items-start border-b border-ink-black/10 pb-4 last:border-0">
     <!-- Time / Role -->
-    <div class="lg:col-span-2 space-y-2">
+    <div class="pb-0">
         <div
-            class="text-[10px] font-ink font-semibold text-ink-text uppercase tracking-[0.2em] group-hover:text-ink-black transition-colors"
+            class="text-xs text-gray-500 uppercase tracking-[0.2em]"
         >
             {period}
         </div>
         <div
-            class="text-[10px] font-ink font-semibold text-ink-text-tertiary uppercase tracking-widest"
+            class="text-sm   uppercase tracking-widest"
         >
             {role}
         </div>
     </div>
 
     <!-- Core Content -->
-    <div class="lg:col-span-10 space-y-6">
+    <div class=" space-y-3">
         <div class="space-y-1">
             <h3
-                class="text-2xl md:text-3xl font-semibold tracking-ink-tight text-ink-text group-hover:text-ink-black transition-all duration-200"
+                class="text-4xl font-bold text-accent"
             >
                 {company}
             </h3>
-            <p class="text-lg md:text-xl font-semibold text-ink-text-secondary italic">
+            <p class="text-md font-semibold italic">
                 {description}
             </p>
         </div>
 
-        <ul class="space-y-4 max-w-2xl">
+        <ul class="space-y-4">
             {
                 details.map((detail) => (
                     <li class="flex items-start gap-4">
-                        <span class="w-1.5 h-1.5 bg-ink-black mt-2 shrink-0 opacity-40 group-hover:opacity-100 transition-opacity" />
-                        <p class="text-sm md:text-base font-medium text-ink-text-secondary leading-relaxed group-hover:text-ink-text transition-colors">
+                        <span class="w-1.5 h-1.5 bg-ink-black mt-2 shrink-0" />
+                        <p class="text-sm md:text-base font-medium leading-relaxed">
                             {detail}
                         </p>
                     </li>

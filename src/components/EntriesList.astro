@@ -65,7 +65,7 @@ const getPrefix = (entry: Entry) => {
             {formatDate(entry.pubDate || entry.date)}
           </span>
 
-          <h3 class="text-base md:text-md font-ink font-semibold tracking-ink-tight text-ink-text group-hover:text-ink-black transition-colors">
+          <h3 class="text-base md:text-md font-ink font-semibold text-ink-text group-hover:text-ink-black transition-colors">
             {entry.title}
             {entry.isExternal && (
               <span class="ml-2 text-ink-text opacity-40 group-hover:opacity-100 transition-opacity">
@@ -75,7 +75,7 @@ const getPrefix = (entry: Entry) => {
           </h3>
         </div>
         <div class="flex items-center gap-2 md:gap-6 shrink-0">
-          <span class="text-[10px] font-ink font-semibold px-2 py-0.5 border border-ink-black uppercase tracking-tighter w-10 text-center group-hover:bg-ink-black group-hover:text-ink-white transition-all bg-ink-white text-ink-text">
+          <span class="text-[11px] border border-accent font-semibold  py-0.5 uppercase tracking-tighter w-10 text-center">
             {getTagLabel(entry.type)}
           </span>
         </div>

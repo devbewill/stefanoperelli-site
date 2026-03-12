@@ -10,10 +10,10 @@ const t = CONTENT;
 <Layout title="Resume | Synthetic Mess">
   <PageLayout>
     <header
-        class="mb-12 flex justify-between items-end border-b border-ink-black pb-3"
+        class="mb-12 flex justify-between items-end border-b pb-3"
       >
         <span
-          class="text-[11px] font-semibold tracking-[0.4em] uppercase text-ink-text"
+          class="text-[11px] font-semibold tracking-[0.4em] uppercase"
           >Professional Record // Dossier</span
         >
         <span class="text-[10px] font-ink font-semibold text-ink-text-tertiary"
@@ -37,7 +37,7 @@ const t = CONTENT;
         <section class="md:col-span-4">
           <div class="flex items-center gap-6 mb-12">
             <h2
-              class="text-[11px] font-semibold tracking-[0.5em] uppercase text-ink-text"
+              class="text-[11px] font-semibold tracking-[0.5em] uppercase"
             >
               Capabilities
             </h2>
@@ -47,12 +47,12 @@ const t = CONTENT;
             {
               t.skills.map((category) => (
                 <div class="space-y-4">
-                  <h3 class="text-[10px] font-semibold tracking-widest uppercase text-ink-text italic">
+                  <h3 class="text-[10px] font-semibold tracking-widest uppercase italic">
                     {category.title}
                   </h3>
                   <div class="flex flex-wrap gap-x-6 gap-y-2">
                     {category.skills.map((skill) => (
-                      <span class="text-sm font-semibold text-ink-text">
+                      <span class="text-sm font-semibold">
                         {skill}
                       </span>
                     ))}
@@ -66,7 +66,7 @@ const t = CONTENT;
         <section class="md:col-span-8">
           <div class="flex items-center gap-6 mb-12">
             <h2
-              class="text-[11px] font-semibold tracking-[0.5em] uppercase text-ink-text"
+              class="text-[11px] font-semibold tracking-[0.5em] uppercase"
             >
               Selected Key Projects
             </h2>
@@ -76,13 +76,13 @@ const t = CONTENT;
             {
               t.projects.map((project) => (
                 <div class="group space-y-2">
-                  <span class="text-[9px] font-ink font-semibold text-ink-text-tertiary group-hover:text-ink-text uppercase tabular-nums tracking-widest transition-colors">
+                  <span class="text-[9px] font-ink font-semibold uppercase tabular-nums tracking-widest transition-colors">
                     {project.role}
                   </span>
-                  <h3 class="text-2xl md:text-3xl font-semibold tracking-ink-tight text-ink-text">
+                  <h3 class="text-2xl md:text-3xl font-semibold">
                     {project.title}
                   </h3>
-                  <p class="text-ink-text-secondary text-sm font-semibold leading-relaxed">
+                  <p class=" text-sm font-semibold leading-relaxed">
                     {project.description}
                   </p>
                 </div>
