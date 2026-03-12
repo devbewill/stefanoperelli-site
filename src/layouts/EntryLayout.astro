@@ -1,7 +1,7 @@
 ---
 import type { CollectionEntry } from "astro:content";
 import Layout from "./Layout.astro";
-import GlobalUI from "../components/GlobalUI.astro";
+import BackButton from "../components/BackButton.astro";
 
 type Props = CollectionEntry<"entries">["data"];
 
@@ -12,8 +12,6 @@ const { title, description, pubDate, heroImage, type } = Astro.props;
   <div
     class="min-h-screen bg-ink-white text-ink-text font-ink flex flex-col relative"
   >
-    <GlobalUI type={type} />
-
     <main class="flex-1 flex flex-col max-w-2xl mx-auto w-full px-4 pt-64 pb-32">
       <article>
         <header class="mb-16 md:mb-24">
@@ -87,15 +85,7 @@ const { title, description, pubDate, heroImage, type } = Astro.props;
         </div>
 
         <div class="mt-32 pt-12 border-t border-ink-black text-center">
-          <button
-            onclick="history.back()"
-            class="text-xs font-semibold tracking-[0.3em] uppercase inline-flex items-center gap-4 hover:text-ink-text group transition-colors"
-          >
-            <span
-              class="h-[1px] w-8 bg-ink-black group-hover:w-16 transition-all"
-            ></span>
-            Revert Stream
-          </button>
+          <BackButton />
         </div>
       </article>
     </main>

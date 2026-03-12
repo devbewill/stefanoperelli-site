@@ -1,5 +1,5 @@
 ---
-import { TAG_STYLES } from "../constants";
+import { TAG_STYLES } from "../constants/tags";
 
 interface Entry {
   title: string;
@@ -61,10 +61,7 @@ const getPrefix = (entry: Entry) => {
         class="group flex items-center justify-between py-1.5 md:py-2 transition-all duration-200 border-b border-ink-black/10 last:border-0 hover:bg-ink-light"
       >
         <div class="flex items-center gap-3 md:gap-6 overflow-hidden flex-1 min-w-0">
-          {/* <span class="text-[10px] font-ink font-semibold text-ink-text-tertiary group-hover:text-ink-text transition-colors w-6">
-            {getPrefix(entry)}
-          </span> */}
-                    <span class="text-xs font-ink font-semibold text-ink-text-tertiary group-hover:text-ink-text transition-colors tabular-nums uppercase">
+          <span class="text-xs font-ink font-semibold text-ink-text-tertiary group-hover:text-ink-text transition-colors tabular-nums uppercase">
             {formatDate(entry.pubDate || entry.date)}
           </span>
 

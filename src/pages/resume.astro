@@ -1,22 +1,15 @@
 ---
-import { CONTENT } from "../constants";
+import { CONTENT } from "../constants/content";
 import Layout from "../layouts/Layout.astro";
-import GlobalUI from "../components/GlobalUI.astro";
+import PageLayout from "../components/PageLayout.astro";
 import ExperienceItem from "../components/ExperienceItem.astro";
 
 const t = CONTENT;
 ---
 
 <Layout title="Resume | Synthetic Mess">
-  <div
-    class="min-h-screen bg-ink-white text-ink-text font-ink flex flex-col"
-  >
-    <GlobalUI />
-
-    <main
-      class="flex-1 flex flex-col max-w-2xl mx-auto w-full px-4 pt-64 pb-32"
-    >
-      <header
+  <PageLayout>
+    <header
         class="mb-12 flex justify-between items-end border-b border-ink-black pb-3"
       >
         <span
@@ -98,6 +91,5 @@ const t = CONTENT;
           </div>
         </section>
       </div>
-    </main>
-  </div>
+  </PageLayout>
 </Layout>

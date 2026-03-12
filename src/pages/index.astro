@@ -1,5 +1,5 @@
 ---
-import { CONTENT } from "../constants";
+import { CONTENT } from "../constants/content";
 import { getCollection } from "astro:content";
 import Layout from "../layouts/Layout.astro";
 import EntriesList from "../components/EntriesList.astro";
@@ -39,8 +39,7 @@ const allItems = [
     class="h-screen w-full bg-ink-white text-ink-text font-ink overflow-hidden relative flex flex-col"
   >
     <!-- Main Content -->
-    <main class="flex-1 flex flex-col max-w-2xl mx-auto w-full px-4 pt-64 pb-32"
-    style="background-color: #ffffff !important; color: #000000 !important;">
+    <main class="flex-1 flex flex-col max-w-2xl mx-auto w-full px-8 pt-64 pb-32">
       <EntriesList
         entries={allItems}
         title="Buffer Outputs // 01—20"
