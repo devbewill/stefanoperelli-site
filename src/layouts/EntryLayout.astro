@@ -14,7 +14,7 @@ const { title, description, pubDate, heroImage, type } = Astro.props;
   >
     <GlobalUI type={type} />
 
-    <main class="max-w-4xl mx-auto px-8 pt-64 pb-32 w-full">
+    <main class="max-w-3xl mx-auto px-8 pt-64 pb-32 w-full">
       <article>
         <header class="mb-16 md:mb-24">
           <div class="flex items-center gap-4 mb-4">
@@ -89,7 +89,7 @@ const { title, description, pubDate, heroImage, type } = Astro.props;
         <div class="mt-32 pt-12 border-t border-ink-black text-center">
           <button
             onclick="history.back()"
-            class="text-xs font-semibold tracking-[0.3em] uppercase inline-flex items-center gap-4 hover:text-ink-black group transition-colors"
+            class="text-xs font-semibold tracking-[0.3em] uppercase inline-flex items-center gap-4 hover:text-ink-text group transition-colors"
           >
             <span
               class="h-[1px] w-8 bg-ink-black group-hover:w-16 transition-all"

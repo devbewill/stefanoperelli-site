@@ -31,9 +31,9 @@ export default {
         },
       },
       fontFamily: {
-        sans: ['"IBM Plex Mono"', "monospace"],
-        mono: ['"IBM Plex Mono"', "monospace"],
-        ink: ['"IBM Plex Mono"', "monospace"],
+        sans: ['"iA Writer Quattro"', "monospace"],
+        mono: ['"iA Writer Quattro"', "monospace"],
+        ink: ['"iA Writer Quattro"', "monospace"],
       },
       borderWidth: {
         ink: "1px",

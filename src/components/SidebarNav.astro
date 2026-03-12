@@ -67,31 +67,27 @@ const isExperimentsActive =
   </div>
 
   <!-- Nav Links -->
-  <nav class="flex flex-col items-end space-y-4 lg:space-y-0">
-    <a
-      href="/"
-      class={`text-4xl lg:text-[11px] font-semibold tracking-widest uppercase transition-all hover:translate-x-[-4px] ${isActive("/") ? "text-ink-black border-b border-ink-black" : "text-ink-text hover:text-ink-black border-b border-transparent hover:border-ink-black"}`}
-      >{t.labels.about === "About" ? "Home" : "Inizio"}</a
-    >
+  <nav class="flex flex-col items-end space-y-4 lg:space-y-4">
+
     <a
       href="/about"
-      class={`text-4xl lg:text-[11px] font-semibold tracking-widest uppercase transition-all hover:translate-x-[-4px] ${isActive("/about") ? "text-ink-black border-b border-ink-black" : "text-ink-text hover:text-ink-black border-b border-transparent hover:border-ink-black"}`}
+      class={`text-4xl lg:text-xs font-semibold tracking-widest uppercase transition-all  ${isActive("/about") ? "text-ink-black border-b border-ink-black" : "text-ink-text hover:text-ink-black border-b border-transparent hover:border-ink-black"}`}
       >{t.labels.about}</a
     >
     <a
       href="/resume"
-      class={`text-4xl lg:text-[11px] font-semibold tracking-widest uppercase transition-all hover:translate-x-[-4px] ${isActive("/resume") ? "text-ink-black border-b border-ink-black" : "text-ink-text hover:text-ink-black border-b border-transparent hover:border-ink-black"}`}
+      class={`text-4xl lg:text-xs font-semibold tracking-widest uppercase transition-all  ${isActive("/resume") ? "text-ink-black border-b border-ink-black" : "text-ink-text hover:text-ink-black border-b border-transparent hover:border-ink-black"}`}
       >Resume</a
     >
 
     <a
       href="/blog"
-      class={`text-4xl lg:text-[11px] font-semibold tracking-widest uppercase transition-all hover:translate-x-[-4px] ${isJournalActive ? "text-ink-black border-b border-ink-black" : "text-ink-text hover:text-ink-black border-b border-transparent hover:border-ink-black"}`}
+      class={`text-4xl lg:text-xs font-semibold tracking-widest uppercase transition-all  ${isJournalActive ? "text-ink-black border-b border-ink-black" : "text-ink-text hover:text-ink-black border-b border-transparent hover:border-ink-black"}`}
       >Journal</a
     >
     <a
       href="/projects"
-      class={`text-4xl lg:text-[11px] font-semibold tracking-widest uppercase transition-all hover:translate-x-[-4px] ${isExperimentsActive ? "text-ink-black border-b border-ink-black" : "text-ink-text hover:text-ink-black border-b border-transparent hover:border-ink-black"}`}
+      class={`text-4xl lg:text-xs font-semibold tracking-widest uppercase transition-all  ${isExperimentsActive ? "text-ink-black border-b border-ink-black" : "text-ink-text hover:text-ink-black border-b border-transparent hover:border-ink-black"}`}
       >MVP</a
     >
   </nav>

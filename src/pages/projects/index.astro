@@ -2,7 +2,7 @@
 import Layout from "../../layouts/Layout.astro";
 import GlobalUI from "../../components/GlobalUI.astro";
 import { getCollection } from "astro:content";
-import { TAG_STYLES } from "../../constants";
+import EntriesList from "../../components/EntriesList.astro";
 
 const projects = (
   await getCollection(
@@ -10,13 +10,6 @@ const projects = (
     ({ data }) => data.type === "project" && data.draft !== true,
   )
 ).sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
-
-const formatDate = (date: Date) =>
-  new Date(date).toLocaleDateString("en-US", {
-    month: "2-digit",
-    day: "2-digit",
-    year: "2-digit",
-  });
 ---
 
 <Layout title="Projects | Synthetic Mess">
@@ -26,49 +19,19 @@ const formatDate = (date: Date) =>
     <GlobalUI />
 
     <main
-      class="flex-1 flex flex-col max-w-3xl mx-auto w-full px-4 pt-64 pb-32"
+      class="flex-1 flex flex-col max-w-2xl mx-auto w-full px-4 pt-64 pb-32"
     >
-      <header
-        class="mb-12 flex justify-between items-end border-b border-ink-black pb-3"
-      >
-        <span
-          class="text-[11px] font-semibold tracking-[0.4em] uppercase text-ink-text"
-          >Selected Outputs // Projects</span
-        >
-        <span class="text-[10px] font-ink font-semibold text-ink-text-tertiary"
-          >PRJ_2026</span
-        >
-      </header>
-
-      <div class="flex flex-col space-y-0.5">
-        {
-          projects.map((prj, index) => (
-            <a
-              href={`/entries/${prj.slug}/`}
-              class="group flex items-center justify-between py-1.5 transition-all duration-200 border-b border-ink-black/10 last:border-0"
-            >
-              <div class="flex items-center gap-6 overflow-hidden">
-                <span class="text-[10px] font-ink font-semibold text-ink-text-tertiary group-hover:text-ink-text transition-colors w-6">
-                  PR_{(index + 1).toString().padStart(2, "0")}
-                </span>
-                <span
-                  class="text-[10px] font-semibold px-2 py-0.5 border border-ink-black uppercase tracking-tighter w-10 text-center group-hover:bg-ink-black group-hover:text-ink-white transition-all bg-ink-white text-ink-text"
-                >
-                  {TAG_STYLES.project.label}
-                </span>
-                <h3 class="text-xl md:text-2xl font-semibold tracking-ink-tight text-ink-text group-hover:text-ink-black transition-colors truncate">
-                  {prj.data.title}
-                </h3>
-              </div>
-              <div class="flex items-center gap-6 shrink-0">
-                <span class="text-xs font-ink font-semibold text-ink-text-tertiary group-hover:text-ink-text transition-colors tabular-nums uppercase">
-                  {formatDate(prj.data.pubDate)}
-                </span>
-              </div>
-            </a>
-          ))
-        }
-      </div>
+      <EntriesList
+        entries={projects.map((prj, index) => ({
+          title: prj.data.title,
+          link: `/entries/${prj.slug}/`,
+          pubDate: prj.data.pubDate,
+          type: "project",
+          index: index + 1,
+        }))}
+        title="Selected Outputs"
+        subtitle="Projects"
+      />
     </main>
   </div>
 </Layout>

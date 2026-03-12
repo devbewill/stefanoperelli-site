@@ -7,7 +7,22 @@
    High-fidelity UI with stark e-ink aesthetic
    ============================================ */
 
+/* Force CSS reload - version bump */
 @layer base {
+  body {
+    font-family: "iA Writer Quattro", monospace !important;
+  }
+}
+
+@layer base {
+  @font-face {
+    font-family: "iA Writer Quattro";
+    src: url("/fonts/iAWriterQuattroV.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+  }
+
   :root {
     --ink-bg: #ffffff;
     --ink-text: #000000;

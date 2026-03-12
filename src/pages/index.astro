@@ -1,8 +1,51 @@
 ---
+import { CONTENT } from "../constants";
+import { getCollection } from "astro:content";
 import Layout from "../layouts/Layout.astro";
-import App from "../components/App.astro";
+import EntriesList from "../components/EntriesList.astro";
+
+const t = CONTENT;
+
+const entries = await getCollection("entries", ({ data }) => {
+  return data.draft !== true;
+});
+
+const allItems = [
+  ...entries.map((entry) => ({
+    title: entry.data.title,
+    link: entry.data.type === "link" ? entry.data.url : `/entries/${entry.slug}`,
+    isExternal: entry.data.type === "link",
+    pubDate: entry.data.pubDate,
+    type: entry.data.type,
+    index: entry.data.index,
+  })),
+  ...CONTENT.newsletters.map((n) => ({
+    title: n.title,
+    date: new Date(n.date),
+    type: "link",
+    link: n.link || "#",
+    isExternal: true,
+    pubDate: new Date(n.date),
+  })),
+]
+  .sort(
+    (a, b) => (b.pubDate || b.date).valueOf() - (a.pubDate || a.date).valueOf(),
+  )
+  .slice(0, 20);
 ---
 
-<Layout>
-  <App />
+<Layout title="Home | Stefano Perelli">
+  <div
+    class="h-screen w-full bg-ink-white text-ink-text font-ink overflow-hidden relative flex flex-col"
+  >
+    <!-- Main Content -->
+    <main class="flex-1 flex flex-col max-w-2xl mx-auto w-full px-4 pt-64 pb-32"
+    style="background-color: #ffffff !important; color: #000000 !important;">
+      <EntriesList
+        entries={allItems}
+        title="Buffer Outputs // 01—20"
+        subtitle="SESSION_2026"
+      />
+  </main>
+  </div>
 </Layout>

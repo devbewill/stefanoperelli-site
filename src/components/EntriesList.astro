@@ -1,0 +1,86 @@
+---
+import { TAG_STYLES } from "../constants";
+
+interface Entry {
+  title: string;
+  link: string;
+  isExternal?: boolean;
+  pubDate?: Date;
+  date?: Date;
+  type: string;
+  index?: number;
+}
+
+interface Props {
+  entries: Entry[];
+  title?: string;
+  subtitle?: string;
+}
+
+const { entries, title, subtitle } = Astro.props;
+
+const formatDate = (date: Date | undefined) => {
+  if (!date) return "";
+  return new Date(date).toLocaleDateString("en-US", {
+    month: "2-digit",
+    day: "2-digit",
+    year: "2-digit",
+  });
+};
+
+const getTagLabel = (type: string) => {
+  return TAG_STYLES[type as keyof typeof TAG_STYLES]?.label || type.toUpperCase();
+};
+
+const getPrefix = (entry: Entry) => {
+  if (entry.type === "project") return `PR_${(entry.index || 0).toString().padStart(2, "0")}`;
+  return (entry.index || 0).toString().padStart(2, "0");
+};
+---
+
+<div class="space-y-0.5">
+  {title && (
+    <header class="mb-12 flex justify-between items-end border-b border-ink-black pb-3">
+      <span class="text-[11px] font-semibold tracking-[0.4em] uppercase text-ink-text">
+        {title}
+      </span>
+      {subtitle && (
+        <span class="text-[10px] font-ink font-semibold text-ink-text-tertiary">
+          {subtitle}
+        </span>
+      )}
+    </header>
+  )}
+
+  <div class="flex flex-col space-y-0.5">
+    {entries.map((entry) => (
+      <a
+        href={entry.link}
+        target={entry.isExternal ? "_blank" : undefined}
+        rel={entry.isExternal ? "noopener noreferrer" : undefined}
+        class="group flex items-center justify-between py-1.5 md:py-2 transition-all duration-200 border-b border-ink-black/10 last:border-0 hover:bg-ink-light"
+      >
+        <div class="flex items-center gap-3 md:gap-6 overflow-hidden flex-1 min-w-0">
+          <span class="text-[10px] font-ink font-semibold text-ink-text-tertiary group-hover:text-ink-text transition-colors w-6">
+            {getPrefix(entry)}
+          </span>
+          <span class="text-[10px] font-ink font-semibold px-2 py-0.5 border border-ink-black uppercase tracking-tighter w-10 text-center group-hover:bg-ink-black group-hover:text-ink-white transition-all bg-ink-white text-ink-text">
+            {getTagLabel(entry.type)}
+          </span>
+          <h3 class="text-base md:text-xl font-ink font-semibold tracking-ink-tight text-ink-text group-hover:text-ink-black transition-colors truncate">
+            {entry.title}
+            {entry.isExternal && (
+              <span class="ml-2 text-ink-text opacity-40 group-hover:opacity-100 transition-opacity">
+                ↗
+              </span>
+            )}
+          </h3>
+        </div>
+        <div class="flex items-center gap-2 md:gap-6 shrink-0">
+          <span class="text-xs font-ink font-semibold text-ink-text-tertiary group-hover:text-ink-text transition-colors tabular-nums uppercase">
+            {formatDate(entry.pubDate || entry.date)}
+          </span>
+        </div>
+      </a>
+    ))}
+  </div>
