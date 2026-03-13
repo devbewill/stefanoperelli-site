@@ -3,6 +3,10 @@ import { CONTENT } from "../constants/content";
 import { getCollection } from "astro:content";
 import Layout from "../layouts/Layout.astro";
 import EntriesList from "../components/EntriesList.astro";
+import BrandIdentity from "../components/BrandIdentity.astro";
+import SidebarNav from "../components/SidebarNav.astro";
+import FooterStatus from "../components/FooterStatus.astro";
+import ContactLinks from "../components/ContactLinks.astro";
 
 const t = CONTENT;
 
@@ -32,21 +36,57 @@ const allItems = [
 ]
   .sort(
     (a, b) => (b.pubDate || b.date).valueOf() - (a.pubDate || a.date).valueOf(),
-  )
-  .slice(0, 20);
+  );
 ---
 
 <Layout title="Home | Stefano Perelli">
-  <div
-    class="h-screen w-full bg-ink-white text-ink-text font-ink overflow-hidden relative flex flex-col"
-  >
-    <!-- Main Content -->
-    <main class="flex-1 flex flex-col max-w-2xl mx-auto w-full px-8 pt-64 pb-32">
-      <EntriesList
-        entries={allItems}
-        title="Buffer Outputs // 01—20"
-        subtitle="SESSION_2026"
-      />
-  </main>
+  <div class="min-h-screen w-full bg-ink-white text-ink-text font-ink flex flex-col md:flex-row">
+    <!-- Left Sidebar: Brand + Navbar (hidden on mobile, shown on desktop) -->
+    <aside class="hidden md:flex md:w-64 lg:w-80 flex-shrink-0 border-r border-ink-black/10 flex-col p-8 lg:p-12">
+      <div class="flex-1 flex flex-col">
+        <!-- Brand Identity -->
+        <div class="mb-12">
+          <BrandIdentity />
+        </div>
+
+        <!-- Sidebar Navigation (desktop) -->
+        <nav class="flex-1">
+          <SidebarNav id="desktop-nav" />
+        </nav>
+      </div>
+
+      <!-- Footer Status -->
+      <div class="mt-auto pt-8">
+        <FooterStatus />
+      </div>
+    </aside>
+
+    <!-- Right Content: Scrollable Entries List (full width on mobile, flex-1 on desktop) -->
+    <main class="flex-1 overflow-y-auto">
+      <div class="max-w-3xl mx-auto px-6 py-8 md:px-8 md:py-12 lg:px-16 lg:py-16">
+        <!-- Mobile Header: Brand Identity (shown only on mobile) -->
+        <div class="md:hidden mb-8">
+          <div class="mb-6">
+            <BrandIdentity />
+          </div>
+        </div>
+
+        <EntriesList
+          entries={allItems}
+          title="Buffer Outputs"
+          subtitle="SESSION_2026"
+        />
+      </div>
+    </main>
+
+    <!-- Mobile Navigation (hamburger menu, hidden on desktop) -->
+    <div class="lg:hidden">
+      <SidebarNav id="mobile-nav" />
+    </div>
+
+    <!-- Contact Links (fixed position) -->
+    <div class="fixed bottom-6 right-6 md:bottom-8 md:right-8 lg:bottom-12 lg:right-12 pointer-events-auto">
+      <ContactLinks />
+    </div>
   </div>
 </Layout>

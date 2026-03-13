@@ -2,9 +2,10 @@
 import { CONTENT } from "../constants/content";
 interface Props {
   activeType?: string;
+  id?: string;
 }
 
-const { activeType } = Astro.props;
+const { activeType, id = "nav-toggle" } = Astro.props;
 const t = CONTENT;
 const pathname = Astro.url.pathname;
 
@@ -22,9 +23,9 @@ const isExperimentsActive =
 ---
 
 <!-- Mobile Toggle (Hidden on Desktop) -->
-<input type="checkbox" id="nav-toggle" class="peer hidden" />
+<input type="checkbox" id={id} class="peer hidden" />
 <label
-  for="nav-toggle"
+  for={id}
   class="lg:hidden fixed top-10 right-10 z-[60] pointer-events-auto cursor-pointer p-1"
 >
   <div class="relative w-6 h-5">
@@ -42,7 +43,7 @@ const isExperimentsActive =
 
 <!-- Navigation Container -->
 <div
-  class="text-right z-20 pointer-events-auto
+  class="text-right z-[100] pointer-events-auto
     fixed lg:static top-0 right-0 h-screen lg:h-auto w-screen lg:w-auto
     bg-ink-white lg:bg-transparent
     flex flex-col items-end justify-center lg:justify-start
@@ -70,6 +71,11 @@ const isExperimentsActive =
   <nav class="flex flex-col items-end space-y-4 lg:space-y-4">
 
     <a
+      href="/"
+      class={`text-4xl lg:text-xs font-semibold tracking-widest uppercase transition-all  ${isActive("/") ? "text-ink-black border-b border-ink-black" : "text-ink-text hover:text-ink-black border-b border-transparent hover:border-ink-black"}`}
+      >Home</a
+    >
+    <a
       href="/about"
       class={`text-4xl lg:text-xs font-semibold tracking-widest uppercase transition-all  ${isActive("/about") ? "text-ink-black border-b border-ink-black" : "text-ink-text hover:text-ink-black border-b border-transparent hover:border-ink-black"}`}
       >{t.labels.about}</a
@@ -95,14 +101,14 @@ const isExperimentsActive =
 
 <style>
   /* Custom Hamburger Logic without JS */
-  #nav-toggle:checked ~ label div span:nth-child(1) {
+  input[type="checkbox"]:checked ~ label div span:nth-child(1) {
     transform: rotate(45deg) translate(2px, -1px);
   }
-  #nav-toggle:checked ~ label div span:nth-child(2) {
+  input[type="checkbox"]:checked ~ label div span:nth-child(2) {
     opacity: 0;
     transform: translate(-20px, -50%);
   }
-  #nav-toggle:checked ~ label div span:nth-child(3) {
+  input[type="checkbox"]:checked ~ label div span:nth-child(3) {
     transform: rotate(-45deg) translate(2px, 1px);
   }
 </style>

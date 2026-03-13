@@ -1,75 +1,110 @@
 ---
 import { CONTENT } from "../constants/content";
 import Layout from "../layouts/Layout.astro";
-import PageLayout from "../components/PageLayout.astro";
+import BrandIdentity from "../components/BrandIdentity.astro";
+import SidebarNav from "../components/SidebarNav.astro";
+import FooterStatus from "../components/FooterStatus.astro";
+import ContactLinks from "../components/ContactLinks.astro";
 
 const t = CONTENT;
 ---
 
 <Layout title={`${t.labels.about} | Synthetic Mess`}>
-  <PageLayout class="overflow-hidden">
-    <div class="flex-1 flex flex-col items-center z-10 overflow-y-auto no-scrollbar space-y-16">
-      <header class="space-y-6">
-        <span
-          class="text-[10px] font-semibold tracking-[0.4em] uppercase text-ink-text"
-          >Section // Manifesto</span
-        >
-        <h2
-          class="text-2xl md:text-3xl font-semibold text-ink-text leading-[1.1]"
-        >
-          {t.bio}
-        </h2>
-      </header>
+  <div class="min-h-screen w-full bg-ink-white text-ink-text font-ink flex flex-col md:flex-row">
+    <!-- Left Sidebar: Brand + Navbar (hidden on mobile, shown on desktop) -->
+    <aside class="hidden md:flex md:w-64 lg:w-80 flex-shrink-0 border-r border-ink-black/10 flex-col p-8 lg:p-12">
+      <div class="flex-1 flex flex-col">
+        <!-- Brand Identity -->
+        <div class="mb-12">
+          <BrandIdentity />
+        </div>
 
-      <div
-        class="grid grid-cols-1 md:grid-cols-2 gap-12 pt-8 border-t border-ink-black"
-      >
-        <div class="space-y-4">
-          <h3
-            class="text-[10px] font-semibold tracking-[0.3em] uppercase text-ink-text italic underline decoration-1 underline-offset-4"
-          >
-            Philosophy
-          </h3>
-          <p
-            class="text-base md:text-lg font-semibold text-ink-text-secondary leading-relaxed"
-          >
-            {t.about_content.philosophy}
-          </p>
-        </div>
-        <div class="space-y-4">
-          <h3
-            class="text-[10px] font-semibold tracking-[0.3em] uppercase text-ink-text italic underline decoration-1 underline-offset-4"
-          >
-            Background
-          </h3>
-          <p
-            class="text-base md:text-lg font-semibold text-ink-text-secondary leading-relaxed"
-          >
-            {t.about_content.background}
-          </p>
-        </div>
+        <!-- Sidebar Navigation (desktop) -->
+        <nav class="flex-1">
+          <SidebarNav id="desktop-nav" />
+        </nav>
       </div>
 
-      <div
-        class="pt-8 flex justify-between items-end opacity-20 group hover:opacity-100 transition-opacity"
-      >
-        <span class="text-[9px] font-ink uppercase tracking-[0.4em]"
-          >End of Dossier</span
-        >
-        <span class="text-[8px] font-ink tabular-nums"
-          >HASH: 6366F1_SYNTH</span
-        >
+      <!-- Footer Status -->
+      <div class="mt-auto pt-8">
+        <FooterStatus />
       </div>
+    </aside>
+
+    <!-- Right Content: Scrollable Content (full width on mobile, flex-1 on desktop) -->
+    <main class="flex-1 overflow-y-auto">
+      <div class="max-w-3xl mx-auto px-6 py-8 md:px-8 md:py-12 lg:px-16 lg:py-16">
+        <!-- Mobile Header: Brand Identity (shown only on mobile) -->
+        <div class="md:hidden mb-8">
+          <div class="mb-6">
+            <BrandIdentity />
+          </div>
+        </div>
+
+        <div class="space-y-16">
+          <header class="space-y-6">
+            <span
+              class="text-[10px] font-semibold tracking-[0.4em] uppercase text-ink-text"
+              >Section // Manifesto</span
+            >
+            <h2
+              class="text-2xl md:text-3xl font-semibold text-ink-text leading-[1.1]"
+            >
+              {t.bio}
+            </h2>
+          </header>
+
+          <div
+            class="grid grid-cols-1 md:grid-cols-2 gap-12 pt-8 border-t border-ink-black"
+          >
+            <div class="space-y-4">
+              <h3
+                class="text-[10px] font-semibold tracking-[0.3em] uppercase text-ink-text italic underline decoration-1 underline-offset-4"
+              >
+                Philosophy
+              </h3>
+              <p
+                class="text-base md:text-lg font-semibold text-ink-text-secondary leading-relaxed"
+              >
+                {t.about_content.philosophy}
+              </p>
+            </div>
+            <div class="space-y-4">
+              <h3
+                class="text-[10px] font-semibold tracking-[0.3em] uppercase text-ink-text italic underline decoration-1 underline-offset-4"
+              >
+                Background
+              </h3>
+              <p
+                class="text-base md:text-lg font-semibold text-ink-text-secondary leading-relaxed"
+              >
+                {t.about_content.background}
+              </p>
+            </div>
+          </div>
+
+          <div
+            class="pt-8 flex justify-between items-end opacity-20 group hover:opacity-100 transition-opacity"
+          >
+            <span class="text-[9px] font-ink uppercase tracking-[0.4em]"
+              >End of Dossier</span
+            >
+            <span class="text-[8px] font-ink tabular-nums"
+              >HASH: 6366F1_SYNTH</span
+            >
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Mobile Navigation (hamburger menu, hidden on desktop) -->
+    <div class="lg:hidden">
+      <SidebarNav id="mobile-nav" />
     </div>
-  </PageLayout>
-</Layout>
 
-<style>
-  .no-scrollbar::-webkit-scrollbar {
-    display: none;
-  }
-  .no-scrollbar {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-  }
-</style>
+    <!-- Contact Links (fixed position) -->
+    <div class="fixed bottom-6 right-6 md:bottom-8 md:right-8 lg:bottom-12 lg:right-12 pointer-events-auto">
+      <ContactLinks />
+    </div>
+  </div>
+</Layout>
