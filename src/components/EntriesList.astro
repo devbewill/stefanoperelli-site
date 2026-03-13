@@ -9,6 +9,7 @@ interface Entry {
   date?: Date;
   type: string;
   index?: number;
+  description?: string;
 }
 
 interface Props {
@@ -32,6 +33,14 @@ const getTagLabel = (type: string) => {
   return TAG_STYLES[type as keyof typeof TAG_STYLES]?.label || type.toUpperCase();
 };
 
+const getTagStyles = (type: string) => {
+  return TAG_STYLES[type as keyof typeof TAG_STYLES] || {
+    backgroundColor: "bg-accent",
+    textColor: "text-white",
+    borderColor: "border-accent",
+  };
+};
+
 const getPrefix = (entry: Entry) => {
   if (entry.type === "project") return `PR_${(entry.index || 0).toString().padStart(2, "0")}`;
   return (entry.index || 0).toString().padStart(2, "0");
@@ -52,33 +61,37 @@ const getPrefix = (entry: Entry) => {
     </header>
   )}
 
-  <div class="flex flex-col space-y-0.5">
+  <div class="flex flex-col space-y-6">
     {entries.map((entry) => (
       <a
         href={entry.link}
         target={entry.isExternal ? "_blank" : undefined}
         rel={entry.isExternal ? "noopener noreferrer" : undefined}
-        class="group flex items-center justify-between py-1.5 md:py-2 transition-all duration-200 border-b border-ink-black/10 last:border-0 hover:bg-ink-light"
+        class="group block transition-all duration-200 border-b border-ink-black/10 last:border-0 pb-6 hover:bg-ink-light/30 -mx-4 px-4"
       >
-        <div class="flex items-center gap-3 md:gap-6 overflow-hidden flex-1 min-w-0">
-          <span class="text-xs font-ink font-semibold text-ink-text-tertiary group-hover:text-ink-text transition-colors tabular-nums uppercase">
-            {formatDate(entry.pubDate || entry.date)}
-          </span>
-
-          <h3 class="text-base md:text-md font-ink font-semibold text-ink-text group-hover:text-ink-black transition-colors">
-            {entry.title}
-            {entry.isExternal && (
-              <span class="ml-2 text-ink-text opacity-40 group-hover:opacity-100 transition-opacity">
-                ↗
-              </span>
-            )}
-          </h3>
-        </div>
-        <div class="flex items-center gap-2 md:gap-6 shrink-0">
-          <span class="text-[11px] border border-accent font-semibold  py-0.5 uppercase tracking-tighter w-10 text-center">
+        <div class="flex items-center gap-3 mb-2">
+          <span class={`text-[10px] border font-semibold py-0.5 uppercase tracking-tighter w-10 text-center ${getTagStyles(entry.type).backgroundColor} ${getTagStyles(entry.type).textColor} ${getTagStyles(entry.type).borderColor}`}>
             {getTagLabel(entry.type)}
           </span>
+          <span class="text-[10px] font-ink font-semibold text-ink-text-tertiary group-hover:text-ink-text transition-colors tabular-nums uppercase">
+            {formatDate(entry.pubDate || entry.date)}
+          </span>
         </div>
+
+        <h3 class="text-base md:text-lg font-ink font-semibold text-ink-text group-hover:text-ink-black transition-colors mb-2">
+          {entry.title}
+          {entry.isExternal && (
+            <span class="ml-2 text-ink-text opacity-40 group-hover:opacity-100 transition-opacity">
+              ↗
+            </span>
+          )}
+        </h3>
+
+        {entry.description && (
+          <p class="text-sm text-ink-text-secondary leading-snug line-clamp-2">
+            {entry.description}
+          </p>
+        )}
       </a>
     ))}
   </div>

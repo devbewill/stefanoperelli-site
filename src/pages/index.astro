@@ -18,6 +18,7 @@ const allItems = [
     pubDate: entry.data.pubDate,
     type: entry.data.type,
     index: entry.data.index,
+    description: entry.data.description,
   })),
   ...CONTENT.newsletters.map((n) => ({
     title: n.title,
@@ -26,6 +27,7 @@ const allItems = [
     link: n.link || "#",
     isExternal: true,
     pubDate: new Date(n.date),
+    description: n.description,
   })),
 ]
   .sort(
