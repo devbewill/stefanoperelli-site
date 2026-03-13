@@ -2,6 +2,9 @@
 import type { CollectionEntry } from "astro:content";
 import Layout from "./Layout.astro";
 import BackButton from "../components/BackButton.astro";
+import BrandIdentity from "../components/BrandIdentity.astro";
+import SidebarNav from "../components/SidebarNav.astro";
+import ContactLinks from "../components/ContactLinks.astro";
 
 type Props = CollectionEntry<"entries">["data"];
 
@@ -9,12 +12,33 @@ const { title, description, pubDate, heroImage, type } = Astro.props;
 ---
 
 <Layout title={`${title} | Synthetic Mess`}>
-  <div
-    class="min-h-screen bg-ink-white text-ink-text font-ink flex flex-col relative"
-  >
-    <main class="flex-1 flex flex-col max-w-2xl mx-auto w-full px-4 pt-64 pb-32">
+  <div class="h-screen w-full bg-ink-white text-ink-text font-ink flex flex-col lg:flex-row overflow-hidden">
+    <!-- Left Sidebar: Brand + Navbar (hidden on mobile, shown on desktop) -->
+    <aside class="hidden lg:flex lg:w-64 lg:w-80 flex-shrink-0 border-r border-ink-black/10 flex-col p-8 lg:p-12 fixed h-screen">
+      <div class="flex-1 flex flex-col">
+        <!-- Brand Identity -->
+        <div class="mb-12">
+          <BrandIdentity />
+        </div>
+
+        <!-- Sidebar Navigation (desktop) -->
+        <nav class="flex-1">
+          <SidebarNav id="desktop-nav" />
+        </nav>
+      </div>
+    </aside>
+
+    <!-- Right Content: Scrollable Content (full width on mobile, flex-1 on desktop) -->
+    <main class="flex-1 overflow-y-auto h-screen lg:ml-64 lg:ml-80">
+      <div class="max-w-3xl mx-auto px-6 py-8 lg:px-8 lg:py-12 lg:px-16 lg:py-16">
+        <!-- Mobile Header: Brand Identity (shown only on mobile) -->
+        <div class="lg:hidden mb-8">
+          <div class="mb-6">
+            <BrandIdentity />
+          </div>
+        </div>
       <article>
-        <header class="mb-16 md:mb-24">
+        <header class="mb-16 lg:mb-24">
           <div class="flex items-center gap-4 mb-4">
             <span
               class="text-[10px] font-semibold tracking-[0.4em] uppercase text-ink-text"
@@ -41,14 +65,14 @@ const { title, description, pubDate, heroImage, type } = Astro.props;
           </div>
 
           <h1
-            class="text-4xl md:text-7xl font-semibold leading-[0.9] text-ink-text mb-8 uppercase"
+            class="text-4xl lg:text-7xl font-semibold leading-[0.9] text-ink-text mb-8 uppercase"
           >
             {title}
           </h1>
 
           {
             description && (
-              <p class="text-xl md:text-2xl text-ink-text-secondary font-semibold leading-relaxed max-w-2xl">
+              <p class="text-xl lg:text-2xl text-ink-text-secondary font-semibold leading-relaxed max-w-2xl">
                 {description}
               </p>
             )
@@ -57,7 +81,7 @@ const { title, description, pubDate, heroImage, type } = Astro.props;
 
         {
           heroImage && (
-            <div class="mb-16 md:mb-24 overflow-hidden border border-ink-black">
+            <div class="mb-16 lg:mb-24 overflow-hidden border border-ink-black">
               <img
                 width={1600}
                 height={800}
@@ -88,6 +112,17 @@ const { title, description, pubDate, heroImage, type } = Astro.props;
           <BackButton />
         </div>
       </article>
+      </div>
     </main>
+
+    <!-- Mobile Navigation (hamburger menu, hidden on desktop) -->
+    <div class="lg:hidden">
+      <SidebarNav id="mobile-nav" />
+    </div>
+
+    <!-- Contact Links (fixed position) -->
+    <div class="fixed bottom-6 right-6 lg:bottom-8 lg:right-8 lg:bottom-12 lg:right-12 pointer-events-auto">
+      <ContactLinks />
+    </div>
   </div>
 </Layout>

@@ -1,5 +1,6 @@
 ---
 import { CONTENT } from "../constants/content";
+import FooterStatus from "./FooterStatus.astro";
 interface Props {
   activeType?: string;
   id?: string;
@@ -23,7 +24,7 @@ const isExperimentsActive =
 ---
 
 <!-- Mobile Toggle (Hidden on Desktop) -->
-<input type="checkbox" id={id} class="peer hidden" />
+<input type="checkbox" id={id} class="peer hidden nav-toggle" />
 <label
   for={id}
   class="lg:hidden fixed top-10 right-10 z-[60] pointer-events-auto cursor-pointer p-1"
@@ -97,18 +98,23 @@ const isExperimentsActive =
       >MVP</a
     >
   </nav>
+
+  <!-- Footer Status (Anchored at bottom) -->
+  <div class="mt-auto pt-10">
+    <FooterStatus />
+  </div>
 </div>
 
 <style>
   /* Custom Hamburger Logic without JS */
-  input[type="checkbox"]:checked ~ label div span:nth-child(1) {
+  .nav-toggle:checked ~ label div span:nth-child(1) {
     transform: rotate(45deg) translate(2px, -1px);
   }
-  input[type="checkbox"]:checked ~ label div span:nth-child(2) {
+  .nav-toggle:checked ~ label div span:nth-child(2) {
     opacity: 0;
     transform: translate(-20px, -50%);
   }
-  input[type="checkbox"]:checked ~ label div span:nth-child(3) {
+  .nav-toggle:checked ~ label div span:nth-child(3) {
     transform: rotate(-45deg) translate(2px, 1px);
   }
 </style>

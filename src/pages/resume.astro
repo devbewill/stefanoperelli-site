@@ -4,16 +4,15 @@ import Layout from "../layouts/Layout.astro";
 import ExperienceItem from "../components/ExperienceItem.astro";
 import BrandIdentity from "../components/BrandIdentity.astro";
 import SidebarNav from "../components/SidebarNav.astro";
-import FooterStatus from "../components/FooterStatus.astro";
 import ContactLinks from "../components/ContactLinks.astro";
 
 const t = CONTENT;
 ---
 
 <Layout title="Resume | Synthetic Mess">
-  <div class="min-h-screen w-full bg-ink-white text-ink-text font-ink flex flex-col md:flex-row">
+  <div class="h-screen w-full bg-ink-white text-ink-text font-ink flex flex-col lg:flex-row overflow-hidden">
     <!-- Left Sidebar: Brand + Navbar (hidden on mobile, shown on desktop) -->
-    <aside class="hidden md:flex md:w-64 lg:w-80 flex-shrink-0 border-r border-ink-black/10 flex-col p-8 lg:p-12">
+    <aside class="hidden lg:flex lg:w-64 lg:w-80 flex-shrink-0 border-r border-ink-black/10 flex-col p-8 lg:p-12 fixed h-screen">
       <div class="flex-1 flex flex-col">
         <!-- Brand Identity -->
         <div class="mb-12">
@@ -25,18 +24,13 @@ const t = CONTENT;
           <SidebarNav id="desktop-nav" />
         </nav>
       </div>
-
-      <!-- Footer Status -->
-      <div class="mt-auto pt-8">
-        <FooterStatus />
-      </div>
     </aside>
 
     <!-- Right Content: Scrollable Content (full width on mobile, flex-1 on desktop) -->
-    <main class="flex-1 overflow-y-auto">
-      <div class="max-w-4xl mx-auto px-6 py-8 md:px-8 md:py-12 lg:px-16 lg:py-16">
+    <main class="flex-1 overflow-y-auto h-screen lg:ml-64 lg:ml-80">
+      <div class="max-w-4xl mx-auto px-6 py-8 lg:px-8 lg:py-12 lg:px-16 lg:py-16">
         <!-- Mobile Header: Brand Identity (shown only on mobile) -->
-        <div class="md:hidden mb-8">
+        <div class="lg:hidden mb-8">
           <div class="mb-6">
             <BrandIdentity />
           </div>
@@ -66,8 +60,8 @@ const t = CONTENT;
           </div>
         </section>
 
-        <div class="grid grid-cols-1 md:grid-cols-12 gap-16">
-          <section class="md:col-span-4">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-16">
+          <section class="lg:col-span-4">
             <div class="flex items-center gap-6 mb-12">
               <h2
                 class="text-[11px] font-semibold tracking-[0.5em] uppercase"
@@ -96,7 +90,7 @@ const t = CONTENT;
             </div>
           </section>
 
-          <section class="md:col-span-8">
+          <section class="lg:col-span-8">
             <div class="flex items-center gap-6 mb-12">
               <h2
                 class="text-[11px] font-semibold tracking-[0.5em] uppercase"
@@ -112,7 +106,7 @@ const t = CONTENT;
                     <span class="text-[9px] font-ink font-semibold uppercase tabular-nums tracking-widest transition-colors">
                       {project.role}
                     </span>
-                    <h3 class="text-2xl md:text-3xl font-semibold">
+                    <h3 class="text-2xl lg:text-3xl font-semibold">
                       {project.title}
                     </h3>
                     <p class=" text-sm font-semibold leading-relaxed">
@@ -133,7 +127,7 @@ const t = CONTENT;
     </div>
 
     <!-- Contact Links (fixed position) -->
-    <div class="fixed bottom-6 right-6 md:bottom-8 md:right-8 lg:bottom-12 lg:right-12 pointer-events-auto">
+    <div class="fixed bottom-6 right-6 lg:bottom-8 lg:right-8 lg:bottom-12 lg:right-12 pointer-events-auto">
       <ContactLinks />
     </div>
   </div>
