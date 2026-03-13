@@ -2,133 +2,94 @@
 import { CONTENT } from "../constants/content";
 import Layout from "../layouts/Layout.astro";
 import ExperienceItem from "../components/ExperienceItem.astro";
-import BrandIdentity from "../components/BrandIdentity.astro";
-import SidebarNav from "../components/SidebarNav.astro";
-import ContactLinks from "../components/ContactLinks.astro";
+import SidebarLayout from "../components/SidebarLayout.astro";
 
 const t = CONTENT;
 ---
 
 <Layout title="Resume | Synthetic Mess">
-  <div class="h-screen w-full bg-ink-white text-ink-text font-ink flex flex-col lg:flex-row overflow-hidden">
-    <!-- Left Sidebar: Brand + Navbar (hidden on mobile, shown on desktop) -->
-    <aside class="hidden lg:flex lg:w-64 lg:w-80 flex-shrink-0 border-r border-ink-black/10 flex-col p-8 lg:p-12 fixed h-screen">
-      <div class="flex-1 flex flex-col">
-        <!-- Brand Identity -->
-        <div class="mb-12">
-          <BrandIdentity />
-        </div>
+  <SidebarLayout maxWidth="max-w-4xl">
+    <header
+      class="mb-12 flex justify-between items-end border-b border-ink-black pb-3"
+    >
+      <span
+        class="text-[11px] font-semibold tracking-[0.4em] uppercase"
+        >Professional Record // Dossier</span
+      >
+      <span class="text-[10px] font-ink font-semibold text-ink-text-tertiary"
+        >RESUME_2026</span
+      >
+    </header>
 
-        <!-- Sidebar Navigation (desktop) -->
-        <nav class="flex-1">
-          <SidebarNav id="desktop-nav" />
-        </nav>
+    <section class="mb-32">
+      <div class="space-y-1">
+        {
+          t.experiences.map((exp) => (
+            <div class="py-12 border-b border-ink-black/10 first:pt-0">
+              <ExperienceItem {...exp} />
+            </div>
+          ))
+        }
       </div>
-    </aside>
+    </section>
 
-    <!-- Right Content: Scrollable Content (full width on mobile, flex-1 on desktop) -->
-    <main class="flex-1 overflow-y-auto h-screen lg:ml-64 lg:ml-80">
-      <div class="max-w-4xl mx-auto px-6 py-8 lg:px-8 lg:py-12 lg:px-16 lg:py-16">
-        <!-- Mobile Header: Brand Identity (shown only on mobile) -->
-        <div class="lg:hidden mb-8">
-          <div class="mb-6">
-            <BrandIdentity />
-          </div>
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-16">
+      <section class="lg:col-span-4">
+        <div class="flex items-center gap-6 mb-12">
+          <h2
+            class="text-[11px] font-semibold tracking-[0.5em] uppercase"
+          >
+            Capabilities
+          </h2>
+          <div class="h-[1px] flex-1 bg-ink-black"></div>
         </div>
-
-        <header
-          class="mb-12 flex justify-between items-end border-b border-ink-black pb-3"
-        >
-          <span
-            class="text-[11px] font-semibold tracking-[0.4em] uppercase"
-            >Professional Record // Dossier</span
-          >
-          <span class="text-[10px] font-ink font-semibold text-ink-text-tertiary"
-            >RESUME_2026</span
-          >
-        </header>
-
-        <section class="mb-32">
-          <div class="space-y-1">
-            {
-              t.experiences.map((exp) => (
-                <div class="py-12 border-b border-ink-black/10 first:pt-0">
-                  <ExperienceItem {...exp} />
-                </div>
-              ))
-            }
-          </div>
-        </section>
-
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-16">
-          <section class="lg:col-span-4">
-            <div class="flex items-center gap-6 mb-12">
-              <h2
-                class="text-[11px] font-semibold tracking-[0.5em] uppercase"
-              >
-                Capabilities
-              </h2>
-              <div class="h-[1px] flex-1 bg-ink-black"></div>
-            </div>
-            <div class="space-y-12">
-              {
-                t.skills.map((category) => (
-                  <div class="space-y-4">
-                    <h3 class="text-[10px] font-semibold tracking-widest uppercase italic">
-                      {category.title}
-                    </h3>
-                    <div class="flex flex-wrap gap-x-6 gap-y-2">
-                      {category.skills.map((skill) => (
-                        <span class="text-sm font-semibold">
-                          {skill}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                ))
-              }
-            </div>
-          </section>
-
-          <section class="lg:col-span-8">
-            <div class="flex items-center gap-6 mb-12">
-              <h2
-                class="text-[11px] font-semibold tracking-[0.5em] uppercase"
-              >
-                Selected Key Projects
-              </h2>
-              <div class="h-[1px] flex-1 bg-ink-black"></div>
-            </div>
-            <div class="space-y-12">
-              {
-                t.projects.map((project) => (
-                  <div class="group space-y-2">
-                    <span class="text-[9px] font-ink font-semibold uppercase tabular-nums tracking-widest transition-colors">
-                      {project.role}
+        <div class="space-y-12">
+          {
+            t.skills.map((category) => (
+              <div class="space-y-4">
+                <h3 class="text-[10px] font-semibold tracking-widest uppercase italic">
+                  {category.title}
+                </h3>
+                <div class="flex flex-wrap gap-x-6 gap-y-2">
+                  {category.skills.map((skill) => (
+                    <span class="text-sm font-semibold">
+                      {skill}
                     </span>
-                    <h3 class="text-2xl lg:text-3xl font-semibold">
-                      {project.title}
-                    </h3>
-                    <p class=" text-sm font-semibold leading-relaxed">
-                      {project.description}
-                    </p>
-                  </div>
-                ))
-              }
-            </div>
-          </section>
+                  ))}
+                </div>
+              </div>
+            ))
+          }
         </div>
-      </div>
-    </main>
+      </section>
 
-    <!-- Mobile Navigation (hamburger menu, hidden on desktop) -->
-    <div class="lg:hidden">
-      <SidebarNav id="mobile-nav" />
+      <section class="lg:col-span-8">
+        <div class="flex items-center gap-6 mb-12">
+          <h2
+            class="text-[11px] font-semibold tracking-[0.5em] uppercase"
+          >
+            Selected Key Projects
+          </h2>
+          <div class="h-[1px] flex-1 bg-ink-black"></div>
+        </div>
+        <div class="space-y-12">
+          {
+            t.projects.map((project) => (
+              <div class="group space-y-2">
+                <span class="text-[9px] font-ink font-semibold uppercase tabular-nums tracking-widest transition-colors">
+                  {project.role}
+                </span>
+                <h3 class="text-2xl lg:text-3xl font-semibold">
+                  {project.title}
+                </h3>
+                <p class=" text-sm font-semibold leading-relaxed">
+                  {project.description}
+                </p>
+              </div>
+            ))
+          }
+        </div>
+      </section>
     </div>
-
-    <!-- Contact Links (fixed position) -->
-    <div class="fixed bottom-6 right-6 lg:bottom-8 lg:right-8 lg:bottom-12 lg:right-12 pointer-events-auto">
-      <ContactLinks />
-    </div>
-  </div>
+  </SidebarLayout>
 </Layout>

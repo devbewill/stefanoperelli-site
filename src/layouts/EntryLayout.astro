@@ -2,9 +2,7 @@
 import type { CollectionEntry } from "astro:content";
 import Layout from "./Layout.astro";
 import BackButton from "../components/BackButton.astro";
-import BrandIdentity from "../components/BrandIdentity.astro";
-import SidebarNav from "../components/SidebarNav.astro";
-import ContactLinks from "../components/ContactLinks.astro";
+import SidebarLayout from "../components/SidebarLayout.astro";
 
 type Props = CollectionEntry<"entries">["data"];
 
@@ -12,117 +10,81 @@ const { title, description, pubDate, heroImage, type } = Astro.props;
 ---
 
 <Layout title={`${title} | Synthetic Mess`}>
-  <div class="h-screen w-full bg-ink-white text-ink-text font-ink flex flex-col lg:flex-row overflow-hidden">
-    <!-- Left Sidebar: Brand + Navbar (hidden on mobile, shown on desktop) -->
-    <aside class="hidden lg:flex lg:w-64 lg:w-80 flex-shrink-0 border-r border-ink-black/10 flex-col p-8 lg:p-12 fixed h-screen">
-      <div class="flex-1 flex flex-col">
-        <!-- Brand Identity -->
-        <div class="mb-12">
-          <BrandIdentity />
-        </div>
-
-        <!-- Sidebar Navigation (desktop) -->
-        <nav class="flex-1">
-          <SidebarNav id="desktop-nav" />
-        </nav>
-      </div>
-    </aside>
-
-    <!-- Right Content: Scrollable Content (full width on mobile, flex-1 on desktop) -->
-    <main class="flex-1 overflow-y-auto h-screen lg:ml-64 lg:ml-80">
-      <div class="max-w-3xl mx-auto px-6 py-8 lg:px-8 lg:py-12 lg:px-16 lg:py-16">
-        <!-- Mobile Header: Brand Identity (shown only on mobile) -->
-        <div class="lg:hidden mb-8">
-          <div class="mb-6">
-            <BrandIdentity />
-          </div>
-        </div>
-      <article>
-        <header class="mb-16 lg:mb-24">
-          <div class="flex items-center gap-4 mb-4">
-            <span
-              class="text-[10px] font-semibold tracking-[0.4em] uppercase text-ink-text"
-            >
-              {
-                type === "post"
-                  ? "Transmission // Insight"
-                  : "Artifact // Project"
-              }
-            </span>
-            <div class="h-[1px] flex-1 bg-ink-black"></div>
-            <time
-              datetime={pubDate.toISOString()}
-              class="text-[10px] font-ink font-semibold text-ink-text-tertiary"
-            >
-              {
-                pubDate.toLocaleDateString("en-us", {
-                  year: "numeric",
-                  month: "short",
-                  day: "numeric",
-                })
-              }
-            </time>
-          </div>
-
-          <h1
-            class="text-4xl lg:text-7xl font-semibold leading-[0.9] text-ink-text mb-8 uppercase"
+  <SidebarLayout>
+    <article>
+      <header class="mb-16 lg:mb-24">
+        <div class="flex items-center gap-4 mb-4">
+          <span
+            class="text-[10px] font-semibold tracking-[0.4em] uppercase text-ink-text"
           >
-            {title}
-          </h1>
+            {
+              type === "post"
+                ? "Transmission // Insight"
+                : "Artifact // Project"
+            }
+          </span>
+          <div class="h-[1px] flex-1 bg-ink-black"></div>
+          <time
+            datetime={pubDate.toISOString()}
+            class="text-[10px] font-ink font-semibold text-ink-text-tertiary"
+          >
+            {
+              pubDate.toLocaleDateString("en-us", {
+                year: "numeric",
+                month: "short",
+                day: "numeric",
+              })
+            }
+          </time>
+        </div>
 
-          {
-            description && (
-              <p class="text-xl lg:text-2xl text-ink-text-secondary font-semibold leading-relaxed max-w-2xl">
-                {description}
-              </p>
-            )
-          }
-        </header>
+        <h1
+          class="text-4xl lg:text-7xl font-semibold leading-[0.9] text-ink-text mb-8 uppercase"
+        >
+          {title}
+        </h1>
 
         {
-          heroImage && (
-            <div class="mb-16 lg:mb-24 overflow-hidden border border-ink-black">
-              <img
-                width={1600}
-                height={800}
-                src={heroImage}
-                alt=""
-                class="w-full object-cover max-h-[60vh] grayscale hover:grayscale-0 transition-all duration-1000"
-              />
-            </div>
+          description && (
+            <p class="text-xl lg:text-2xl text-ink-text-secondary font-semibold leading-relaxed max-w-2xl">
+              {description}
+            </p>
           )
         }
+      </header>
 
-        <div
-          class="prose prose-zinc max-w-none
-                    prose-h2:text-ink-text prose-h2:font-semibold prose-h2:tracking-ink-tight prose-h2:text-3xl prose-h2:uppercase
-                    prose-h3:text-ink-text prose-h3:font-semibold prose-h3:text-xl
-                    prose-p:text-ink-text-secondary prose-p:text-lg prose-p:leading-relaxed
-                    prose-strong:text-ink-text prose-strong:font-semibold
-                    prose-a:text-ink-text prose-a:border-b prose-a:border-ink-black/30 hover:prose-a:border-ink-black
-                    prose-code:bg-ink-light prose-code:text-ink-text prose-code:px-1.5 prose-code:py-0.5 prose-code:border prose-code:border-ink-black prose-code:before:content-none prose-code:after:content-none
-                    prose-pre:bg-ink-light prose-pre:border prose-pre:border-ink-black prose-pre:p-8
-                    prose-img:border prose-img:border-ink-black
-                    prose-blockquote:border-l-ink-black prose-blockquote:bg-ink-light prose-blockquote:py-2 prose-blockquote:px-8"
-        >
-          <slot />
-        </div>
+      {
+        heroImage && (
+          <div class="mb-16 lg:mb-24 overflow-hidden border border-ink-black">
+            <img
+              width={1600}
+              height={800}
+              src={heroImage}
+              alt=""
+              class="w-full object-cover max-h-[60vh] grayscale hover:grayscale-0 transition-all duration-1000"
+            />
+          </div>
+        )
+      }
 
-        <div class="mt-32 pt-12 border-t border-ink-black text-center">
-          <BackButton />
-        </div>
-      </article>
+      <div
+        class="prose prose-zinc max-w-none
+                  prose-h2:text-ink-text prose-h2:font-semibold prose-h2:tracking-ink-tight prose-h2:text-3xl prose-h2:uppercase
+                  prose-h3:text-ink-text prose-h3:font-semibold prose-h3:text-xl
+                  prose-p:text-ink-text-secondary prose-p:text-lg prose-p:leading-relaxed
+                  prose-strong:text-ink-text prose-strong:font-semibold
+                  prose-a:text-ink-text prose-a:border-b prose-a:border-ink-black/30 hover:prose-a:border-ink-black
+                  prose-code:bg-ink-light prose-code:text-ink-text prose-code:px-1.5 prose-code:py-0.5 prose-code:border prose-code:border-ink-black prose-code:before:content-none prose-code:after:content-none
+                  prose-pre:bg-ink-light prose-pre:border prose-pre:border-ink-black prose-pre:p-8
+                  prose-img:border prose-img:border-ink-black
+                  prose-blockquote:border-l-ink-black prose-blockquote:bg-ink-light prose-blockquote:py-2 prose-blockquote:px-8"
+      >
+        <slot />
       </div>
-    </main>
 
-    <!-- Mobile Navigation (hamburger menu, hidden on desktop) -->
-    <div class="lg:hidden">
-      <SidebarNav id="mobile-nav" />
-    </div>
-
-    <!-- Contact Links (fixed position) -->
-    <div class="fixed bottom-6 right-6 lg:bottom-8 lg:right-8 lg:bottom-12 lg:right-12 pointer-events-auto">
-      <ContactLinks />
-    </div>
-  </div>
+      <div class="mt-32 pt-12 border-t border-ink-black text-center">
+        <BackButton />
+      </div>
+    </article>
+  </SidebarLayout>
 </Layout>
