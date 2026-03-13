@@ -1,20 +1,20 @@
 export const TAG_STYLES = {
   post: {
     label: "POST",
-    backgroundColor: "bg-orange-100",
-    textColor: "text-orange-800",
-    borderColor: "border-orange-300",
+    backgroundColor: "bg-fluo-green",
+    textColor: "text-black",
+    borderColor: "bg-fluo-green",
   },
   project: {
     label: "PRG",
-    backgroundColor: "bg-blue-100",
-    textColor: "text-blue-800",
-    borderColor: "border-blue-300",
+    backgroundColor: "bg-fluo-yellow",
+    textColor: "text-black",
+    borderColor: "bg-fluo-yellow",
   },
   link: {
     label: "LINK",
-    backgroundColor: "bg-pink-100",
-    textColor: "text-pink-800",
-    borderColor: "border-pink-300",
+    backgroundColor: "bg-fluo-pink",
+    textColor: "text-black",
+    borderColor: "bg-fluo-pink",
   },
 } as const;

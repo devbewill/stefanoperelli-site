@@ -14,6 +14,9 @@ export default {
         "ink-text-secondary": "#222222",
         // Keep accent for subtle interactions (optional)
         accent: "rgb(31 32 177)",
+        "fluo-green": "#65ff00",
+        "fluo-pink": "#ff3ed7",
+        "fluo-yellow": "#ffff00",
         background: "#FFFFFF",
         foreground: "#000000",
         zinc: {

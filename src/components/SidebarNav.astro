@@ -20,7 +20,7 @@ const isJournalActive = isActive("/blog") || activeType === "post";
 const isExperimentsActive =
   isActive("/projects") ||
   activeType === "project" ||
-  pathname.startsWith("/experiments");
+  pathname.startsWith("/projects");
 ---
 
 <!-- Mobile Toggle (Hidden on Desktop) -->
@@ -31,13 +31,13 @@ const isExperimentsActive =
 >
   <div class="relative w-6 h-5">
     <span
-      class="absolute top-0 left-0 w-full h-[1px] transition-all origin-left group-peer-checked:rotate-45"
+      class="absolute top-0 left-0 w-full h-[1px] bg-ink-black transition-all origin-left"
     ></span>
     <span
-      class="absolute top-1/2 left-0 -translate-y-1/2 w-full h-[1px] transition-all group-peer-checked:opacity-0"
+      class="absolute top-1/2 left-0 -translate-y-1/2 w-full h-[1px] bg-ink-black transition-all"
     ></span>
     <span
-      class="absolute bottom-0 left-0 w-full h-[1px] transition-all origin-left group-peer-checked:-rotate-45"
+      class="absolute bottom-0 left-0 w-full h-[1px] bg-ink-black transition-all origin-left"
     ></span>
   </div>
 </label>
@@ -70,7 +70,6 @@ const isExperimentsActive =
 
   <!-- Nav Links -->
   <nav class="flex flex-col items-end space-y-4 lg:space-y-4">
-
     <a
       href="/"
       class={`text-4xl lg:text-xs font-semibold tracking-widest uppercase transition-all  ${isActive("/") ? "text-ink-black border-b border-ink-black" : "text-ink-text hover:text-ink-black border-b border-transparent hover:border-ink-black"}`}
@@ -95,7 +94,7 @@ const isExperimentsActive =
     <a
       href="/projects"
       class={`text-4xl lg:text-xs font-semibold tracking-widest uppercase transition-all  ${isExperimentsActive ? "text-ink-black border-b border-ink-black" : "text-ink-text hover:text-ink-black border-b border-transparent hover:border-ink-black"}`}
-      >MVP</a
+      >Projects</a
     >
   </nav>
 
