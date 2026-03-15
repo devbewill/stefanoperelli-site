@@ -74,8 +74,8 @@ const { title, description, pubDate, heroImage, type } = Astro.props;
                   prose-p:text-lg prose-p:leading-relaxed
                   prose-strong:font-semibold
                   prose-a:border-b prose-a:border-ink-black/30 hover:prose-a:border-ink-black
-                  prose-code:bg-ink-light prose-code:px-1.5 prose-code:py-0.5 prose-code:border prose-code:border-ink-black prose-code:before:content-none prose-code:after:content-none
-                  prose-pre:bg-ink-light prose-pre:border prose-pre:border-ink-black prose-pre:p-8
+                  prose-code:not(pre code):bg-ink-light prose-code:not(pre code):px-1.5 prose-code:not(pre code):py-0.5 prose-code:not(pre code):border prose-code:not(pre code):border-ink-black prose-code:not(pre code):before:content-none prose-code:not(pre code):after:content-none
+                  prose-pre:bg-transparent prose-pre:border-none prose-pre:text-inherit
                   prose-img:border prose-img:border-ink-black
                   prose-blockquote:border-l-ink-black prose-blockquote:bg-ink-light prose-blockquote:py-2 prose-blockquote:px-8"
       >

@@ -98,18 +98,43 @@
     @apply text-ink-text-secondary;
   }
 
-  /* Code blocks */
-  code,
-  pre {
-    @apply font-ink text-ink-text bg-ink-light border border-ink-border;
-  }
-
+  /* Code blocks - allow Shiki theme to override for pre blocks */
   code {
-    @apply px-1 py-0.5 text-sm;
+    @apply font-mono text-ink-text bg-ink-light border border-ink-border px-1 py-0.5 text-sm;
   }
 
-  pre {
-    @apply p-4 overflow-x-auto;
+  /* Only apply custom styles to pre elements that don't have Shiki class */
+  pre:not(.shiki) {
+    @apply font-mono text-ink-text bg-ink-light border border-ink-border p-4 overflow-x-auto;
+  }
+
+  /* Ensure Shiki code blocks use their theme colors - don't override inline styles */
+  pre.shiki {
+    border: none !important;
+    text-shadow: none !important;
+    box-shadow: none !important;
+    font-family: monospace !important;
+  }
+
+  pre.shiki > code {
+    background-color: transparent !important;
+    border: none !important;
+    text-shadow: none !important;
+    box-shadow: none !important;
+    font-family: inherit !important;
+  }
+
+  /* Protect Shiki's inline styles on span elements */
+  pre.shiki code span {
+    background-color: transparent !important;
+    border: none !important;
+    text-shadow: none !important;
+    box-shadow: none !important;
+  }
+
+  /* Remove any line background overrides */
+  pre.shiki .line {
+    background-color: transparent !important;
   }
 
   /* Blockquotes */

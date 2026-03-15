@@ -34,7 +34,7 @@ export default {
       },
       fontFamily: {
         sans: ['"iA Writer Quattro"', "monospace"],
-        mono: ['"iA Writer Quattro"', "monospace"],
+        mono: ["monospace"],
         ink: ['"iA Writer Quattro"', "monospace"],
       },
     },
