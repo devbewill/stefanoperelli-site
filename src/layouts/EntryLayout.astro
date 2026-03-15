@@ -23,10 +23,10 @@ const { title, description, pubDate, heroImage, type } = Astro.props;
                 : "Artifact // Project"
             }
           </span>
-          <div class="h-[1px] flex-1 bg-ink-black"></div>
+          <div class="h-[1px] flex-1 bg-black"></div>
           <time
             datetime={pubDate.toISOString()}
-            class="text-[10px] font-ink font-semibold"
+            class="text-[10px] font-sans font-semibold"
           >
             {
               pubDate.toLocaleDateString("en-us", {
@@ -55,7 +55,7 @@ const { title, description, pubDate, heroImage, type } = Astro.props;
 
       {
         heroImage && (
-          <div class="mb-16 lg:mb-24 overflow-hidden border border-ink-black">
+          <div class="mb-16 lg:mb-24 overflow-hidden border border-black">
             <img
               width={1600}
               height={800}
@@ -69,20 +69,20 @@ const { title, description, pubDate, heroImage, type } = Astro.props;
 
       <div
         class="prose prose-zinc max-w-none
-                  prose-h2:text-3xl prose-h2:font-semibold prose-h2:tracking-ink-tight prose-h2:uppercase
+                  prose-h2:text-3xl prose-h2:font-semibold prose-h2:tracking-tight prose-h2:uppercase
                   prose-h3:text-xl
                   prose-p:text-lg prose-p:leading-relaxed
                   prose-strong:font-semibold
-                  prose-a:border-b prose-a:border-ink-black/30 hover:prose-a:border-ink-black
-                  prose-code:not(pre code):bg-ink-light prose-code:not(pre code):px-1.5 prose-code:not(pre code):py-0.5 prose-code:not(pre code):border prose-code:not(pre code):border-ink-black prose-code:not(pre code):before:content-none prose-code:not(pre code):after:content-none
+                  prose-a:border-b prose-a:border-black/30 hover:prose-a:border-black
+                  prose-code:not(pre code):bg-zinc-100 prose-code:not(pre code):px-1.5 prose-code:not(pre code):py-0.5 prose-code:not(pre code):border prose-code:not(pre code):border-black prose-code:not(pre code):before:content-none prose-code:not(pre code):after:content-none
                   prose-pre:bg-transparent prose-pre:border-none prose-pre:text-inherit
-                  prose-img:border prose-img:border-ink-black
-                  prose-blockquote:border-l-ink-black prose-blockquote:bg-ink-light prose-blockquote:py-2 prose-blockquote:px-8"
+                  prose-img:border prose-img:border-black
+                  prose-blockquote:border-l-black prose-blockquote:bg-zinc-100 prose-blockquote:py-2 prose-blockquote:px-8"
       >
         <slot />
       </div>
 
-      <div class="mt-32 pt-12 border-t border-ink-black text-center">
+      <div class="mt-32 pt-12 border-t border-black text-center">
         <BackButton />
       </div>
     </article>

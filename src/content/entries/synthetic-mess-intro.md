@@ -1,7 +1,7 @@
 ---
 type: post
 title: "Share the mess – it might help someone else too"
-description: "Perché questo spazio esiste, cosa significa 'Synthetic Mess' e come l'AI sta riscrivendo le regole del gioco digitale."
+description: "Yeah, I know it’s a total mess, but at least now it’s a mess with a fancy name."
 pubDate: 2026-01-01
 tags: ["philosophy", "product", "ai", "digital"]
 readingTime: "3 min"

@@ -40,21 +40,16 @@ const getTagStyles = (type: string) => {
     borderColor: "border-accent",
   };
 };
-
-const getPrefix = (entry: Entry) => {
-  if (entry.type === "project") return `PR_${(entry.index || 0).toString().padStart(2, "0")}`;
-  return (entry.index || 0).toString().padStart(2, "0");
-};
 ---
 
 <div class="space-y-0.5">
   {title && (
-    <header class="mb-12 flex justify-between items-end border-b border-ink-black pb-3">
-      <span class="text-[11px] font-semibold tracking-[0.4em] uppercase text-ink-text">
+    <header class="mb-12 flex justify-between items-end border-b border-black pb-3">
+      <span class="text-[11px] font-semibold tracking-[0.4em] uppercase text-black">
         {title}
       </span>
       {subtitle && (
-        <span class="text-[10px] font-ink font-semibold text-ink-text-tertiary">
+        <span class="text-[10px] font-sans font-semibold text-zinc-500">
           {subtitle}
         </span>
       )}
@@ -62,36 +57,40 @@ const getPrefix = (entry: Entry) => {
   )}
 
   <div class="flex flex-col space-y-6">
-    {entries.map((entry) => (
-      <a
-        href={entry.link}
-        target={entry.isExternal ? "_blank" : undefined}
-        rel={entry.isExternal ? "noopener noreferrer" : undefined}
-        class="group block transition-all duration-200 border-b border-ink-black/10 last:border-0 pb-6 hover:bg-ink-light/30 -mx-4 px-4"
-      >
-        <div class="flex items-center gap-3 mb-2">
-          <span class={`text-[10px] border font-semibold py-0.5 uppercase tracking-tighter w-10 text-center ${getTagStyles(entry.type).backgroundColor} ${getTagStyles(entry.type).textColor} ${getTagStyles(entry.type).borderColor}`}>
-            {getTagLabel(entry.type)}
-          </span>
-          <span class="text-[10px] font-ink font-semibold text-ink-text-tertiary group-hover:text-ink-text transition-colors tabular-nums uppercase">
-            {formatDate(entry.pubDate || entry.date)}
-          </span>
-        </div>
-
-        <h3 class="text-base md:text-lg font-ink font-semibold text-ink-text group-hover:text-ink-black transition-colors mb-2">
-          {entry.title}
-          {entry.isExternal && (
-            <span class="ml-2 text-ink-text opacity-40 group-hover:opacity-100 transition-opacity">
-              ↗
+    {entries.map((entry) => {
+      const tagStyles = getTagStyles(entry.type);
+      return (
+        <a
+          href={entry.link}
+          target={entry.isExternal ? "_blank" : undefined}
+          rel={entry.isExternal ? "noopener noreferrer" : undefined}
+          class="group block transition-all duration-200 border-b border-black/10 last:border-0 pb-6 hover:bg-zinc-100/30 -mx-4 px-4"
+        >
+          <div class="flex items-center gap-3 mb-2">
+            <span class={`text-[10px] border font-semibold py-0.5 uppercase tracking-tighter w-10 text-center ${tagStyles.backgroundColor} ${tagStyles.textColor} ${tagStyles.borderColor}`}>
+              {getTagLabel(entry.type)}
             </span>
-          )}
-        </h3>
+            <span class="text-[10px] font-sans font-semibold text-zinc-500 group-hover:text-black transition-colors tabular-nums uppercase">
+              {formatDate(entry.pubDate || entry.date)}
+            </span>
+          </div>
 
-        {entry.description && (
-          <p class="text-sm text-ink-text-secondary leading-snug line-clamp-2">
-            {entry.description}
-          </p>
-        )}
-      </a>
-    ))}
+          <h3 class="text-base md:text-lg font-sans font-semibold text-black group-hover:text-black transition-colors mb-2">
+            {entry.title}
+            {entry.isExternal && (
+              <span class="ml-2 text-black opacity-40 group-hover:opacity-100 transition-opacity">
+                ↗
+              </span>
+            )}
+          </h3>
+
+          {entry.description && (
+            <p class="text-sm text-zinc-800 leading-snug line-clamp-2">
+              {entry.description}
+            </p>
+          )}
+        </a>
+      );
+    })}
   </div>
+</div>
