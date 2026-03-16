@@ -7,8 +7,6 @@ tags: ["n8n", "automation"]
 readingTime: "3 min"
 ---
 
-# How I automated my daughter's school in less than an hour (without ever using n8n before)
-
 When you discover that your daughter's school secretary writes event times in **attachments** instead of in the email body, a normal person resigns themselves to it. I instead spent an hour building an automation that does it for me.
 
 It's a story that demonstrates something important: automating stupid things is _frighteningly simple_. If you do it once in n8n, you discover that 70% of your daily tasks could disappear tomorrow morning.
@@ -19,7 +17,7 @@ The school sends emails like this:
 
 > **Subject:** Important Event
 >
-> Text: [empty]
+> **Text:** [empty]
 >
 > **Attachment:** school_event_document.pdf
 
@@ -134,8 +132,11 @@ Before starting everything, you need to give n8n permission to read Gmail and wr
 2. Choose "External" (you're the one using it)
 3. Fill it in: app name, email, summary
 4. In "Scopes", add:
-   - `https://www.googleapis.com/auth/gmail.readonly`
-   - `https://www.googleapis.com/auth/calendar`
+
+```
+- https://www.googleapis.com/auth/gmail.readonly
+- https://www.googleapis.com/auth/calendar
+```
 
 ### Step 3: Credentials
 

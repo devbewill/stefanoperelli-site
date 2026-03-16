@@ -20,4 +20,9 @@
   html {
     scroll-behavior: smooth;
   }
+
+  pre,
+  code {
+    font-family: monospace;
+  }
 }

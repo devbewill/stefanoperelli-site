@@ -12,7 +12,7 @@ const { title, description, pubDate, heroImage, type } = Astro.props;
 <Layout title={`${title} | Synthetic Mess`}>
   <SidebarLayout maxWidth="max-w-4xl">
     <article>
-      <header class="mb-16 lg:mb-24">
+      <header class="mb-16">
         <div class="flex items-center gap-4 mb-4">
           <span
             class="text-[10px] font-semibold tracking-[0.4em] uppercase"
@@ -39,7 +39,7 @@ const { title, description, pubDate, heroImage, type } = Astro.props;
         </div>
 
         <h1
-          class="text-4xl lg:text-7xl font-semibold leading-[0.9] mb-8 uppercase"
+          class="text-4xl lg:text-7xl font-black leading-[0.9] mb-8 uppercase"
         >
           {title}
         </h1>
@@ -69,7 +69,7 @@ const { title, description, pubDate, heroImage, type } = Astro.props;
 
       <div
         class="prose prose-zinc max-w-none
-                  prose-h2:text-3xl prose-h2:font-semibold prose-h2:tracking-tight prose-h2:uppercase
+                  prose-h2:text-3xl prose-h2:font-black prose-h2:tracking-tight prose-h2:uppercase
                   prose-h3:text-xl
                   prose-p:text-lg prose-p:leading-relaxed
                   prose-strong:font-semibold
@@ -77,7 +77,7 @@ const { title, description, pubDate, heroImage, type } = Astro.props;
                   prose-code:not(pre code):bg-zinc-100 prose-code:not(pre code):px-1.5 prose-code:not(pre code):py-0.5 prose-code:not(pre code):border prose-code:not(pre code):border-black prose-code:not(pre code):before:content-none prose-code:not(pre code):after:content-none
                   prose-pre:bg-transparent prose-pre:border-none prose-pre:text-inherit
                   prose-img:border prose-img:border-black
-                  prose-blockquote:border-l-black prose-blockquote:bg-zinc-100 prose-blockquote:py-2 prose-blockquote:px-8"
+                  prose-blockquote:border-l-black prose-blockquote:bg-zinc-100 prose-blockquote:py-2 prose-blockquote:px-4"
       >
         <slot />
       </div>
