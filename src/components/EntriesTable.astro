@@ -1,0 +1,132 @@
+---
+import { TAG_STYLES } from "../constants/tags";
+
+interface Entry {
+  title: string;
+  link: string;
+  isExternal?: boolean;
+  pubDate?: Date;
+  date?: Date;
+  type: string;
+  index?: number;
+  description?: string;
+}
+
+interface Props {
+  entries: Entry[];
+  title?: string;
+  subtitle?: string;
+}
+
+const { entries, title, subtitle } = Astro.props;
+
+const formatDate = (date: Date | undefined) => {
+  if (!date) return "";
+  return new Date(date).toLocaleDateString("en-US", {
+    month: "2-digit",
+    day: "2-digit",
+    year: "2-digit",
+  });
+};
+
+const getTagLabel = (type: string) => {
+  return TAG_STYLES[type as keyof typeof TAG_STYLES]?.label || type.toUpperCase();
+};
+
+const getTagStyles = (type: string) => {
+  return TAG_STYLES[type as keyof typeof TAG_STYLES] || {
+    backgroundColor: "bg-accent",
+    textColor: "text-white",
+    borderColor: "border-accent",
+  };
+};
+---
+
+<div class="space-y-0.5">
+  {title && (
+    <header class="mb-8 flex justify-between items-end  pb-3">
+      <span class="text-[11px] font-black tracking-[0.4em] uppercase text-black">
+        {title}
+      </span>
+      {subtitle && (
+        <span class="text-[10px] font-medium text-zinc-500 tracking-wide">
+          {subtitle}
+        </span>
+      )}
+    </header>
+  )}
+
+  <div class="entries-grid w-full">
+    <!-- Header Row -->
+    <div class="grid grid-cols-[80px_64px_1fr] md:grid-cols-[70px_54px_1fr_2fr] gap-2 border-b border-black pb-2">
+      <span class="text-[11px] font-bold tracking-[0.3em] uppercase text-left">
+        Date
+      </span>
+      <span class="text-[11px] font-bold   tracking-[0.3em] uppercase text-left">
+        Type
+      </span>
+      <span class="text-[11px] font-bold   tracking-[0.3em] uppercase text-left">
+        Title
+      </span>
+      <span class="text-[11px]  font-bold tracking-[0.3em] uppercase text-left hidden md:block">
+        Description
+      </span>
+    </div>
+
+    <!-- Entry Rows -->
+    <div class="flex flex-col">
+      {entries.map((entry) => {
+        const tagStyles = getTagStyles(entry.type);
+        return (
+          <a
+            href={entry.link}
+            target={entry.isExternal ? "_blank" : undefined}
+            rel={entry.isExternal ? "noopener noreferrer" : undefined}
+            class="grid grid-cols-[80px_64px_1fr] md:grid-cols-[70px_54px_1fr_2fr] gap-2 py-2 border-b border-black/5 hover:bg-zinc-50 transition-colors group items-center"
+          >
+            <!-- Date -->
+            <span class="text-[11px] font-medium text-zinc-600 tabular-nums tracking-tight">
+              {formatDate(entry.pubDate || entry.date)}
+            </span>
+
+            <!-- Tag - Fixed width -->
+            <span class={`text-[11px] font-bold py-0.5 px-1.5 uppercase tracking-tighter inline-block w-10 text-center ${tagStyles.backgroundColor} ${tagStyles.textColor}`}>
+              {getTagLabel(entry.type)}
+            </span>
+
+            <!-- Title - Always single line, no wrapping -->
+            <div class="flex items-center gap-1 min-w-0">
+              <span class="text-xs font-bold uppercase">
+                {entry.title}
+              </span>
+              {entry.isExternal && (
+                <span class="text-black opacity-30 group-hover:opacity-100 transition-opacity flex-shrink-0">
+                  ↗
+                </span>
+              )}
+            </div>
+
+            <!-- Description - Truncated when space runs out -->
+            <p class="text-xs font-medium text-zinc-500 leading-tight overflow-hidden text-ellipsis whitespace-nowrap hidden md:block">
+              {entry.description}
+            </p>
+          </a>
+        );
+      })}
+    </div>
+  </div>
+</div>
+
+<style>
+
+  /* Smooth hover transitions */
+  .entries-grid a {
+    transition: background-color 0.15s ease;
+  }
+
+  /* Link hover animation */
+  .entries-grid a:hover span {
+    text-decoration: none;
+    text-underline-offset: 2px;
+  }
+</style>

@@ -10,7 +10,7 @@ const { title, description, pubDate, heroImage, type } = Astro.props;
 ---
 
 <Layout title={`${title} | Synthetic Mess`}>
-  <SidebarLayout>
+  <SidebarLayout maxWidth="max-w-4xl">
     <article>
       <header class="mb-16 lg:mb-24">
         <div class="flex items-center gap-4 mb-4">
@@ -26,7 +26,7 @@ const { title, description, pubDate, heroImage, type } = Astro.props;
           <div class="h-[1px] flex-1 bg-black"></div>
           <time
             datetime={pubDate.toISOString()}
-            class="text-[10px] font-sans font-semibold"
+            class="text-[10px] font-semibold"
           >
             {
               pubDate.toLocaleDateString("en-us", {

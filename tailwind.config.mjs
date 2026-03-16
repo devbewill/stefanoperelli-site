@@ -5,15 +5,15 @@ export default {
     extend: {
       colors: {
         accent: "rgb(31 32 177)",
-        "fluo-green": "#65ff00",
-        "fluo-pink": "#ff3ed7",
-        "fluo-yellow": "#ffff00",
+        "fluo-green": "#95ffb6",
+        "fluo-pink": "#fface1",
+        "fluo-yellow": "#ffdc79",
         background: "#FFFFFF",
-        foreground: "#000000",  
+        foreground: "#000000",
       },
       fontFamily: {
-        sans: ['"iA Writer Quattro"', "monospace"],
-        mono: ["monospace"],
+        sans: ["Inter", "-apple-system", "BlinkMacSystemFont", "sans-serif"],
+        mono: ["ui-monospace"],
       },
     },
   },

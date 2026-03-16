@@ -2,7 +2,7 @@
 import { CONTENT } from "../constants/content";
 import { getCollection } from "astro:content";
 import Layout from "../layouts/Layout.astro";
-import EntriesList from "../components/EntriesList.astro";
+import EntriesTable from "../components/EntriesTable.astro";
 import SidebarLayout from "../components/SidebarLayout.astro";
 
 const t = CONTENT;
@@ -38,7 +38,7 @@ const allItems = [
 
 <Layout title="Home | Stefano Perelli">
   <SidebarLayout>
-    <EntriesList
+    <EntriesTable
       entries={allItems}
       title="Buffer Outputs"
       subtitle="SESSION_2026"

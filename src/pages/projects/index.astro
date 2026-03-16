@@ -1,7 +1,7 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import { getCollection } from "astro:content";
-import EntriesList from "../../components/EntriesList.astro";
+import EntriesTable from "../../components/EntriesTable.astro";
 import SidebarLayout from "../../components/SidebarLayout.astro";
 
 const projects = (
@@ -14,7 +14,7 @@ const projects = (
 
 <Layout title="Projects | Synthetic Mess">
   <SidebarLayout>
-    <EntriesList
+    <EntriesTable
       entries={projects.map((prj, index) => ({
         title: prj.data.title,
         link: `/entries/${prj.slug}/`,

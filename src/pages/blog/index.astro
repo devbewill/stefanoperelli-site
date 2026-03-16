@@ -1,7 +1,7 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import { getCollection } from "astro:content";
-import EntriesList from "../../components/EntriesList.astro";
+import EntriesTable from "../../components/EntriesTable.astro";
 import SidebarLayout from "../../components/SidebarLayout.astro";
 
 const posts = (
@@ -14,7 +14,7 @@ const posts = (
 
 <Layout title="Journal | Synthetic Mess">
   <SidebarLayout>
-    <EntriesList
+    <EntriesTable
       entries={posts.map((post) => ({
         title: post.data.title,
         link: `/entries/${post.slug}/`,

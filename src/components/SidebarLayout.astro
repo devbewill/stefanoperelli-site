@@ -8,7 +8,7 @@ interface Props {
   maxWidth?: string;
 }
 
-const { showMobileHeader = true, maxWidth = "max-w-3xl" } = Astro.props;
+const { showMobileHeader = true, maxWidth = "max-w-none" } = Astro.props;
 ---
 
 <div class="h-screen w-full bg-white font-sans flex flex-col lg:flex-row overflow-hidden">
@@ -29,7 +29,7 @@ const { showMobileHeader = true, maxWidth = "max-w-3xl" } = Astro.props;
 
   <!-- Right Content: Scrollable Content (full width on mobile, flex-1 on desktop) -->
   <main class="flex-1 overflow-y-auto h-screen lg:ml-80">
-    <div class={`${maxWidth} mx-auto px-6 py-8 lg:p-16`}>
+    <div class={`mx-auto px-6 py-8 lg:p-16 ${maxWidth || ""}`}>
       <!-- Mobile Header: Brand Identity (shown only on mobile) -->
       {showMobileHeader && (
         <div class="lg:hidden mb-8">
