@@ -1,6 +1,6 @@
 ---
-type: post
-title: "From attachment to new calendar event"
+type: project
+title: "N8N - From attachment to new calendar event"
 description: "How I automated calendar event creation from email attachments sent by my daughter's school"
 pubDate: 2026-03-15
 tags: ["n8n", "automation"]

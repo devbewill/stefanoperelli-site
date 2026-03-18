@@ -1,6 +1,6 @@
 ---
 type: post
-title: "Google DeepMind introduces Agentic Vision to Gemini 3 Flash"
+title: "Google introduces Agentic Vision to Gemini 3"
 description: "Google DeepMind introduces Agentic Vision for better understand images"
 pubDate: 2026-03-16
 tags: ["deepmind", "Agentic Vision"]

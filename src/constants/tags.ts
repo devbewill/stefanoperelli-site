@@ -6,7 +6,7 @@ export const TAG_STYLES = {
     borderColor: "bg-fluo-green",
   },
   project: {
-    label: "PRG",
+    label: "PRJ",
     backgroundColor: "bg-fluo-yellow",
     textColor: "text-black",
     borderColor: "bg-fluo-yellow",

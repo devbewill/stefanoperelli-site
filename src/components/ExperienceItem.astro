@@ -24,10 +24,10 @@ const { period, company, role, description, details } = Astro.props;
     <!-- Core Content -->
     <div class="space-y-3">
         <div class="space-y-1">
-            <h3 class="text-4xl font-bold text-black">
+            <h3 class="text-3xl font-black text-black">
                 {company}
             </h3>
-            <p class="text-md font-semibold italic">
+            <p class="text-md font-normal italic">
                 {description}
             </p>
         </div>
@@ -37,7 +37,7 @@ const { period, company, role, description, details } = Astro.props;
                 details.map((detail) => (
                     <li class="flex items-start gap-4">
                         <span class="w-1.5 h-1.5 bg-black mt-2 shrink-0" />
-                        <p class="text-sm md:text-base font-medium leading-relaxed">
+                        <p class="text-sm md:text-base font-normal leading-relaxed">
                             {detail}
                         </p>
                     </li>
