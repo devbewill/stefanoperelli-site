@@ -1,57 +1,59 @@
 ---
 type: "project"
 name: "HubLab"
-title: "One timeline for every critical Jira epic"
-description: "A cross-project Gantt view that brings every critical epic from several Jira projects into a single scrollable timeline, with live story progress on each bar."
+title: "One hub for everything that happens around Jira"
+description: "An internal governance hub built on top of Jira: portfolio and timelines, sprints, releases and deployments, pull requests, support tickets and SLAs, timesheets, costs, risks and UAT test books, all in one place and always up to date."
 pubDate: "2026-03-21"
-role: "Builder"
-tools: ["Next.js", "Jira REST API", "JQL", "Claude Code"]
+role: "Product owner & builder"
+tools: ["React", "TanStack", "Node.js", "PostgreSQL", "Prisma", "Jira REST API", "Claude Code"]
 year: "2026"
 featured: true
 status: "live"
 story:
-  problem: "I tag the epics that really matter with a priority label, across several Jira projects. Jira can filter them inside one project, but it can't show all of them side by side on a single timeline without a paid add-on."
-  approach: "A small Next.js app that reads the Jira REST API, collects every priority epic in one JQL query, counts story progress in a single batched call and draws one swimlane per project on a zoomable timeline."
-  role: "Idea, product design and build, pairing with Claude Code over a weekend."
-  status: "Working internal tool. It only needs read-only access to Jira and a label on the epics to track."
-  next: "Use it as a test case for a broader question: how much of the 'missing 20%' in the tools I use every day can I now build myself instead of buying a plugin?"
+  problem: "The information a delivery team needs every day is scattered: epics in Jira boards, releases in another view, pull requests in the code host, support tickets in the service desk, hours in timesheets, risks in spreadsheets. Answering a simple question like 'are we on track?' meant opening five tools."
+  approach: "A web app that keeps its own copy of the Jira data, refreshed every few minutes, and builds focused views on top of it: one section per question the team actually asks, from 'what ships next week' to 'how much did this initiative cost'."
+  role: "Product vision, information design and most of the build, pairing with Claude Code. It started as a weekend experiment and became the tool the team opens every morning."
+  status: "In daily use by the team. New sections are added when a recurring question shows up in meetings."
+  next: "A KPI layer with two levels of detail: operational metrics (cycle time, throughput, bottlenecks) for the team, and a red-amber-green summary for leadership, both computed from the same data."
 ---
 
 ## The idea
 
-I work across multiple Jira projects, each with its own board, roadmap and timeline. The critical epics, the ones I follow week by week, carry a priority label. What I wanted was simple: see all of them, from every project, on one horizontal timeline.
+HubLab started small: I wanted to see the critical epics of several Jira projects on a single timeline, something Jira doesn't do without a paid add-on. I built that view on a weekend, and the team started using it.
 
-Jira doesn't do that. You can filter by label inside a single project, but as soon as you want epics from three or four projects in the same view, the answer is a paid plugin or a third-party add-on. So I built the missing piece myself, on a weekend, with Claude Code doing most of the heavy lifting.
+Then the questions kept coming. Which releases are going out this week? Which pull requests are waiting for review? How many support tickets are about to break their SLA? Where did the hours go this month? Each answer lived in a different tool, often in a different format.
+
+So the timeline became a hub. The idea is simple: **one place where the whole delivery picture is visible**, built around the questions a team asks every day, not around the structure of the tools that hold the data.
 
 ## What it does
 
-**HubLab** is a scrollable, Gantt-style timeline:
+HubLab is organised in sections, each answering a specific question:
 
-- **One row per project**, with every priority epic placed by start and due date.
-- **Progress inside the bar**: each epic bar is split into one segment per user story, coloured by status (done, in progress, to do), so you can read progress at a glance.
-- **Four zoom levels**: today, weeks, months, quarters, always centred on today.
-- **Releases** from every project shown on the same timeline.
-- **Click an epic** to open a side panel with its stories, status and assignee.
-- **Sync** refreshes the data; everything else is cached for 24 hours.
+- **Overview**: the state of work across all projects at a glance, with what is blocked or stalled.
+- **Portfolio & timeline**: initiatives and epics on a zoomable Gantt, with story progress drawn inside each bar, plus planning views to compare what was planned with what is happening.
+- **Sprints**: health of the running sprints for every board, with committed and completed work.
+- **Releases & deployments**: what is going to staging and production, with generated release notes.
+- **Pull requests**: open reviews across repositories, so nothing waits too long.
+- **Support**: incoming tickets, their history and SLA status, to spot problems before they become escalations.
+- **Timesheet**: logged hours by person and period, without exporting anything to a spreadsheet.
+- **Costs & risks**: effort turned into cost per initiative, and a RAID log (risks, assumptions, issues, dependencies) with a risk matrix.
+- **Test books**: UAT test cases generated from the sprint content, with pass and fail results.
+- **Docs & changelog**: internal guides, and a log of every data sync so anyone can check the data is fresh.
+
+A small back office manages users, roles and which sections each person can see.
 
 ## How I built it
 
-**Getting data out of Jira.** The app uses the Jira REST API with read-only access. A single JQL query fetches every labelled epic across all projects:
+**A local copy of Jira.** The first version called the Jira API on every page load. It was slow and hit rate limits. Now a background scheduler keeps a replica in PostgreSQL: every few minutes it downloads only the tickets that changed since the last run, along with their status history and work logs. Reference data (projects, boards, versions) refreshes hourly, and a daily reconcile step removes what was deleted in Jira. The app reads only from the replica, so pages are fast and the API is touched by a single process.
 
-```
-issuetype = Epic AND labels = <priority-label> ORDER BY created DESC
-```
+**Status history as raw material.** Storing every status transition, not just the current status, is what makes the interesting views possible: time spent in each state, bottlenecks, rework, cycle time. Most of the KPI work ahead is a query on that table.
 
-Two details cost me time. The old search endpoint has been retired, and the current one uses cursor-based pagination (`nextPageToken`) while silently ignoring the old `startAt` parameter. And to avoid one API call per epic, story stats come from a single batched query (`parent in (…)`) grouped in memory by epic and status.
+**Safe by design.** Sync errors never take the app down: a failed cycle simply retries on the next run, because the sync cursor only moves forward when a run succeeds. With more than one server running, a lock makes sure only one of them syncs at a time.
 
-**One number drives the timeline.** Every position on screen comes from `pxPerDay = viewportWidth / visibleDays`. A date becomes a pixel with `differenceInDays(date, origin) * pxPerDay`, and changing zoom only changes how many days fit in the viewport.
-
-**Bars made of real segments.** Instead of CSS gradients, each bar is a row of flex children, one per story, separated by a hairline. It's simple, and it scales from 1 to 40 stories.
-
-**Caching that survives hot reload.** Jira responses are cached in memory for 24 hours. The cache lives on `globalThis`, otherwise Next.js hot reload creates separate copies and "Sync" clears only one of them.
+**AI as a pair programmer.** Almost every section was designed and built with Claude Code. That changed the cost of an idea: a new view for a recurring question takes an afternoon, so it gets built instead of staying on a wish list.
 
 ## What I learned
 
-Most tools I use every day cover 80% of what I need. The last 20% usually means paying for a plugin, filing a feature request that might ship in a year and a half, or living without it.
+The tools a team uses every day cover 80% of what it needs. The missing 20% is usually the part that connects them: a view across projects, across tools, across roles. That is where most of the time in status meetings goes.
 
-This project changed that trade-off for me. With an AI pair programmer, a focused internal tool takes a weekend, not a quarter. The barrier to custom tooling is less and less about skill, and more about the habit of accepting the gap.
+HubLab taught me that a delivery manager who can build can close that gap directly. The best sections were not planned: they came from noticing the same question asked in three meetings in a row. Keeping the data in one place made each new answer cheap, and having the answers on screen changed the meetings themselves: less time collecting status, more time deciding what to do about it.

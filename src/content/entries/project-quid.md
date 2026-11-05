@@ -8,7 +8,7 @@ role: "Full Stack Developer & Interaction Designer"
 tools: ["Next.js", "Convex", "Gemini 1.5 Flash", "Framer Motion"]
 year: "2026"
 featured: true
-status: "live"
+status: "off"
 links:
   - label: "See it in action"
     url: "https://quid-notes.vercel.app/landing-page"
@@ -16,7 +16,7 @@ story:
   problem: "Most people keep a 'note graveyard' and a separate task list, with almost nothing connecting the two. Ideas stay ideas and never turn into action."
   approach: "One engine for both: an item is a note until you activate it. On activation, Gemini reads the note and proposes concrete tasks."
   role: "Product concept, interaction design and full-stack build."
-  status: "MVP online with a public demo, tested on my own workflow."
+  status: "No longer online. The MVP ran with a public demo and was tested on my own workflow."
   next: "Add a 'gatekeeper' mode that helps decide which notes deserve to become tasks, to prevent task inflation."
 ---
 

@@ -135,11 +135,12 @@ const rotating = ["digital transformation", "product strategy", "AI & innovation
       <ol class="plist">
         {projects.map((p, i) => (
           <li>
-            <a class="prow" href={`/entries/${p.slug}/`}>
+            <a class={`prow${i === 0 ? " latest" : ""}`} href={`/entries/${p.slug}/`}>
               <span class="pnum">{String(i + 1).padStart(2, "0")}</span>
               <h3>{projectName(p)}</h3>
               <div class="pdesc">
                 <div class="ptags">
+                  {i === 0 && <span class="tagpill hot">Latest</span>}
                   <span class="tagpill">{p.data.type === "project" && p.data.featured ? "Featured" : "Experiment"}</span>
                   <span class="tagpill">{p.data.pubDate.getFullYear()}</span>
                 </div>

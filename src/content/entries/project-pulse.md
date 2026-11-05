@@ -8,12 +8,12 @@ role: "Builder"
 tools: ["Next.js", "Convex", "Vector Search", "TipTap", "Transformers.js"]
 year: "2026"
 featured: true
-status: "build"
+status: "live"
 story:
   problem: "Folders, tags and graph views turn note-taking into admin work. The act of thinking gets buried under the effort of deciding where each note should go."
   approach: "A single chat-like stream with no folders. While you type, the text is turned into embeddings and matched against past notes, so related thoughts surface on their own."
   role: "Concept, interaction design and build, using AI to explore the trade-offs of semantic retrieval."
-  status: "Working prototype tested on my own daily logs. The retrieval works; the experience still needs tuning."
+  status: "Live and tested on my own daily logs. The retrieval works; the experience still needs tuning."
   next: "Make suggestions 'polite': show fewer and better matches, give more weight to recent notes, and add an AI summary layer for reviewing the stream."
 ---
 

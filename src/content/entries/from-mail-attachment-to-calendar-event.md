@@ -7,12 +7,12 @@ pubDate: "2026-03-15"
 role: "Builder"
 tools: ["n8n", "Gemini", "Gmail API", "Google Calendar API"]
 year: "2026"
-status: "live"
+status: "off"
 story:
   problem: "The school announces events in PDF attachments with an empty email body. Each time I had to open the PDF, read the date and create the calendar event by hand."
   approach: "A five-node n8n workflow: a Gmail trigger, Gemini reading the PDF, a validation step and a Google Calendar node that creates the event."
   role: "Idea and build: my first n8n workflow, done in about 45 minutes."
-  status: "Running on my Gmail and calendar, so school events no longer slip through."
+  status: "No longer running. While it was on, school events stopped slipping through."
   next: "Reuse the same pattern (trigger, extract, validate, act) for invoices, forms and deadlines buried in other attachments."
 ---
 

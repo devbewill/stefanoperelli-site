@@ -29,7 +29,7 @@ const entries = defineCollection({
       featured: z.boolean().optional().default(false),
       heroImage: z.string().optional(),
       // Campi opzionali della scheda progetto: si mostrano solo se presenti
-      status: z.enum(["live", "build", "idea"]).optional(),
+      status: z.enum(["live", "off", "build", "idea"]).optional(),
       links: z.array(z.object({ label: z.string(), url: z.string().url() })).optional(),
       story: z
         .object({

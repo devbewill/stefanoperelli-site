@@ -121,6 +121,7 @@
               "type": "string",
               "enum": [
                 "live",
+                "off",
                 "build",
                 "idea"
               ]

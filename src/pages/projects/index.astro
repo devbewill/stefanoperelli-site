@@ -1,23 +1,85 @@
 ---
 import Layout from "../../layouts/Layout.astro";
-import ProjectCard from "../../components/ProjectCard.astro";
-import { getProjects } from "../../lib/entries";
+import { getProjects, projectName, readingTime } from "../../lib/entries";
 
 const projects = await getProjects();
+const STATUS = { live: "Live", off: "Off", build: "In progress", idea: "Idea" } as const;
+
+const cases = projects.map((p, i) => {
+  const d = p.data.type === "project" ? p.data : undefined;
+  const name = projectName(p);
+  const words = name.split(/\s+/);
+  return {
+    slug: p.slug,
+    n: String(i + 1).padStart(2, "0"),
+    name,
+    claim: name !== p.data.title ? p.data.title : undefined,
+    description: p.data.description,
+    initials: (words.length > 1 ? words[0][0] + words[1][0] : words[0].slice(0, 2)).toUpperCase(),
+    status: d?.status,
+    role: d?.role,
+    year: d?.year ?? p.data.pubDate.getFullYear(),
+    tools: d?.tools ?? [],
+    read: readingTime(p.body),
+    latest: i === 0,
+  };
+});
+
+const live = cases.filter((c) => c.status === "live").length;
+const tools = new Set(cases.flatMap((c) => c.tools)).size;
 ---
 
-<Layout title="Projects | Synthetic Mess">
+<Layout title="Projects | Stefano Perelli">
   <header class="page-head">
-    <div class="wrap">
-      <span class="kicker">Projects · {projects.length} experiments</span>
-      <h1 class="h1">Small tools at the edge of <span class="mark">AI &amp; product</span>.</h1>
-      <p class="sub">MVPs and side projects I build to test ideas, automate the boring parts and learn by doing.</p>
+    <div class="wrap bhead">
+      <div>
+        <span class="kicker">Projects</span>
+        <h1 class="h1">Small tools at the edge of <span class="mark">AI &amp; product</span>.</h1>
+        <p class="sub">MVPs and side projects I build to test ideas, automate the boring parts and learn by doing.</p>
+      </div>
+      <dl class="bstats">
+        <div><dt>Projects</dt><dd>{cases.length}</dd></div>
+        <div><dt>Live now</dt><dd><i class="sdot live" aria-hidden="true"></i>{live}</dd></div>
+        <div><dt>Tools used</dt><dd>{tools}</dd></div>
+      </dl>
     </div>
   </header>
 
   <section class="wrap">
-    <div class="masonry">
-      {projects.map((p, i) => <ProjectCard entry={p} index={i + 1} feature={i === 0} />)}
-    </div>
+    <ol class="cases">
+      {cases.map((c) => (
+        <li>
+          <a class={`case${c.latest ? " latest" : ""}`} href={`/entries/${c.slug}/`}>
+            <div class="case-cover" aria-hidden="true">
+              <span class="case-n">N°{c.n}</span>
+              <b class="case-ini">{c.initials}</b>
+              {c.latest && <span class="case-flag">Latest</span>}
+            </div>
+
+            <div class="case-body">
+              <div class="case-top">
+                {c.status && <span class="tagpill"><i class={`sdot ${c.status}`} aria-hidden="true"></i>{STATUS[c.status]}</span>}
+                <span class="case-meta">{c.year} · {c.read} read</span>
+              </div>
+              <h2>{c.name}</h2>
+              {c.claim && <p class="case-claim">{c.claim}</p>}
+              {c.description && <p class="case-desc">{c.description}</p>}
+
+              <dl class="case-spec">
+                {c.role && <div><dt>Role</dt><dd>{c.role}</dd></div>}
+                {c.tools.length > 0 && (
+                  <div class="wide">
+                    <dt>Stack</dt>
+                    <dd class="chips">{c.tools.map((t) => <span class="chip">{t}</span>)}</dd>
+                  </div>
+                )}
+              </dl>
+
+              <span class="case-go">Read the case <span class="barrow">→</span></span>
+            </div>
+          </a>
+        </li>
+      ))}
+    </ol>
   </section>
 </Layout>

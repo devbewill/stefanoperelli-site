@@ -10,7 +10,7 @@ const { entry } = Astro.props;
 const d = entry.data;
 if (d.type !== "project") throw new Error("ProjectLayout expects a project entry");
 
-const STATUS = { live: "Live", build: "In progress", idea: "Idea" } as const;
+const STATUS = { live: "Live", off: "Off", build: "In progress", idea: "Idea" } as const;
 const STORY = { problem: "The problem", approach: "The approach", role: "My role", status: "Where it stands", next: "Next step" } as const;
 
 const all = await getProjects();
@@ -36,7 +36,7 @@ const subOf = (p: Entry) => (p.data.type === "project" ? [p.data.role, p.data.ye
       <div class="pj-icon" aria-hidden="true"><b>{initials}</b><span>{number}</span></div>
       <div>
         <div class="pj-badges">
-          {d.status && <span class={`tagpill${d.status === "live" ? " hot" : ""}`}>{STATUS[d.status]}</span>}
+          {d.status && <span class="tagpill"><i class={`sdot ${d.status}`} aria-hidden="true"></i>{STATUS[d.status]}</span>}
           {d.featured && <span class="tagpill">Featured</span>}
         </div>
         <h1>{name}</h1>
@@ -49,7 +49,7 @@ const subOf = (p: Entry) => (p.data.type === "project" ? [p.data.role, p.data.ye
     <dl class="pj-meta">
       {d.role && <div><dt>Role</dt><dd>{d.role}</dd></div>}
       <div><dt>Year</dt><dd>{d.year ?? d.pubDate.getFullYear()}</dd></div>
-      {d.status && <div><dt>Status</dt><dd>{STATUS[d.status]}</dd></div>}
+      {d.status && <div><dt>Status</dt><dd><i class={`sdot ${d.status}`} aria-hidden="true"></i>{STATUS[d.status]}</dd></div>}
       <div><dt>Read</dt><dd>{readingTime(entry.body)}</dd></div>
       {stack.length > 0 && (
         <div class="pj-stack"><dt>Stack</dt><dd class="chips">{stack.map((s) => <span class="chip a">{s}</span>)}</dd></div>
