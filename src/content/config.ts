@@ -17,6 +17,7 @@ const entries = defineCollection({
     // PROJECTS / PORTFOLIO
     z.object({
       type: z.literal("project"),
+      name: z.string().optional(), // nome breve del progetto (es. "Pulse")
       title: z.string(),
       description: z.string().optional(),
       pubDate: z.coerce.date(),

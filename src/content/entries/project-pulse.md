@@ -1,40 +1,47 @@
 ---
 type: "project"
-title: "Pulse - LocalAI NoteTaking App"
-description: "An infinite stream of consciousness powered by real-time semantic retrieval. Your past context, served as you think."
+name: "Pulse"
+title: "A note-taking stream that remembers for you"
+description: "Write in a single, endless stream. While you type, Pulse quietly brings back what you already wrote on the same topic, using semantic search instead of folders and tags."
 pubDate: "2026-03-01"
 role: "Builder"
-tools: ["Next.js", "Convex", "Vector Search", "Transformers.js"]
+tools: ["Next.js", "Convex", "Vector Search", "TipTap", "Transformers.js"]
 year: "2026"
 featured: true
+status: "build"
+story:
+  problem: "Folders, tags and graph views turn note-taking into admin work. The act of thinking gets buried under the effort of deciding where each note should go."
+  approach: "A single chat-like stream with no folders. While you type, the text is turned into embeddings and matched against past notes, so related thoughts surface on their own."
+  role: "Concept, interaction design and build, using AI to explore the trade-offs of semantic retrieval."
+  status: "Working prototype tested on my own daily logs. The retrieval works; the experience still needs tuning."
+  next: "Make suggestions 'polite': show fewer and better matches, give more weight to recent notes, and add an AI summary layer for reviewing the stream."
 ---
 
-## The Concept: Context without Search
+## The idea
 
-The inception of **PULSE** came from a deep frustration with traditional note-taking apps. In a world of folders, tags, and complex graph views, the actual _act_ of thinking often gets buried under the administrative burden of organizing. I wanted something that felt like a chat with my own shadow—a single, infinite vertical stream where the UI doesn't ask you where to put a note, but instead tells you what you've thought about this before.
+Pulse came from a frustration with traditional note-taking apps. Every tool asks you to organise first and think later: which folder, which tag, which page. I wanted the opposite: a tool that never asks where a note goes, and instead tells you what you've already thought about the topic.
 
-## AI Brainstorming: From Static to Fluid
+The picture in my head was a chat with my own past self. One infinite vertical stream, where every entry is a heartbeat, hence the name.
 
-The brainstorming phase was heavily assisted by AI to explore the boundaries of **Semantic Retrieval**. Instead of "searching" for notes, we explored the idea of "beating" notes—hence the name Pulse. Each entry is a heartbeat.
+## What it does
 
-The core challenge discussed with AI models was the latency of vector embeddings. We debated:
+- **One stream, no structure**: you just write, like in a chat.
+- **Context while you type**: every few keystrokes the current text is compared with all previous notes, and the closest ones appear next to the editor.
+- **Search without searching**: you don't type queries. Related notes find you while the thought is still forming.
 
-- **Local vs Cloud**: Should we use `transformers.js` to run embeddings in the browser or hit an API?
-- **Distraction vs Utility**: How many matches are too many? AI helped simulate scenarios where real-time suggestions could become noise rather than a signal.
+## How I built it
 
-## Implementation: The Vector Heartbeat
+Before writing code I used AI to explore the hard questions of semantic retrieval:
 
-Building PULSE required a tight integration between the editor and the database. Using **Convex**, I implemented a system where every few keystrokes (debounced), the partial text is vectorized and compared against thousands of previous "heartbeats".
+- **Local or cloud embeddings?** Running models in the browser with `transformers.js` keeps notes private, an API is faster to set up.
+- **Signal or noise?** How many matches are useful before suggestions become a distraction? AI helped me simulate scenarios before building them.
 
-- **Editor**: A custom TipTap implementation optimized for a "chat style" flow.
-- **Backend**: Convex Vector Search allowed for sub-second matching, making the context suggestions feel like they were appearing just as the thought was forming.
+The build pairs a custom **TipTap** editor, tuned for a chat-like flow, with **Convex** as backend. The text being typed is debounced, vectorised and matched with **Convex Vector Search** against thousands of previous entries. Matching takes well under a second, so suggestions appear while the sentence is still being written.
 
-## The Reality Check: Feeling the Noise
+## What I learned
 
-Test phase was brutal. Once I had "touched" the app and started using it for real daily logs, I hit the first wall: **The Over-Prompting Trap**.
+Testing it on real daily logs was humbling. At first Pulse showed matches for every single sentence, and it felt like someone whispering in my ear while I was trying to talk. The key lesson: **semantic relevance is not cognitive relevance**. Two notes can be similar without being useful to each other in that moment.
 
-Initially, the app would show matching notes for every single sentence. It felt like someone whispering in my ear while I was trying to talk. I realized that _semantic relevance doesn't equal cognitive relevance_.
+I added "soft context" rules: higher similarity thresholds and more weight to recent notes. I also realised that an infinite stream is great for capturing thoughts, but poor for reviewing them without a summary layer on top.
 
-**The Pivot**: I had to implement "Soft Context" rules—prioritizing recency and setting high similarity thresholds. I also realized that the "Infinite Flow" is great for capture, but terrible for review without an AI-driven summary layer.
-
-**Verdict**: The idea is good, but the UX needs to be "polite." It needs to be there when you need it, and invisible when you don't. It's a tool for non-linear thinkers, but it needs linear constraints to be useful.
+The idea holds. The interface has to be polite: present when you need it, invisible when you don't. It's a tool for non-linear thinkers, and it still needs a few linear constraints to be useful.

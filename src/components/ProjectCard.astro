@@ -1,5 +1,5 @@
 ---
-import type { Entry } from "../lib/entries";
+import { projectName, type Entry } from "../lib/entries";
 
 interface Props {
   entry: Entry;
@@ -17,7 +17,7 @@ const isFeatured = d.type === "project" && d.featured;
     <span class="pcard-num">{String(index).padStart(2, "0")}</span>
     <span class={`tagpill${isFeatured && !feature ? " hot" : ""}`}>{isFeatured ? "Featured" : "Experiment"}</span>
   </div>
-  <h3>{d.title}</h3>
+  <h3>{projectName(entry)}</h3>
   {d.description && <p class="lead">{d.description}</p>}
   <span class="go">Read case</span>
 </a>

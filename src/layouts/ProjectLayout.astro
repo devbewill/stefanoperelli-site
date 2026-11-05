@@ -1,6 +1,6 @@
 ---
 import Layout from "./Layout.astro";
-import { getProjects, readingTime, type Entry } from "../lib/entries";
+import { getProjects, readingTime, projectName, type Entry } from "../lib/entries";
 
 interface Props {
   entry: Entry;
@@ -21,12 +21,14 @@ const others = all.filter((p) => ![entry.slug, prev.slug, next.slug].includes(p.
 
 const stack = d.tools ?? d.tags ?? [];
 const story = d.story ? (Object.keys(STORY) as (keyof typeof STORY)[]).filter((k) => d.story?.[k]) : [];
-const initials = d.title.replace(/[^A-Za-z0-9 ]/g, " ").trim().split(/\s+/)[0].slice(0, 2).toUpperCase();
+const name = projectName(entry);
+const words = name.replace(/[^A-Za-z0-9 ]/g, " ").trim().split(/\s+/);
+const initials = (words.length > 1 ? words[0][0] + words[1][0] : words[0].slice(0, 2)).toUpperCase();
 const number = String(i + 1).padStart(2, "0");
 const subOf = (p: Entry) => (p.data.type === "project" ? [p.data.role, p.data.year ?? p.data.pubDate.getFullYear()] : []).filter(Boolean).join(" · ");
 ---
 
-<Layout title={`${d.title} | Synthetic Mess`} description={d.description}>
+<Layout title={`${name} · ${d.title} | Stefano Perelli`} description={d.description}>
   <article class="wrap pj">
     <a class="back" href="/projects">← All projects</a>
 
@@ -37,10 +39,11 @@ const subOf = (p: Entry) => (p.data.type === "project" ? [p.data.role, p.data.ye
           {d.status && <span class={`tagpill${d.status === "live" ? " hot" : ""}`}>{STATUS[d.status]}</span>}
           {d.featured && <span class="tagpill">Featured</span>}
         </div>
-        <h1>{d.title}</h1>
+        <h1>{name}</h1>
       </div>
     </header>
 
+    {name !== d.title && <p class="pj-claim">{d.title}</p>}
     {d.description && <p class="sub pj-sub">{d.description}</p>}
 
     <dl class="pj-meta">
@@ -86,10 +89,10 @@ const subOf = (p: Entry) => (p.data.type === "project" ? [p.data.role, p.data.ye
     {all.length > 1 && (
       <nav class="pj-nav" aria-label="More projects">
         <a class="pj-step" href={`/entries/${prev.slug}/`}>
-          <span class="kicker">← Previous</span><b>{prev.data.title}</b><small>{subOf(prev)}</small>
+          <span class="kicker">← Previous</span><b>{projectName(prev)}</b><small>{subOf(prev)}</small>
         </a>
         <a class="pj-step next" href={`/entries/${next.slug}/`}>
-          <span class="kicker">Next →</span><b>{next.data.title}</b><small>{subOf(next)}</small>
+          <span class="kicker">Next →</span><b>{projectName(next)}</b><small>{subOf(next)}</small>
         </a>
       </nav>
     )}
@@ -100,7 +103,7 @@ const subOf = (p: Entry) => (p.data.type === "project" ? [p.data.role, p.data.ye
         <div class="projgrid">
           {others.map((p) => (
             <a class="pbadge" href={`/entries/${p.slug}/`}>
-              <b>{p.data.title}</b><small>{subOf(p)}</small>
+              <b>{projectName(p)}</b><small>{subOf(p)}</small>
             </a>
           ))}
         </div>

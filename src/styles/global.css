@@ -380,7 +380,8 @@ section.block { padding: var(--s9) 0 0; scroll-margin-top: var(--s9); }
 .pj-icon span { position: absolute; right: -8px; bottom: -8px; background: var(--ink); color: var(--paper); font: 700 0.6rem var(--mono); padding: 3px 6px; border-radius: 999px; border: 2px solid var(--paper); }
 .pj-badges { display: flex; gap: 6px; margin-bottom: 8px; }
 .pj h1 { margin: 0; font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 900; line-height: 1.05; letter-spacing: -0.035em; text-wrap: balance; }
-.pj-sub { font-size: 1.2rem; max-width: 56ch; }
+.pj-claim { margin: 0 0 var(--s3); font-size: clamp(1.25rem, 2.4vw, 1.6rem); font-weight: 600; letter-spacing: -0.02em; line-height: 1.25; max-width: 34ch; }
+.pj-sub { font-size: 1.1rem; max-width: 60ch; }
 .pj-meta { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: var(--s5) var(--s6); margin: var(--s7) 0 0; padding: var(--s5) 0; border-block: 1px solid var(--rule); }
 .pj-meta dt { font: 700 0.62rem var(--mono); text-transform: uppercase; letter-spacing: 0.14em; color: var(--muted); margin-bottom: 6px; }
 .pj-meta dd { margin: 0; font-size: 0.95rem; font-weight: 500; }

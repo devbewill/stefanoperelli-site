@@ -3,7 +3,7 @@ import { getCollection } from "astro:content";
 import { CONTENT } from "../constants/content";
 import Layout from "../layouts/Layout.astro";
 import JournalRow from "../components/JournalRow.astro";
-import { getPosts, getProjects, readingTime, formatDate } from "../lib/entries";
+import { getPosts, getProjects, readingTime, formatDate, projectName } from "../lib/entries";
 
 const t = CONTENT;
 const projects = await getProjects();
@@ -137,7 +137,7 @@ const rotating = ["digital transformation", "product strategy", "AI & innovation
           <li>
             <a class="prow" href={`/entries/${p.slug}/`}>
               <span class="pnum">{String(i + 1).padStart(2, "0")}</span>
-              <h3>{p.data.title}</h3>
+              <h3>{projectName(p)}</h3>
               <div class="pdesc">
                 <div class="ptags">
                   <span class="tagpill">{p.data.type === "project" && p.data.featured ? "Featured" : "Experiment"}</span>
