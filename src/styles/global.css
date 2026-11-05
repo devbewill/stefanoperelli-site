@@ -490,11 +490,12 @@ section.block { padding: var(--s9) 0 0; scroll-margin-top: var(--s9); }
 }
 
 /* ---------- indice progetti (home) ---------- */
-.plist { list-style: none; margin: var(--s7) 0 0; padding: 0; border-top: 2px solid var(--ink); counter-reset: none; }
-.plist li { border-bottom: 1px solid var(--rule); }
+/* stesso box chiaro della lista journal */
+.plist { list-style: none; margin: var(--s7) 0 0; padding: 0; background: var(--paper-2); border: 1px solid var(--rule); }
+.plist li + li { border-top: 1px solid var(--rule); }
 .prow {
   position: relative; display: grid; grid-template-columns: 64px minmax(0, 1.25fr) minmax(0, 1fr) 48px; gap: var(--s5); align-items: center;
-  padding: var(--s6) var(--s4); text-decoration: none; overflow: hidden; isolation: isolate;
+  padding: var(--s6) var(--s5); text-decoration: none; overflow: hidden; isolation: isolate;
 }
 /* riempimento rosso che sale dal basso al passaggio */
 .prow::before { content: ""; position: absolute; inset: 0; background: var(--accent); transform: scaleY(0); transform-origin: bottom; transition: transform 0.35s cubic-bezier(0.65, 0, 0.35, 1); z-index: -1; }
@@ -512,7 +513,7 @@ section.block { padding: var(--s9) 0 0; scroll-margin-top: var(--s9); }
 .prow .parrow { width: 48px; height: 48px; border-radius: 50%; border: 1px solid var(--ink); display: grid; place-items: center; font-size: 1.1rem; transition: transform 0.35s, background 0.2s, color 0.2s, border-color 0.2s; }
 .prow:hover .parrow { background: var(--on-accent); color: var(--accent); border-color: var(--on-accent); transform: rotate(-45deg); }
 @media (max-width: 760px) {
-  .prow { grid-template-columns: 36px minmax(0, 1fr); gap: var(--s3) var(--s4); padding: var(--s5) 0; }
+  .prow { grid-template-columns: 36px minmax(0, 1fr); gap: var(--s3) var(--s4); padding: var(--s5) var(--s4); }
   .prow .pdesc { grid-column: 2; }
   .prow .parrow { display: none; }
   .prow:hover h3 { transform: none; }
