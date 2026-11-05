@@ -23,7 +23,158 @@ So this post is an attempt to build a **mental map of the Linux desktop**: what 
 
 If you prefer to see the whole map at once before reading the details, here it is:
 
-![Anatomy of a Linux desktop: same building blocks, different desktops. The stack split between a complete desktop (GNOME) and a custom one (Hyprland / Niri), with the sixteen building blocks, examples and adoption levels.](/images/linux-desktop-anatomy.jpg)
+<figure class="dmap not-prose" aria-label="Anatomy of a Linux desktop: the stack, layer by layer, and the sixteen building blocks with examples and adoption levels">
+<header class="dmap-head"><span class="dmap-kicker">System map</span><h3 class="dmap-title">Anatomy of a Linux desktop</h3><p class="dmap-sub">Same building blocks, different desktops. Most of the names you meet are not alternatives to each other: they live at different layers of the system.</p></header>
+<div class="dmap-stack" role="table" aria-label="Complete desktop compared with a custom desktop">
+<div class="ds-row ds-headrow" role="row"><span class="ds-layer" role="columnheader">Layer</span><span class="ds-cell ds-a" role="columnheader"><b>Complete desktop</b><small>GNOME · ready to use</small></span><span class="ds-cell ds-b" role="columnheader"><b>Custom desktop</b><small>Hyprland / Niri · you assemble it</small></span></div>
+<div class="ds-row" role="row">
+<span class="ds-layer" role="rowheader"><i>01</i>Hardware</span>
+<span class="ds-cell ds-shared" role="cell">GPU, display, input devices<em>shared</em></span>
+</div>
+<div class="ds-row" role="row">
+<span class="ds-layer" role="rowheader"><i>02</i>Kernel</span>
+<span class="ds-cell ds-shared" role="cell">Linux kernel + Mesa, DRM, KMS<em>shared</em></span>
+</div>
+<div class="ds-row" role="row">
+<span class="ds-layer" role="rowheader"><i>03</i>Protocol</span>
+<span class="ds-cell ds-shared" role="cell">Wayland<em>shared</em></span>
+</div>
+<div class="ds-row" role="row">
+<span class="ds-layer" role="rowheader"><i>04</i>Compositor</span>
+<span class="ds-cell ds-a" role="cell">Mutter</span><span class="ds-cell ds-b" role="cell">Hyprland / Niri</span>
+</div>
+<div class="ds-row" role="row">
+<span class="ds-layer" role="rowheader"><i>05</i>Desktop shell</span>
+<span class="ds-cell ds-a" role="cell">GNOME Shell</span><span class="ds-cell ds-b" role="cell">Noctalia / DankMaterialShell · optional</span>
+</div>
+<div class="ds-row" role="row">
+<span class="ds-layer" role="rowheader"><i>06</i>Bar, launcher, alerts, lock</span>
+<span class="ds-cell ds-a" role="cell">Included in the shell</span><span class="ds-cell ds-b" role="cell">Waybar · Rofi · Mako · hyprlock</span>
+</div>
+<div class="ds-row" role="row">
+<span class="ds-layer" role="rowheader"><i>07</i>Applications</span>
+<span class="ds-cell ds-a" role="cell">Nautilus, Settings, …</span><span class="ds-cell ds-b" role="cell">Dolphin, Firefox, …</span>
+</div>
+<div class="ds-row" role="row">
+<span class="ds-layer" role="rowheader"><i>08</i>Terminal</span>
+<span class="ds-cell ds-a" role="cell">Ptyxis / GNOME Console</span><span class="ds-cell ds-b" role="cell">Alacritty / Kitty / WezTerm</span>
+</div>
+<div class="ds-row" role="row">
+<span class="ds-layer" role="rowheader"><i>09</i>Shell</span>
+<span class="ds-cell ds-a" role="cell">Bash</span><span class="ds-cell ds-b" role="cell">Fish / Zsh / Nushell</span>
+</div>
+<div class="ds-row" role="row">
+<span class="ds-layer" role="rowheader"><i>10</i>Prompt</span>
+<span class="ds-cell ds-a" role="cell">Built-in or Starship</span><span class="ds-cell ds-b" role="cell">Starship</span>
+</div>
+<div class="ds-row ds-result" role="row"><span class="ds-layer" role="rowheader">Result</span><span class="ds-cell ds-a" role="cell">One coherent, integrated desktop</span><span class="ds-cell ds-b" role="cell">Same foundation, your own experience</span></div>
+</div>
+<div class="dmap-blocks">
+<div class="dmap-filter" role="radiogroup" aria-label="Filter building blocks"><span>Building blocks</span>
+<label><input type="radio" name="dmap-f" value="all" checked /><span>All 16</span></label>
+<label><input type="radio" name="dmap-f" value="core" /><span>Core</span></label>
+<label><input type="radio" name="dmap-f" value="ui" /><span>Desktop UI</span></label>
+<label><input type="radio" name="dmap-f" value="term" /><span>Terminal</span></label>
+<label><input type="radio" name="dmap-f" value="system" /><span>Apps &amp; system</span></label>
+</div>
+<ol class="dmap-grid">
+<li class="db db-core"><div class="db-top"><span class="db-n">01</span><span class="db-g">Core</span></div><h4>Display protocol</h4><p>How applications talk to the graphics system.</p><ul class="db-ex">
+<li><span>Wayland</span><span class="db-meter" role="img" aria-label="adoption 5 of 5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span></li>
+<li><span>X11 (Xorg)</span><span class="db-meter" role="img" aria-label="adoption 4 of 5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class=""></i></span></li>
+</ul></li>
+<li class="db db-core wide"><div class="db-top"><span class="db-n">02</span><span class="db-g">Core</span></div><h4>Compositor / WM</h4><p>Places windows and workspaces, handles input and, on Wayland, is the display server.</p><ul class="db-ex">
+<li><span>Mutter</span><span class="db-meter" role="img" aria-label="adoption 5 of 5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span></li>
+<li><span>KWin</span><span class="db-meter" role="img" aria-label="adoption 5 of 5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span></li>
+<li><span>Hyprland</span><span class="db-meter" role="img" aria-label="adoption 4 of 5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class=""></i></span></li>
+<li><span>Niri</span><span class="db-meter" role="img" aria-label="adoption 3 of 5"><i class="on"></i><i class="on"></i><i class="on"></i><i class=""></i><i class=""></i></span></li>
+<li><span>Sway</span><span class="db-meter" role="img" aria-label="adoption 3 of 5"><i class="on"></i><i class="on"></i><i class="on"></i><i class=""></i><i class=""></i></span></li>
+<li><span>MangoWC</span><span class="db-meter" role="img" aria-label="adoption 2 of 5"><i class="on"></i><i class="on"></i><i class=""></i><i class=""></i><i class=""></i></span></li>
+</ul></li>
+<li class="db db-ui wide"><div class="db-top"><span class="db-n">03</span><span class="db-g">Desktop UI</span></div><h4>Desktop environment</h4><p>A set of integrated components that delivers a complete experience.</p><ul class="db-ex">
+<li><span>GNOME</span><span class="db-meter" role="img" aria-label="adoption 5 of 5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span></li>
+<li><span>KDE Plasma</span><span class="db-meter" role="img" aria-label="adoption 5 of 5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span></li>
+<li><span>Xfce</span><span class="db-meter" role="img" aria-label="adoption 4 of 5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class=""></i></span></li>
+<li><span>Cinnamon</span><span class="db-meter" role="img" aria-label="adoption 3 of 5"><i class="on"></i><i class="on"></i><i class="on"></i><i class=""></i><i class=""></i></span></li>
+<li><span>MATE</span><span class="db-meter" role="img" aria-label="adoption 3 of 5"><i class="on"></i><i class="on"></i><i class="on"></i><i class=""></i><i class=""></i></span></li>
+<li><span>LXQt</span><span class="db-meter" role="img" aria-label="adoption 2 of 5"><i class="on"></i><i class="on"></i><i class=""></i><i class=""></i><i class=""></i></span></li>
+</ul></li>
+<li class="db db-ui wide"><div class="db-top"><span class="db-n">04</span><span class="db-g">Desktop UI</span></div><h4>Desktop shell</h4><p>The interface around the windows: panels, launcher, notifications, quick settings.</p><ul class="db-ex">
+<li><span>GNOME Shell</span><span class="db-meter" role="img" aria-label="adoption 5 of 5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span></li>
+<li><span>Plasma Shell</span><span class="db-meter" role="img" aria-label="adoption 5 of 5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span></li>
+<li><span>Noctalia</span><span class="db-meter" role="img" aria-label="adoption 3 of 5"><i class="on"></i><i class="on"></i><i class="on"></i><i class=""></i><i class=""></i></span></li>
+<li><span>DankMaterialShell</span><span class="db-meter" role="img" aria-label="adoption 3 of 5"><i class="on"></i><i class="on"></i><i class="on"></i><i class=""></i><i class=""></i></span></li>
+<li><span>Waybar (partial)</span><span class="db-meter" role="img" aria-label="adoption 3 of 5"><i class="on"></i><i class="on"></i><i class="on"></i><i class=""></i><i class=""></i></span></li>
+</ul></li>
+<li class="db db-ui"><div class="db-top"><span class="db-n">05</span><span class="db-g">Desktop UI</span></div><h4>Shell framework</h4><p>Tools to build your own shell and components.</p><ul class="db-ex">
+<li><span>Quickshell</span><span class="db-meter" role="img" aria-label="adoption 3 of 5"><i class="on"></i><i class="on"></i><i class="on"></i><i class=""></i><i class=""></i></span></li>
+</ul></li>
+<li class="db db-ui"><div class="db-top"><span class="db-n">06</span><span class="db-g">Desktop UI</span></div><h4>Bar</h4><p>Workspaces, system status, tray, clock.</p><ul class="db-ex">
+<li><span>Waybar</span><span class="db-meter" role="img" aria-label="adoption 4 of 5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class=""></i></span></li>
+<li><span>Polybar</span><span class="db-meter" role="img" aria-label="adoption 4 of 5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class=""></i></span></li>
+<li><span>Yambar</span><span class="db-meter" role="img" aria-label="adoption 2 of 5"><i class="on"></i><i class="on"></i><i class=""></i><i class=""></i><i class=""></i></span></li>
+</ul></li>
+<li class="db db-ui"><div class="db-top"><span class="db-n">07</span><span class="db-g">Desktop UI</span></div><h4>App launcher</h4><p>Search for applications and start them.</p><ul class="db-ex">
+<li><span>Rofi</span><span class="db-meter" role="img" aria-label="adoption 4 of 5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class=""></i></span></li>
+<li><span>Fuzzel</span><span class="db-meter" role="img" aria-label="adoption 4 of 5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class=""></i></span></li>
+<li><span>Wofi</span><span class="db-meter" role="img" aria-label="adoption 3 of 5"><i class="on"></i><i class="on"></i><i class="on"></i><i class=""></i><i class=""></i></span></li>
+<li><span>Walker</span><span class="db-meter" role="img" aria-label="adoption 3 of 5"><i class="on"></i><i class="on"></i><i class="on"></i><i class=""></i><i class=""></i></span></li>
+</ul></li>
+<li class="db db-ui"><div class="db-top"><span class="db-n">08</span><span class="db-g">Desktop UI</span></div><h4>Notification daemon</h4><p>Shows desktop notifications.</p><ul class="db-ex">
+<li><span>Mako</span><span class="db-meter" role="img" aria-label="adoption 4 of 5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class=""></i></span></li>
+<li><span>Dunst</span><span class="db-meter" role="img" aria-label="adoption 4 of 5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class=""></i></span></li>
+<li><span>SwayNC</span><span class="db-meter" role="img" aria-label="adoption 3 of 5"><i class="on"></i><i class="on"></i><i class="on"></i><i class=""></i><i class=""></i></span></li>
+</ul></li>
+<li class="db db-ui"><div class="db-top"><span class="db-n">09</span><span class="db-g">Desktop UI</span></div><h4>Wallpaper, lock, idle</h4><p>Background, lock screen and idle management.</p><ul class="db-ex">
+<li><span>hyprlock</span><span class="db-meter" role="img" aria-label="adoption 4 of 5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class=""></i></span></li>
+<li><span>swaylock</span><span class="db-meter" role="img" aria-label="adoption 4 of 5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class=""></i></span></li>
+<li><span>swww</span><span class="db-meter" role="img" aria-label="adoption 3 of 5"><i class="on"></i><i class="on"></i><i class="on"></i><i class=""></i><i class=""></i></span></li>
+<li><span>hypridle</span><span class="db-meter" role="img" aria-label="adoption 3 of 5"><i class="on"></i><i class="on"></i><i class="on"></i><i class=""></i><i class=""></i></span></li>
+</ul></li>
+<li class="db db-system"><div class="db-top"><span class="db-n">10</span><span class="db-g">Apps & system</span></div><h4>Display manager</h4><p>The login screen that starts your session.</p><ul class="db-ex">
+<li><span>GDM</span><span class="db-meter" role="img" aria-label="adoption 5 of 5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span></li>
+<li><span>SDDM</span><span class="db-meter" role="img" aria-label="adoption 5 of 5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span></li>
+<li><span>LightDM</span><span class="db-meter" role="img" aria-label="adoption 4 of 5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class=""></i></span></li>
+<li><span>greetd</span><span class="db-meter" role="img" aria-label="adoption 3 of 5"><i class="on"></i><i class="on"></i><i class="on"></i><i class=""></i><i class=""></i></span></li>
+</ul></li>
+<li class="db db-term"><div class="db-top"><span class="db-n">11</span><span class="db-g">Terminal</span></div><h4>Terminal emulator</h4><p>The graphical window that hosts the shell.</p><ul class="db-ex">
+<li><span>Alacritty</span><span class="db-meter" role="img" aria-label="adoption 5 of 5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span></li>
+<li><span>Kitty</span><span class="db-meter" role="img" aria-label="adoption 5 of 5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span></li>
+<li><span>WezTerm</span><span class="db-meter" role="img" aria-label="adoption 4 of 5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class=""></i></span></li>
+<li><span>Ghostty</span><span class="db-meter" role="img" aria-label="adoption 4 of 5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class=""></i></span></li>
+</ul></li>
+<li class="db db-term"><div class="db-top"><span class="db-n">12</span><span class="db-g">Terminal</span></div><h4>Command shell</h4><p>Interprets the commands you type.</p><ul class="db-ex">
+<li><span>Bash</span><span class="db-meter" role="img" aria-label="adoption 5 of 5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span></li>
+<li><span>Zsh</span><span class="db-meter" role="img" aria-label="adoption 5 of 5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span></li>
+<li><span>Fish</span><span class="db-meter" role="img" aria-label="adoption 4 of 5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class=""></i></span></li>
+<li><span>Nushell</span><span class="db-meter" role="img" aria-label="adoption 3 of 5"><i class="on"></i><i class="on"></i><i class="on"></i><i class=""></i><i class=""></i></span></li>
+</ul></li>
+<li class="db db-term"><div class="db-top"><span class="db-n">13</span><span class="db-g">Terminal</span></div><h4>Prompt</h4><p>Customises how the prompt looks.</p><ul class="db-ex">
+<li><span>Starship</span><span class="db-meter" role="img" aria-label="adoption 5 of 5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span></li>
+</ul></li>
+<li class="db db-system"><div class="db-top"><span class="db-n">14</span><span class="db-g">Apps & system</span></div><h4>GUI toolkit</h4><p>Libraries used to draw buttons, windows and menus.</p><ul class="db-ex">
+<li><span>GTK</span><span class="db-meter" role="img" aria-label="adoption 5 of 5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span></li>
+<li><span>Qt / QML</span><span class="db-meter" role="img" aria-label="adoption 5 of 5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span></li>
+</ul></li>
+<li class="db db-system"><div class="db-top"><span class="db-n">15</span><span class="db-g">Apps & system</span></div><h4>File manager</h4><p>Browse folders and manage files.</p><ul class="db-ex">
+<li><span>Nautilus</span><span class="db-meter" role="img" aria-label="adoption 5 of 5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span></li>
+<li><span>Dolphin</span><span class="db-meter" role="img" aria-label="adoption 4 of 5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class=""></i></span></li>
+<li><span>Thunar</span><span class="db-meter" role="img" aria-label="adoption 4 of 5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class=""></i></span></li>
+<li><span>Nemo</span><span class="db-meter" role="img" aria-label="adoption 3 of 5"><i class="on"></i><i class="on"></i><i class="on"></i><i class=""></i><i class=""></i></span></li>
+</ul></li>
+<li class="db db-system wide"><div class="db-top"><span class="db-n">16</span><span class="db-g">Apps & system</span></div><h4>System services</h4><p>Invisible plumbing: integration, permissions, audio, network.</p><ul class="db-ex">
+<li><span>xdg-desktop-portal</span><span class="db-meter" role="img" aria-label="adoption 4 of 5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class=""></i></span></li>
+<li><span>polkit</span><span class="db-meter" role="img" aria-label="adoption 4 of 5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class=""></i></span></li>
+<li><span>PipeWire</span><span class="db-meter" role="img" aria-label="adoption 4 of 5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class=""></i></span></li>
+<li><span>NetworkManager</span><span class="db-meter" role="img" aria-label="adoption 4 of 5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class=""></i></span></li>
+</ul></li>
+</ol></div>
+<footer class="dmap-foot"><div><span class="dmap-kicker">Valid combinations</span><ul>
+<li>Hyprland + Waybar + Rofi + Mako + Alacritty + Fish + Starship</li>
+<li>Niri + Noctalia + Kitty + Zsh + Starship</li>
+<li>KDE Plasma + Konsole + Bash</li>
+<li>GNOME + Ptyxis + Fish + Starship</li>
+</ul></div><p class="dmap-claim">Same system.<br /><span>Infinite combinations.</span></p></footer>
+</figure>
 
 > **About the adoption levels:** they indicate general adoption or popularity within a specific category. They are not market-share percentages — for most Linux components a reliable global statistic simply doesn't exist.
 

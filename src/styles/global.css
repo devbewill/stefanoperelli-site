@@ -581,3 +581,84 @@ section.block { padding: var(--s9) 0 0; scroll-margin-top: var(--s9); }
   .quote-mark { font-size: 6rem; height: 0.5em; }
   .hero-title .rot-line { font-size: clamp(2rem, 9vw, 2.6rem); }
 }
+
+/* ---------- post: mappa del desktop Linux (infografica in codice) ---------- */
+.dmap { margin: var(--s7) 0; border: 1px solid var(--rule); background: var(--paper-2); color: var(--ink); font-size: 0.95rem; }
+.dmap-head { padding: var(--s6); border-bottom: 1px solid var(--rule); background: #0e0f12; color: #eeede9; }
+.dmap-kicker { display: inline-flex; align-items: center; gap: 8px; font: 700 0.64rem var(--mono); text-transform: uppercase; letter-spacing: 0.14em; color: var(--muted); }
+.dmap-kicker::before { content: ""; width: 8px; height: 8px; background: var(--accent); }
+.dmap-head .dmap-kicker { color: #9aa0ab; }
+.dmap-title { margin: var(--s3) 0 0; font-size: clamp(1.8rem, 4.2vw, 2.9rem); font-weight: 900; letter-spacing: -0.045em; line-height: 1; color: #eeede9; }
+.dmap-sub { margin: var(--s3) 0 0; max-width: 62ch; color: #b8bcc4; line-height: 1.5; }
+
+/* stack a confronto */
+.dmap-stack { display: grid; padding: var(--s5) var(--s6) var(--s6); }
+.ds-row { display: grid; grid-template-columns: minmax(0, 2.2fr) minmax(0, 3fr) minmax(0, 3fr); gap: 6px; position: relative; }
+.ds-row + .ds-row { margin-top: 6px; }
+.ds-layer { display: flex; align-items: center; gap: 10px; font: 600 0.7rem var(--mono); text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); }
+.ds-layer i { font-style: normal; color: var(--accent-fg); }
+.ds-cell { padding: 10px 12px; border: 1px solid var(--rule); background: var(--paper); line-height: 1.3; font-weight: 600; min-width: 0; }
+.ds-shared { grid-column: 2 / 4; display: flex; justify-content: space-between; align-items: center; gap: var(--s3); background: transparent; border-style: dashed; color: var(--muted); font-weight: 500; }
+.ds-shared em { font: 700 0.6rem var(--mono); font-style: normal; text-transform: uppercase; letter-spacing: 0.14em; }
+.ds-a { border-left: 3px solid var(--ink); }
+.ds-b { border-left: 3px solid var(--accent); }
+.ds-headrow .ds-cell { border: 0; background: none; padding: 0 0 var(--s3); display: grid; }
+.ds-headrow .ds-a b, .ds-headrow .ds-b b { font-size: 1.05rem; font-weight: 800; letter-spacing: -0.02em; }
+.ds-headrow .ds-b b { color: var(--accent-fg); }
+.ds-headrow small { font: 500 0.66rem var(--mono); text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-top: 2px; }
+.ds-result { margin-top: var(--s3) !important; }
+.ds-result .ds-a { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.ds-result .ds-b { background: var(--accent); color: var(--on-accent); border-color: var(--accent); }
+
+/* mattoncini con filtro senza JS */
+.dmap-blocks { border-top: 1px solid var(--rule); padding: var(--s6); }
+.dmap-filter { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-bottom: var(--s5); }
+.dmap-filter > span { font: 800 1.1rem var(--sans, inherit); letter-spacing: -0.02em; margin-right: auto; }
+.dmap-filter label { cursor: pointer; }
+.dmap-filter input { position: absolute; opacity: 0; pointer-events: none; }
+.dmap-filter label span { display: inline-block; font: 700 0.66rem var(--mono); text-transform: uppercase; letter-spacing: 0.1em; padding: 6px 10px; border: 1px solid var(--rule); background: var(--paper); transition: background 0.2s, color 0.2s; }
+.dmap-filter label:hover span { border-color: var(--ink); }
+.dmap-filter input:checked + span { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.dmap-filter input:focus-visible + span { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.dmap-grid { list-style: none; margin: 0; padding: 0; display: grid; grid-auto-flow: row dense; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1px; background: var(--rule); border: 1px solid var(--rule); }
+.db { background: var(--paper-2); padding: var(--s4); display: flex; flex-direction: column; transition: opacity 0.25s, background 0.25s; }
+.db.wide { grid-column: span 2; }
+.db-top { display: flex; justify-content: space-between; align-items: center; }
+.db-n { font: 800 0.75rem var(--mono); color: var(--accent-fg); }
+.db-g { font: 600 0.58rem var(--mono); text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); }
+.db h4 { margin: var(--s3) 0 0; font-size: 1.02rem; font-weight: 800; letter-spacing: -0.02em; line-height: 1.2; }
+.db p { margin: 6px 0 0; font-size: 0.82rem; line-height: 1.45; color: var(--muted); }
+.db-ex { list-style: none; margin: auto 0 0; padding: var(--s4) 0 0; display: grid; gap: 5px; }
+.db.wide .db-ex { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: var(--s5); }
+.db-ex li { display: flex; justify-content: space-between; align-items: center; gap: 8px; font: 500 0.74rem var(--mono); }
+.db-ex li > span:first-child { min-width: 0; overflow-wrap: break-word; }
+.db.wide .db-ex li { font-size: 0.7rem; }
+.db.wide .db-ex { column-gap: var(--s4) !important; }
+.db-meter { display: inline-flex; gap: 2px; flex: none; }
+.db-meter i { width: 7px; height: 7px; background: var(--rule); }
+.db-meter i.on { background: var(--accent); }
+.dmap-blocks:has(input[value="core"]:checked) .db:not(.db-core),
+.dmap-blocks:has(input[value="ui"]:checked) .db:not(.db-ui),
+.dmap-blocks:has(input[value="term"]:checked) .db:not(.db-term),
+.dmap-blocks:has(input[value="system"]:checked) .db:not(.db-system) { opacity: 0.18; }
+
+.dmap-foot { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: var(--s6); align-items: end; padding: var(--s6); border-top: 1px solid var(--rule); }
+.dmap-foot ul { list-style: none; margin: var(--s3) 0 0; padding: 0; display: grid; gap: 6px; font: 500 0.78rem var(--mono); }
+.dmap-foot li::before { content: "+ "; color: var(--accent-fg); font-weight: 700; }
+.dmap-claim { margin: 0; text-align: right; font-size: clamp(1.4rem, 3vw, 2rem); font-weight: 900; letter-spacing: -0.04em; line-height: 1.05; }
+.dmap-claim span { color: var(--accent-fg); }
+
+@media (max-width: 860px) { .dmap-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 560px) {
+  .dmap-head, .dmap-stack, .dmap-blocks, .dmap-foot { padding: var(--s4); }
+  .ds-row { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .ds-layer { grid-column: 1 / -1; margin-top: 4px; }
+  .ds-headrow .ds-layer { display: none; }
+  .ds-shared { grid-column: 1 / -1; }
+  .dmap-grid { grid-template-columns: minmax(0, 1fr); }
+  .db.wide { grid-column: auto; }
+  .dmap-filter > span { width: 100%; }
+  .dmap-foot { grid-template-columns: minmax(0, 1fr); }
+  .dmap-claim { text-align: left; }
+}
