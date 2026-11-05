@@ -11,6 +11,8 @@ For twenty-five years I kept saying the same thing: "Yes, Linux is great, I use 
 
 Now I've made the switch. My desktop PC runs Arch. Not the Arch of 2010, the one you installed with the wiki open on a second screen. This is an Arch that installs in half an hour, updates without ceremony and gives you a working environment from day one. The credit goes to **Omarchy**, DHH's project that takes Arch and Hyprland and packages them around a very precise idea of how work should be done.
 
+![The Omarchy installer's final screen: the pixel-art Omarchy logo, "Installed Omarchy", and a Reboot Now button.](/images/omarchy-install-done.webp)
+
 ## Not a distro, an opinion
 
 Omarchy isn't a distribution in the classic sense. It's Arch with a set of decisions already made on top, and those decisions are what make the difference:
