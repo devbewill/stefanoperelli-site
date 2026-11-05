@@ -2,8 +2,8 @@
 import Layout from "../layouts/Layout.astro";
 
 const EMAIL = "sedprc@gmail.com";
-// Endpoint di un servizio form (FormBold, Formspree, ...). Se manca, il form apre il client email.
-const endpoint = import.meta.env.PUBLIC_CONTACT_ENDPOINT ?? "";
+// Endpoint Formspree: i messaggi arrivano via email. Si puo sovrascrivere con PUBLIC_CONTACT_ENDPOINT.
+const endpoint = import.meta.env.PUBLIC_CONTACT_ENDPOINT || "https://formspree.io/f/xyeevpej";
 
 const channels = [
   { label: "Email", value: EMAIL, href: `mailto:${EMAIL}`, detail: "For proposals and longer messages", external: false },
@@ -12,7 +12,7 @@ const channels = [
 ];
 ---
 
-<Layout title="Contact | Synthetic Mess" showContact={false}>
+<Layout title="Contact | Stefano Perelli" showContact={false}>
   <div class="wrap contact">
     <a class="back" href="/">← Back to portfolio</a>
 
@@ -47,6 +47,8 @@ const channels = [
         <span class="kicker">A direct message</span>
         <h2 class="h2" id="form-title">Send me a message</h2>
         <form id="contact-form" action={endpoint || undefined} method="POST" data-email={EMAIL}>
+          <input type="hidden" name="_subject" value="New message from stefanoperelli site" />
+          <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" style="display:none" />
           <label for="contact-name">Name</label>
           <input id="contact-name" name="name" type="text" autocomplete="name" required />
           <label for="contact-email">Your email</label>
