@@ -1,65 +1,117 @@
 ---
 import { CONTENT } from "../constants/content";
 import Layout from "../layouts/Layout.astro";
-import SidebarLayout from "../components/SidebarLayout.astro";
 
 const t = CONTENT;
 ---
 
-<Layout title={`${t.labels.about} | Synthetic Mess`}>
-  <SidebarLayout maxWidth="max-w-4xl">
-    <div class="space-y-16">
-      <header class="space-y-6">
-        <span
-          class="text-[10px] font-semibold tracking-[0.4em] uppercase"
-          >Section // Manifesto</span
-        >
-        <h2
-          class="text-2xl lg:text-3xl font-semibold leading-[1.1]"
-        >
-          {t.bio}
-        </h2>
-      </header>
-
-      <div
-        class="grid grid-cols-1 lg:grid-cols-2 gap-12 pt-8 border-t border-black"
-      >
-        <div class="space-y-4">
-          <h3
-            class="text-[10px] font-semibold tracking-[0.3em] uppercase italic underline decoration-1 underline-offset-4"
-          >
-            Philosophy
-          </h3>
-          <p
-            class="text-base lg:text-lg font-semibold leading-relaxed"
-          >
-            {t.about_content.philosophy}
-          </p>
-        </div>
-        <div class="space-y-4">
-          <h3
-            class="text-[10px] font-semibold tracking-[0.3em] uppercase italic underline decoration-1 underline-offset-4"
-          >
-            Background
-          </h3>
-          <p
-            class="text-base lg:text-lg font-semibold leading-relaxed"
-          >
-            {t.about_content.background}
-          </p>
-        </div>
-      </div>
-
-      <div
-        class="pt-8 flex justify-between items-end opacity-20 group hover:opacity-100 transition-opacity"
-      >
-        <span class="text-[9px] font-sans uppercase tracking-[0.4em]"
-          >End of Dossier</span
-        >
-        <span class="text-[8px] font-sans tabular-nums"
-          >HASH: 6366F1_SYNTH</span
-        >
+<Layout title="About & Resume | Synthetic Mess">
+  <!-- MANIFESTO -->
+  <header class="page-head">
+    <div class="wrap">
+      <span class="kicker">About · Resume 2026</span>
+      <h1 class="h1" style="max-width:22ch">
+        From code to <span class="mark">product leadership</span>.
+      </h1>
+      <p class="sub">{t.bio}</p>
+      <div class="cta">
+        <a class="btn fill" href="/stefano-perelli-resume.pdf" download>↓ Download resume</a>
+        <a class="link" href="#experience">Experience →</a>
+        <a class="link" href="/contact">Contact →</a>
       </div>
     </div>
-  </SidebarLayout>
+  </header>
+
+  <!-- CHI SONO -->
+  <section class="block" id="who">
+    <div class="wrap">
+      <span class="kicker">Who I am</span>
+      <h2 class="h2">In short</h2>
+      <div class="acc">
+        <details open>
+          <summary>Right now<i aria-hidden="true"></i></summary>
+          <p>{t.now}</p>
+        </details>
+        <details>
+          <summary>Philosophy<i aria-hidden="true"></i></summary>
+          <p>{t.about_content.philosophy}</p>
+        </details>
+        <details>
+          <summary>Background<i aria-hidden="true"></i></summary>
+          <p>{t.about_content.background}</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <section class="quote-band">
+    <figure class="wrap" style="margin:0 auto">
+      <blockquote>Technology should be <span class="mark">invisible</span>.</blockquote>
+      <figcaption class="kicker">A tool that enables business, never an obstacle</figcaption>
+    </figure>
+  </section>
+
+  <!-- ESPERIENZA -->
+  <section class="block" id="experience">
+    <div class="wrap">
+      <span class="kicker">Experience</span>
+      <h2 class="h2">Professional record</h2>
+      <div class="xp-full">
+        {t.experiences.map((x, i) => (
+          <article class="xp-item">
+            <div>
+              <span class="when">{x.period}</span>
+              <span class="role">{x.role}</span>
+              {i === 0 && <span class="tagpill hot" style="display:inline-block;margin-top:12px">Current</span>}
+            </div>
+            <div>
+              <h3>{x.link ? <a href={x.link} target="_blank" rel="noopener">{x.company} ↗</a> : x.company}</h3>
+              {x.description && <p class="desc">{x.description}</p>}
+              <ul class="bullets">
+                {x.details.map((d) => {
+                  const [head, ...rest] = d.split(": ");
+                  return rest.length ? <li><strong>{head}:</strong> {rest.join(": ")}</li> : <li>{d}</li>;
+                })}
+              </ul>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- COMPETENZE -->
+  <section class="block" id="capabilities">
+    <div class="wrap">
+      <span class="kicker">Capabilities</span>
+      <h2 class="h2">What I'm good at</h2>
+      <div class="skills">
+        {t.skills.map((c, i) => (
+          <div class="skill-card">
+            <span class="kicker">{c.title}</span>
+            <div class="chips">
+              {c.skills.map((s, j) => <span class={`chip${i === 0 && j < 3 ? " a" : ""}`}>{s}</span>)}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- PROGETTI CHIAVE -->
+  <section class="block" id="key-projects">
+    <div class="wrap">
+      <span class="kicker">Selected key projects</span>
+      <h2 class="h2">Work I'm proud of</h2>
+      <div class="kp">
+        {t.projects.map((p) => (
+          <div class="kp-card">
+            <span class="tagpill">{p.role}</span>
+            <h3>{"link" in p && p.link ? <a href={p.link} target="_blank" rel="noopener">{p.title} ↗</a> : p.title}</h3>
+            <p>{p.description}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
 </Layout>

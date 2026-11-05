@@ -1,22 +1,36 @@
 ---
+import "@fontsource/geist-sans/400.css";
+import "@fontsource/geist-sans/500.css";
+import "@fontsource/geist-sans/600.css";
+import "@fontsource/geist-sans/700.css";
+import "@fontsource/geist-sans/800.css";
+import "@fontsource/geist-sans/900.css";
+import "@fontsource/geist-mono/400.css";
+import "@fontsource/geist-mono/500.css";
+import "@fontsource/geist-mono/700.css";
 import "../styles/global.css";
 import { ClientRouter } from "astro:transitions";
+import SiteNav from "../components/SiteNav.astro";
+import SiteFooter from "../components/SiteFooter.astro";
+import ContactCta from "../components/ContactCta.astro";
 
 interface Props {
     title?: string;
     description?: string;
     image?: string;
+    showContact?: boolean;
 }
 
 const {
-    title = "Stefano Perelli | Project & Delivery Manager",
+    title = "Stefano Perelli | Delivery & Quality Manager",
     description = "Product Director & Delivery Manager with a strong passion for building complex and scalable digital products.",
     image = "/og-image.jpg",
+    showContact = true,
 } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -25,22 +39,38 @@ const {
         <meta name="description" content={description} />
         <meta name="generator" content={Astro.generator} />
 
-        <!-- OpenGraph Tags -->
         <meta property="og:title" content={title} />
         <meta property="og:description" content={description} />
         <meta property="og:type" content="website" />
         <meta property="og:image" content={new URL(image, Astro.url)} />
         <meta property="og:url" content={Astro.url} />
 
-        <!-- Twitter Card -->
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={title} />
         <meta name="twitter:description" content={description} />
         <meta name="twitter:image" content={new URL(image, Astro.url)} />
 
+        <script is:inline>
+            (function () {
+                function theme() {
+                    var t = null;
+                    try { t = localStorage.getItem("theme"); localStorage.removeItem("accent"); } catch (e) {}
+                    if (!t && window.matchMedia("(prefers-color-scheme: dark)").matches) t = "dark";
+                    document.documentElement.setAttribute("data-theme", t || "light");
+                }
+                theme();
+                document.addEventListener("astro:after-swap", theme);
+            })();
+        </script>
+
         <ClientRouter />
     </head>
-    <body class="font-sans antialiased">
-        <slot />
+    <body>
+        <SiteNav />
+        <main>
+            <slot />
+        </main>
+        {showContact && <ContactCta />}
+        <SiteFooter />
     </body>
 </html>

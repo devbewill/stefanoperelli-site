@@ -1,0 +1,121 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+const EMAIL = "sedprc@gmail.com";
+// Endpoint di un servizio form (FormBold, Formspree, ...). Se manca, il form apre il client email.
+const endpoint = import.meta.env.PUBLIC_CONTACT_ENDPOINT ?? "";
+
+const channels = [
+  { label: "Email", value: EMAIL, href: `mailto:${EMAIL}`, detail: "For proposals and longer messages", external: false },
+  { label: "LinkedIn", value: "Stefano Perelli", href: "https://linkedin.com/in/stefanoperelli/", detail: "To connect and follow my work", external: true },
+  { label: "Resume", value: "Download PDF", href: "/stefano-perelli-resume.pdf", detail: "The full professional record", external: false, download: true },
+];
+---
+
+<Layout title="Contact | Synthetic Mess" showContact={false}>
+  <div class="wrap contact">
+    <a class="back" href="/">← Back to portfolio</a>
+
+    <header class="contact-head">
+      <span class="kicker">Contact</span>
+      <h1 class="h1">Let's <span class="mark">talk</span>.</h1>
+      <p class="sub">Got a project, a question, or just want to trade a few thoughts on AI, product and delivery? Write me.</p>
+    </header>
+
+    <div class="contact-grid">
+      <section aria-labelledby="channels-title">
+        <span class="kicker">Where to find me</span>
+        <h2 class="h2" id="channels-title">Pick your channel</h2>
+        <div class="channels">
+          {channels.map((c) => (
+            <a
+              class="channel"
+              href={c.href}
+              target={c.external ? "_blank" : undefined}
+              rel={c.external ? "noopener noreferrer" : undefined}
+              download={c.download ? "" : undefined}
+            >
+              <span class="channel-top"><span class="kicker">{c.label}</span><span aria-hidden="true">↗</span></span>
+              <b>{c.value}</b>
+              <small>{c.detail}</small>
+            </a>
+          ))}
+        </div>
+      </section>
+
+      <section class="form-wrap" aria-labelledby="form-title">
+        <span class="kicker">A direct message</span>
+        <h2 class="h2" id="form-title">Send me a message</h2>
+        <form id="contact-form" action={endpoint || undefined} method="POST" data-email={EMAIL}>
+          <label for="contact-name">Name</label>
+          <input id="contact-name" name="name" type="text" autocomplete="name" required />
+          <label for="contact-email">Your email</label>
+          <input id="contact-email" name="email" type="email" autocomplete="email" required />
+          <label for="contact-message">Message</label>
+          <textarea id="contact-message" name="message" rows="6" required></textarea>
+          <button class="btn fill" type="submit">Send message ↗</button>
+          <p class="contact-note">
+            {endpoint ? "Your message is delivered through a form service." : "This opens your email app with the message ready to send."}
+          </p>
+        </form>
+      </section>
+    </div>
+  </div>
+
+  <dialog class="feedback" id="contact-feedback" aria-labelledby="feedback-title" aria-describedby="feedback-message">
+    <div class="feedback-box">
+      <span class="kicker" id="feedback-title">Contact</span>
+      <p id="feedback-message"></p>
+      <button class="btn fill" id="feedback-ok" type="button">OK</button>
+    </div>
+  </dialog>
+</Layout>
+
+<script>
+  function setupContact() {
+    const form = document.getElementById("contact-form") as HTMLFormElement | null;
+    if (!form) return;
+    const submit = form.querySelector<HTMLButtonElement>('button[type="submit"]')!;
+    const dialog = document.getElementById("contact-feedback") as HTMLDialogElement;
+    const msg = document.getElementById("feedback-message")!;
+    document.getElementById("feedback-ok")!.addEventListener("click", () => dialog.close());
+
+    const show = (text: string) => {
+      msg.textContent = text;
+      dialog.showModal();
+    };
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      if (!form.reportValidity()) return;
+      const data = new FormData(form);
+      const endpoint = form.getAttribute("action");
+
+      if (!endpoint) {
+        const subject = `Hello from ${data.get("name")}`;
+        const body = `${data.get("message")}\n\n${data.get("name")} · ${data.get("email")}`;
+        location.href = `mailto:${form.dataset.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        return;
+      }
+
+      const label = submit.textContent;
+      submit.disabled = true;
+      submit.textContent = "Sending…";
+      try {
+        const res = await fetch(endpoint, { method: "POST", body: data, headers: { Accept: "application/json" } });
+        if (res.ok) {
+          form.reset();
+          show("Message sent. Thanks, I'll get back to you soon.");
+        } else {
+          show(`Sending failed (error ${res.status}). Please try again or write me by email.`);
+        }
+      } catch {
+        show("Network error. Please try again or write me by email.");
+      } finally {
+        submit.disabled = false;
+        submit.textContent = label;
+      }
+    });
+  }
+  document.addEventListener("astro:page-load", setupContact);
+</script>

@@ -1,7 +1,8 @@
 ---
-import { type CollectionEntry, getCollection } from "astro:content";
+import { type CollectionEntry, getCollection, render } from "astro:content";
 import EntryLayout from "../../layouts/EntryLayout.astro";
-import { render } from "astro:content";
+import ProjectLayout from "../../layouts/ProjectLayout.astro";
+import { readingTime } from "../../lib/entries";
 
 export async function getStaticPaths() {
   const entries = await getCollection("entries", ({ data }) => {
@@ -18,6 +19,14 @@ const entry = Astro.props;
 const { Content } = await render(entry);
 ---
 
-<EntryLayout {...entry.data}>
-  <Content />
-</EntryLayout>
+{
+  entry.data.type === "project" ? (
+    <ProjectLayout entry={entry}>
+      <Content />
+    </ProjectLayout>
+  ) : (
+    <EntryLayout {...entry.data} readingTime={readingTime(entry.body)}>
+      <Content />
+    </EntryLayout>
+  )
+}

@@ -6,6 +6,10 @@ export default defineConfig({
   integrations: [react(), tailwind()],
 
   publicDir: "public",
+  // About e Resume sono ora una pagina sola
+  redirects: {
+    "/resume": "/about",
+  },
   markdown: {
     shikiConfig: {
       // Scegli il tuo tema preferito qui

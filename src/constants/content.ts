@@ -26,7 +26,7 @@ export const CONTENT = {
       period: "Jun 2025 – Present",
       company: "HARLEY&DIKKINSON",
       link: "https://harleydikkinson.com/",
-      role: "Project & Quality Manager",
+      role: "Delivery & Quality Manager",
       description: "Fintech platform for real estate regeneration",
       details: [
         "AI Adoption: Launched company-wide AI programme — tool selection, training of 3 teams (Creative, PM, Analyst).",

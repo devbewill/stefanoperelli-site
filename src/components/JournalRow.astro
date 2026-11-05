@@ -1,0 +1,35 @@
+---
+import { formatDate } from "../lib/entries";
+
+interface Props {
+  n: string;
+  title: string;
+  href: string;
+  date: Date;
+  description?: string;
+  meta?: string;
+  external?: boolean;
+}
+
+const { n, title, href, date, description, meta, external = false } = Astro.props;
+---
+
+<li>
+  <a
+    class="jrow"
+    href={href}
+    target={external ? "_blank" : undefined}
+    rel={external ? "noopener noreferrer" : undefined}
+  >
+    <span class="jn">#{n}</span>
+    <div class="jbody">
+      <div class="jmeta">
+        <time datetime={date.toISOString()}>{formatDate(date)}</time>
+        {meta && <span>· {meta}</span>}
+      </div>
+      <h3>{title}</h3>
+      {description && <p>{description}</p>}
+    </div>
+    <span class="barrow" aria-hidden="true">{external ? "↗" : "→"}</span>
+  </a>
+</li>

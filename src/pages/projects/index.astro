@@ -1,30 +1,23 @@
 ---
 import Layout from "../../layouts/Layout.astro";
-import { getCollection } from "astro:content";
-import EntriesTable from "../../components/EntriesTable.astro";
-import SidebarLayout from "../../components/SidebarLayout.astro";
+import ProjectCard from "../../components/ProjectCard.astro";
+import { getProjects } from "../../lib/entries";
 
-const projects = (
-  await getCollection(
-    "entries",
-    ({ data }) => data.type === "project" && data.draft !== true,
-  )
-).sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+const projects = await getProjects();
 ---
 
 <Layout title="Projects | Synthetic Mess">
-  <SidebarLayout>
-    <EntriesTable
-      entries={projects.map((prj, index) => ({
-        title: prj.data.title,
-        link: `/entries/${prj.slug}/`,
-        pubDate: prj.data.pubDate,
-        type: "project",
-        index: index + 1,
-        description: prj.data.description,
-      }))}
-      title="Selected Outputs"
-      subtitle="Projects"
-    />
-  </SidebarLayout>
+  <header class="page-head">
+    <div class="wrap">
+      <span class="kicker">Projects · {projects.length} experiments</span>
+      <h1 class="h1">Small tools at the edge of <span class="mark">AI &amp; product</span>.</h1>
+      <p class="sub">MVPs and side projects I build to test ideas, automate the boring parts and learn by doing.</p>
+    </div>
+  </header>
+
+  <section class="wrap">
+    <div class="masonry">
+      {projects.map((p, i) => <ProjectCard entry={p} index={i + 1} feature={i === 0} />)}
+    </div>
+  </section>
 </Layout>

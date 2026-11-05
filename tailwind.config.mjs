@@ -12,8 +12,8 @@ export default {
         foreground: "#000000",
       },
       fontFamily: {
-        sans: ["Inter", "-apple-system", "BlinkMacSystemFont", "sans-serif"],
-        mono: ["ui-monospace"],
+        sans: ["Geist Sans", "system-ui", "-apple-system", "sans-serif"],
+        mono: ["Geist Mono", "ui-monospace", "monospace"],
       },
       typography: {
         DEFAULT: {

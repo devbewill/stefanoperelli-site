@@ -1,0 +1,110 @@
+---
+import Layout from "./Layout.astro";
+import { getProjects, readingTime, type Entry } from "../lib/entries";
+
+interface Props {
+  entry: Entry;
+}
+
+const { entry } = Astro.props;
+const d = entry.data;
+if (d.type !== "project") throw new Error("ProjectLayout expects a project entry");
+
+const STATUS = { live: "Live", build: "In progress", idea: "Idea" } as const;
+const STORY = { problem: "The problem", approach: "The approach", role: "My role", status: "Where it stands", next: "Next step" } as const;
+
+const all = await getProjects();
+const i = all.findIndex((p) => p.slug === entry.slug);
+const prev = all[(i - 1 + all.length) % all.length];
+const next = all[(i + 1) % all.length];
+const others = all.filter((p) => ![entry.slug, prev.slug, next.slug].includes(p.slug));
+
+const stack = d.tools ?? d.tags ?? [];
+const story = d.story ? (Object.keys(STORY) as (keyof typeof STORY)[]).filter((k) => d.story?.[k]) : [];
+const initials = d.title.replace(/[^A-Za-z0-9 ]/g, " ").trim().split(/\s+/)[0].slice(0, 2).toUpperCase();
+const number = String(i + 1).padStart(2, "0");
+const subOf = (p: Entry) => (p.data.type === "project" ? [p.data.role, p.data.year ?? p.data.pubDate.getFullYear()] : []).filter(Boolean).join(" · ");
+---
+
+<Layout title={`${d.title} | Synthetic Mess`} description={d.description}>
+  <article class="wrap pj">
+    <a class="back" href="/projects">← All projects</a>
+
+    <header class="pj-head">
+      <div class="pj-icon" aria-hidden="true"><b>{initials}</b><span>{number}</span></div>
+      <div>
+        <div class="pj-badges">
+          {d.status && <span class={`tagpill${d.status === "live" ? " hot" : ""}`}>{STATUS[d.status]}</span>}
+          {d.featured && <span class="tagpill">Featured</span>}
+        </div>
+        <h1>{d.title}</h1>
+      </div>
+    </header>
+
+    {d.description && <p class="sub pj-sub">{d.description}</p>}
+
+    <dl class="pj-meta">
+      {d.role && <div><dt>Role</dt><dd>{d.role}</dd></div>}
+      <div><dt>Year</dt><dd>{d.year ?? d.pubDate.getFullYear()}</dd></div>
+      {d.status && <div><dt>Status</dt><dd>{STATUS[d.status]}</dd></div>}
+      <div><dt>Read</dt><dd>{readingTime(entry.body)}</dd></div>
+      {stack.length > 0 && (
+        <div class="pj-stack"><dt>Stack</dt><dd class="chips">{stack.map((s) => <span class="chip a">{s}</span>)}</dd></div>
+      )}
+    </dl>
+
+    {d.links && d.links.length > 0 && (
+      <div class="cta pj-links">
+        {d.links.map((l, j) => (
+          <a class={`btn${j === 0 ? " fill" : ""}`} href={l.url} target="_blank" rel="noopener">{l.label} ↗</a>
+        ))}
+      </div>
+    )}
+
+    {story.length > 0 && (
+      <section class="pj-sec">
+        <span class="kicker">The story</span>
+        <div class="story">
+          {story.map((k) => (
+            <div class="story-row"><h3>{STORY[k]}</h3><p>{d.story![k]}</p></div>
+          ))}
+        </div>
+      </section>
+    )}
+
+    {d.heroImage && (
+      <figure class="pj-media"><img src={d.heroImage} alt="" loading="lazy" /></figure>
+    )}
+
+    <section class="pj-sec">
+      <span class="kicker">The project</span>
+      <div class="pj-body prose prose-lg max-w-none prose-sm-fluo">
+        <slot />
+      </div>
+    </section>
+
+    {all.length > 1 && (
+      <nav class="pj-nav" aria-label="More projects">
+        <a class="pj-step" href={`/entries/${prev.slug}/`}>
+          <span class="kicker">← Previous</span><b>{prev.data.title}</b><small>{subOf(prev)}</small>
+        </a>
+        <a class="pj-step next" href={`/entries/${next.slug}/`}>
+          <span class="kicker">Next →</span><b>{next.data.title}</b><small>{subOf(next)}</small>
+        </a>
+      </nav>
+    )}
+
+    {others.length > 0 && (
+      <section class="pj-sec">
+        <span class="kicker">Other experiments</span>
+        <div class="projgrid">
+          {others.map((p) => (
+            <a class="pbadge" href={`/entries/${p.slug}/`}>
+              <b>{p.data.title}</b><small>{subOf(p)}</small>
+            </a>
+          ))}
+        </div>
+      </section>
+    )}
+  </article>
+</Layout>

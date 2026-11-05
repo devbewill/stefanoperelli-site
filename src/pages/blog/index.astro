@@ -1,29 +1,123 @@
 ---
 import Layout from "../../layouts/Layout.astro";
-import { getCollection } from "astro:content";
-import EntriesTable from "../../components/EntriesTable.astro";
-import SidebarLayout from "../../components/SidebarLayout.astro";
+import { getPosts, readingTime, formatDate } from "../../lib/entries";
 
-const posts = (
-  await getCollection(
-    "entries",
-    ({ data }) => data.type === "post" && data.draft !== true,
-  )
-).sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+const posts = await getPosts();
+
+const tagsOf = (p: (typeof posts)[number]) => (p.data.type === "post" ? p.data.tags ?? [] : []).map((t) => t.toLowerCase());
+
+// Tag più usati per i filtri
+const counts = new Map<string, number>();
+posts.forEach((p) => tagsOf(p).forEach((k) => counts.set(k, (counts.get(k) ?? 0) + 1)));
+const topTags = [...counts.entries()].sort((a, b) => b[1] - a[1]).slice(0, 8).map(([k]) => k);
+
+const items = posts.map((p, i) => ({
+  n: String(posts.length - i).padStart(2, "0"),
+  title: p.data.title,
+  href: `/entries/${p.slug}/`,
+  date: p.data.pubDate,
+  description: p.data.description ?? "",
+  read: readingTime(p.body),
+  tags: tagsOf(p),
+}));
+const [featured, ...rest] = items;
+const search = (it: (typeof items)[number]) => `${it.title} ${it.description} ${it.tags.join(" ")}`.toLowerCase();
 ---
 
-<Layout title="Journal | Synthetic Mess">
-  <SidebarLayout>
-    <EntriesTable
-      entries={posts.map((post) => ({
-        title: post.data.title,
-        link: `/entries/${post.slug}/`,
-        pubDate: post.data.pubDate,
-        type: "post",
-        description: post.data.description,
-      }))}
-      title="Archive Items"
-      subtitle="Journal"
-    />
-  </SidebarLayout>
+<Layout title="Journal | Stefano Perelli">
+  <header class="page-head">
+    <div class="wrap bhead">
+      <div>
+        <span class="kicker">Journal</span>
+        <h1 class="h1">Notes from the <span class="mark">mess</span>.</h1>
+        <p class="sub">Thoughts on AI, product, delivery and the tools I use to keep the chaos productive.</p>
+      </div>
+      <dl class="bstats">
+        <div><dt>Entries</dt><dd>{posts.length}</dd></div>
+        <div><dt>Topics</dt><dd>{counts.size}</dd></div>
+        <div><dt>Last update</dt><dd>{featured ? formatDate(featured.date) : "—"}</dd></div>
+      </dl>
+    </div>
+  </header>
+
+  <div class="btoolbar">
+    <div class="wrap btoolbar-in">
+      <label class="bsearch">
+        <span aria-hidden="true">⌕</span>
+        <input id="bsearch" type="search" placeholder="Search posts…" aria-label="Search posts" autocomplete="off" />
+      </label>
+      <div class="filters" role="group" aria-label="Filter by tag">
+        <button type="button" class="chip" data-tag="" aria-pressed="true">All</button>
+        {topTags.map((tag) => <button type="button" class="chip" data-tag={tag} aria-pressed="false">#{tag}</button>)}
+      </div>
+      <span class="bcount" id="bcount" aria-live="polite">{posts.length} posts</span>
+    </div>
+  </div>
+
+  <section class="wrap">
+    {featured && (
+      <a class="bfeat bitem" href={featured.href} data-tags={featured.tags.join("|")} data-search={search(featured)}>
+        <div class="bfeat-main">
+          <div class="bmeta"><span class="tagpill hot">Latest</span><span>{formatDate(featured.date, "long")}</span><span>· {featured.read} read</span></div>
+          <h2>{featured.title}</h2>
+          {featured.description && <p>{featured.description}</p>}
+          <span class="bgo">Read the post →</span>
+        </div>
+        <div class="bfeat-side" aria-hidden="true">
+          <span class="bnum">N°{featured.n}</span>
+          <div class="chips">{featured.tags.slice(0, 4).map((t) => <span class="chip">#{t}</span>)}</div>
+        </div>
+      </a>
+    )}
+
+    <div class="bgrid">
+      {rest.map((it) => (
+        <a class="bcard bitem" href={it.href} data-tags={it.tags.join("|")} data-search={search(it)}>
+          <div class="bmeta"><span class="bn">#{it.n}</span><span>{formatDate(it.date, "long")}</span><span class="bread">{it.read}</span></div>
+          <h3>{it.title}</h3>
+          {it.description && <p>{it.description}</p>}
+          <div class="bfoot">
+            <div class="chips">{it.tags.slice(0, 3).map((t) => <span class="chip">#{t}</span>)}</div>
+            <span class="barrow" aria-hidden="true">→</span>
+          </div>
+        </a>
+      ))}
+    </div>
+
+    <p class="bempty" id="bempty" hidden>Nothing here yet. Try another tag or search term.</p>
+  </section>
 </Layout>
+
+<script>
+  function setupJournal() {
+    const input = document.getElementById("bsearch") as HTMLInputElement | null;
+    if (!input) return;
+    const buttons = document.querySelectorAll<HTMLButtonElement>(".filters button");
+    const items = document.querySelectorAll<HTMLElement>(".bitem");
+    const count = document.getElementById("bcount")!;
+    const empty = document.getElementById("bempty")!;
+    let tag = "";
+
+    const run = () => {
+      const q = input.value.trim().toLowerCase();
+      let shown = 0;
+      items.forEach((el) => {
+        const ok = (!tag || el.dataset.tags!.split("|").includes(tag)) && (!q || el.dataset.search!.includes(q));
+        el.hidden = !ok;
+        if (ok) shown++;
+      });
+      count.textContent = `${shown} ${shown === 1 ? "post" : "posts"}`;
+      empty.hidden = shown > 0;
+    };
+
+    buttons.forEach((btn) =>
+      btn.addEventListener("click", () => {
+        tag = btn.dataset.tag ?? "";
+        buttons.forEach((b) => b.setAttribute("aria-pressed", String(b === btn)));
+        run();
+      }),
+    );
+    input.addEventListener("input", run);
+  }
+  document.addEventListener("astro:page-load", setupJournal);
+</script>

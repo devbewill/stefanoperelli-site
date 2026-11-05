@@ -1,48 +1,190 @@
 ---
-import { CONTENT } from "../constants/content";
 import { getCollection } from "astro:content";
+import { CONTENT } from "../constants/content";
 import Layout from "../layouts/Layout.astro";
-import EntriesTable from "../components/EntriesTable.astro";
-import SidebarLayout from "../components/SidebarLayout.astro";
+import JournalRow from "../components/JournalRow.astro";
+import { getPosts, getProjects, readingTime, formatDate } from "../lib/entries";
 
 const t = CONTENT;
+const projects = await getProjects();
+const posts = await getPosts();
+const links = await getCollection("entries", ({ data }) => data.type === "link" && data.draft !== true);
 
-const entries = await getCollection("entries", ({ data }) => {
-  return data.draft !== true;
-});
+const [latest, ...restPosts] = posts;
 
-const allItems = [
-  ...entries.map((entry) => ({
-    title: entry.data.title,
-    link: entry.data.type === "link" ? entry.data.url : `/entries/${entry.slug}`,
-    isExternal: entry.data.type === "link",
-    pubDate: entry.data.pubDate,
-    type: entry.data.type,
-    index: entry.data.index,
-    description: entry.data.description,
+// Stream del journal: post + link esterni + newsletter, ordinati per data.
+const stream = [
+  ...restPosts.map((p, i) => ({
+    n: String(posts.length - 1 - i).padStart(2, "0"), // stessa numerazione della pagina Journal
+    title: p.data.title,
+    href: `/entries/${p.slug}/`,
+    date: p.data.pubDate,
+    description: p.data.description,
+    meta: readingTime(p.body),
+    external: false,
   })),
-  ...CONTENT.newsletters.map((n) => ({
+  ...links.map((l) => ({
+    title: l.data.title,
+    href: l.data.type === "link" ? l.data.url : "#",
+    date: l.data.pubDate,
+    description: l.data.description,
+    meta: "Link",
+    external: true,
+    n: "↗",
+  })),
+  ...t.newsletters.map((n) => ({
     title: n.title,
+    href: n.link,
     date: new Date(n.date),
-    type: "link",
-    link: n.link || "#",
-    isExternal: true,
-    pubDate: new Date(n.date),
     description: n.description,
+    meta: "Link",
+    external: true,
+    n: "↗",
   })),
 ]
-  .sort(
-    (a, b) => (b.pubDate || b.date).valueOf() - (a.pubDate || a.date).valueOf(),
-  );
+  .sort((a, b) => b.date.valueOf() - a.date.valueOf())
+  .slice(0, 5);
+
+// Parole che ruotano nel titolo (dalle aree di leadership)
+const rotating = ["digital transformation", "product strategy", "AI & innovation", "governance & delivery", "change management", "cross-functional teams"];
 ---
 
-<Layout title="Home | Stefano Perelli">
-  <SidebarLayout>
-    <EntriesTable
-      entries={allItems}
-      title="Buffer Outputs"
-      subtitle="SESSION_2026"
-    />
-  </SidebarLayout>
+<Layout title="Stefano Perelli | Synthetic Mess">
+  <!-- HERO -->
+  <header class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <span class="kicker">Portfolio · 2026</span>
+        <h1 class="h1 hero-title">
+          <span class="sr-only">Leading teams through {rotating.join(", ")}.</span>
+          <span aria-hidden="true"><span class="lead-in">Leading teams through</span><span class="rot-line"><span class="rot" data-words={JSON.stringify(rotating)}><span class="rot-w"><span class="mark">{rotating[0]}</span></span></span>.</span></span>
+        </h1>
+        <p class="hero-lede">Building the structures, processes and culture that make change <strong>scalable and lasting</strong>.</p>
+        <div class="hero-meta">
+          <span class="role">Delivery &amp; Quality Manager <em>@</em> Harley&amp;Dikkinson</span>
+          <span class="status"><i aria-hidden="true"></i>Milan local node</span>
+        </div>
+      </div>
+      <div class="pt" aria-hidden="true">
+        <div class="pt-ring"></div>
+        <div class="portrait"><img src="/images/stefano-perelli.jpg" width="400" height="400" alt="Stefano Perelli" /></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- CITAZIONE -->
+  <section class="quote">
+    <figure class="wrap quote-in">
+      <span class="quote-mark" aria-hidden="true">“</span>
+      <div>
+        <blockquote>
+          <span class="q-soft">Disorder is part of the creative process.</span>
+          <span class="q-strong"><span class="mark">Synthesis</span> is what brings real value.</span>
+        </blockquote>
+        <figcaption><span>Synthetic Mess</span><span>Order is overrated</span></figcaption>
+      </div>
+    </figure>
+  </section>
+
+  <!-- JOURNAL (al posto di Analytics) -->
+  <section class="block" id="journal">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <span class="kicker">Journal</span>
+          <h2 class="h2">Notes from the <span class="mark">mess</span></h2>
+        </div>
+        <a class="link" href="/blog">Full archive →</a>
+      </div>
+
+      <div class="journal">
+        {latest && (
+          <a class="jfeat" href={`/entries/${latest.slug}/`}>
+            <div>
+              <div class="meta">
+                <span>Latest</span>
+                <span>{formatDate(latest.data.pubDate, "long")}</span>
+                <span>{readingTime(latest.body)} read</span>
+              </div>
+              <h3>{latest.data.title}</h3>
+              {latest.data.description && <p>{latest.data.description}</p>}
+            </div>
+            <div class="jfeat-foot">
+              <span class="btn fill go">Read →</span>
+              <span class="bnum" aria-hidden="true">N°{String(posts.length).padStart(2, "0")}</span>
+            </div>
+          </a>
+        )}
+        <ul class="jlist">
+          {stream.map((s) => <JournalRow {...s} />)}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROGETTI -->
+  <section class="block" id="projects">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <span class="kicker">Selected projects</span>
+          <h2 class="h2">What I'm <span class="mark">building</span></h2>
+        </div>
+        <a class="link" href="/projects">All projects →</a>
+      </div>
+      <ol class="plist">
+        {projects.map((p, i) => (
+          <li>
+            <a class="prow" href={`/entries/${p.slug}/`}>
+              <span class="pnum">{String(i + 1).padStart(2, "0")}</span>
+              <h3>{p.data.title}</h3>
+              <div class="pdesc">
+                <div class="ptags">
+                  <span class="tagpill">{p.data.type === "project" && p.data.featured ? "Featured" : "Experiment"}</span>
+                  <span class="tagpill">{p.data.pubDate.getFullYear()}</span>
+                </div>
+                {p.data.description && <p>{p.data.description}</p>}
+              </div>
+              <span class="parrow" aria-hidden="true">→</span>
+            </a>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
 </Layout>
 
+<script>
+  // Titolo: la parola evidenziata cambia in loop con uno scorrimento verticale,
+  // mentre la larghezza si adatta alla parola nuova.
+  let timer: number | undefined;
+  function setupRotator() {
+    clearInterval(timer);
+    const rot = document.querySelector<HTMLElement>(".rot");
+    const word = rot?.querySelector<HTMLElement>(".rot-w");
+    const text = word?.querySelector<HTMLElement>(".mark");
+    if (!rot || !word || !text) return;
+    const words: string[] = JSON.parse(rot.dataset.words ?? "[]");
+    const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const narrow = () => matchMedia("(max-width: 760px)").matches;
+    let i = 0;
+
+    const fit = () => { if (!narrow()) rot.style.width = word.offsetWidth + "px"; else rot.style.width = ""; };
+    fit();
+
+    timer = window.setInterval(() => {
+      i = (i + 1) % words.length;
+      if (reduce) { text.textContent = words[i]; fit(); return; }
+      word.classList.add("out");
+      setTimeout(() => {
+        word.classList.remove("out");
+        word.classList.add("pre");
+        text.textContent = words[i];
+        fit();
+        void word.offsetWidth; // forza il reflow prima di far entrare la parola
+        word.classList.remove("pre");
+      }, 400);
+    }, 2600);
+  }
+  document.addEventListener("astro:page-load", setupRotator);
+</script>

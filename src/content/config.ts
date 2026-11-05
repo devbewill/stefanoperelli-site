@@ -27,6 +27,18 @@ const entries = defineCollection({
       year: z.string().optional(),
       featured: z.boolean().optional().default(false),
       heroImage: z.string().optional(),
+      // Campi opzionali della scheda progetto: si mostrano solo se presenti
+      status: z.enum(["live", "build", "idea"]).optional(),
+      links: z.array(z.object({ label: z.string(), url: z.string().url() })).optional(),
+      story: z
+        .object({
+          problem: z.string().optional(),
+          approach: z.string().optional(),
+          role: z.string().optional(),
+          status: z.string().optional(),
+          next: z.string().optional(),
+        })
+        .optional(),
     }),
     // EXTERNAL LINKS / RECOMMENDATIONS
     z.object({

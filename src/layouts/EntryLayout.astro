@@ -1,90 +1,46 @@
 ---
 import type { CollectionEntry } from "astro:content";
 import Layout from "./Layout.astro";
-import BackButton from "../components/BackButton.astro";
-import SidebarLayout from "../components/SidebarLayout.astro";
 
-type Props = CollectionEntry<"entries">["data"];
+type Props = CollectionEntry<"entries">["data"] & { readingTime?: string };
 
-const { title, description, pubDate, heroImage, type } = Astro.props;
+const props = Astro.props;
+const { title, description, pubDate, heroImage, type, tags = [], readingTime } = props as typeof props & {
+  heroImage?: string;
+};
+const backHref = type === "project" ? "/projects" : "/blog";
+const backLabel = type === "project" ? "All projects" : "Journal";
 ---
 
 <Layout title={`${title} | Synthetic Mess`}>
-  <SidebarLayout maxWidth="max-w-4xl">
-    <article>
-      <header class="mb-16">
-        <div class="flex items-center gap-4 mb-4">
-          <span
-            class="text-[10px] font-semibold tracking-[0.4em] uppercase"
-          >
-            {
-              type === "post"
-                ? "Transmission // Insight"
-                : "Artifact // Project"
-            }
-          </span>
-          <div class="h-[1px] flex-1 bg-black"></div>
-          <time
-            datetime={pubDate.toISOString()}
-            class="text-[10px] font-semibold"
-          >
-            {
-              pubDate.toLocaleDateString("en-us", {
-                year: "numeric",
-                month: "short",
-                day: "numeric",
-              })
-            }
-          </time>
-        </div>
+  <article class="article">
+    <a class="back" href={backHref}>← {backLabel}</a>
 
-        <h1
-          class="text-4xl lg:text-7xl font-black leading-[0.9] mb-8 uppercase"
-        >
-          {title}
-        </h1>
+    <div class="meta" style="margin-top:48px">
+      <span class={`tagpill hot`}>{type === "project" ? "Project" : "Journal"}</span>
+      <time datetime={pubDate.toISOString()}>
+        {pubDate.toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" })}
+      </time>
+      {readingTime && <span>· {readingTime} read</span>}
+    </div>
 
-        {
-          description && (
-            <p class="text-xl lg:text-2xl font-semibold leading-relaxed max-w-2xl">
-              {description}
-            </p>
-          )
-        }
-      </header>
+    <h1>{title}</h1>
+    {description && <p class="lede">{description}</p>}
 
-      {
-        heroImage && (
-          <div class="mb-16 lg:mb-24 overflow-hidden border border-black">
-            <img
-              width={1600}
-              height={800}
-              src={heroImage}
-              alt=""
-              class="w-full object-cover max-h-[60vh] grayscale hover:grayscale-0 transition-all duration-1000"
-            />
-          </div>
-        )
-      }
+    {tags.length > 0 && (
+      <div class="chips" style="margin-top:24px">{tags.map((tag) => <span class="chip">#{tag}</span>)}</div>
+    )}
 
-      <div
-        class="prose prose-zinc max-w-none
-                  prose-h2:text-3xl prose-h2:font-black prose-h2:tracking-tight prose-h2:uppercase
-                  prose-h3:text-xl
-                  prose-p:text-lg prose-p:leading-relaxed
-                  prose-strong:font-semibold
-                  prose-a:border-b prose-a:border-black/30 hover:prose-a:border-black
-                  prose-code:not(pre code):bg-zinc-100 prose-code:not(pre code):px-1.5 prose-code:not(pre code):py-0.5 prose-code:not(pre code):border prose-code:not(pre code):border-black prose-code:not(pre code):before:content-none prose-code:not(pre code):after:content-none
-                  prose-pre:bg-transparent prose-pre:border-none prose-pre:text-inherit
-                  prose-img:border prose-img:border-black
-                  prose-blockquote:border-l-black prose-blockquote:bg-zinc-100 prose-blockquote:py-2 prose-blockquote:px-4"
-      >
-        <slot />
-      </div>
+    {heroImage && (
+      <div class="hero-img"><img width={1600} height={800} src={heroImage} alt="" /></div>
+    )}
 
-      <div class="mt-32 pt-12 border-t border-black text-center">
-        <BackButton />
-      </div>
-    </article>
-  </SidebarLayout>
+    <div class="body prose prose-lg max-w-none prose-sm-fluo">
+      <slot />
+    </div>
+
+    <div style="margin-top:96px;padding-top:32px;border-top:1px solid var(--rule)">
+      <a class="link" href={backHref}>← Back to {backLabel}</a>
+    </div>
+  </article>
 </Layout>
